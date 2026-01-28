@@ -37,5 +37,46 @@
       "tracking": "تتبع الضربات",
       "share": "شارك التحدي"
     }
+  },
+  "Techs": {
+    "badge": "التقنية",
+    "title": "تقنية متقدمة لتطوير أدائك",
+    "description": "نجمع بين أحدث تقنيات الكاميرات والذكاء الاصطناعي <highlight> لنقدم لك تجربة تدريب احترافية. </highlight>",
+    "items": {
+      "liveStats": { "title": "إحصائيات حية", "desc": "بيانات فورية أثناء اللعب" },
+      "shotTracking": { "title": "تتبع الضربات", "desc": "تحليل دقيق لكل ضربة وحركة" },
+      "aiAnalysis": { "title": "تحليل AI", "desc": "ذكاء اصطناعي متقدم لتحسين أدائك" },
+      "cameras4k": { "title": "كاميرات 4K", "desc": "تسجيل عالي الدقة لكل لحظة" }
+    }
+  },
+  "Courts": {
+    "badge": "الملاعب",
+    "title": "اكتشف ملاعبنا",
+    "viewAll": "عرض الكل",
+    "items": {
+      "training": { "name": "أكاديمية التدريب" },
+      "padel": { "name": "ملاعب البادل" },
+      "tennis": { "name": "ملاعب التنس" }
+    }
+  },
+  "Marquee": {
+    "dataAnalysis": "تحليل البيانات",
+    "continuousSupport": "دعم مستمر",
+    "anywhere": "وين ماكنت",
+    "bookingMgmt": "إدارة الحجوزات",
+    "fastEntry": "دخول سريع",
+    "padel": "بادل",
+    "tennis": "تنس",
+    "eventBooking": "حجز فعاليات",
+    "highSecurity": "أمان عالي",
+    "performanceMonitor": "مراقبة اداء",
+    "exclusiveDiscounts": "خصومات حصرية",
+    "support247": "معك 24/7",
+    "skillRecording": "تصوير لمهاراتك",
+    "timeMgmt": "إدارة الوقت",
+    "easyAccess": "سهولة الوصول",
+    "instantNotif": "إشعارات لحظية",
+    "lifestyle": "نمط حياة",
+    "smoothExp": "تجربة سلسة"
   }
 }

@@ -1,63 +1,8 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
 import { Camera, Cpu, Activity, BarChart3, Target, Share2 } from 'lucide-react';
-
-type FeatureChipProps = {
-  icon: any;
-  label: React.ReactNode;
-  className: string;
-  color: string;
-  delay: number;
-  side: 'left' | 'right';
-  driftX: number;
-  driftY: number;
-};
-
-const FeatureChip = ({ 
-  icon: Icon, label, className, color, delay, side, driftX, driftY 
-}: any) => {
-  return (
-    /* OUTER DIV: Handles the Fly-out (Phase 1) */
-    <motion.div
-      initial={{ opacity: 0, scale: 0, x: side === 'left' ? 150 : -150, y: 50 }}
-      whileInView={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ type: "spring", stiffness: 50, damping: 20, delay }}
-      className={`absolute z-50 ${className}`}
-    >
-      {/* INNER DIV: Handles Infinite Float (Phase 2) */}
-      <motion.div
-        /* Floating animation */
-        animate={{
-          x: [0, driftX, 0, -driftX, 0],
-          y: [0, driftY, 0, -driftY, 0],
-        }}
-        /* STOP floating on hover */
-        whileHover={{ 
-          x: 0, 
-          y: 0, 
-          scale: 1.05, // Subtle pop on hover
-          transition: { duration: 0.3, ease: "easeOut" } 
-        }}
-        transition={{
-          x: { duration: 10, repeat: Infinity, ease: "easeInOut", delay: delay + 0.8 },
-          y: { duration: 12, repeat: Infinity, ease: "easeInOut", delay: delay + 0.8 },
-        }}
-        className="flex flex-col items-center justify-center p-1.5 md:p-4 w-24 md:w-32 h-24 md:h-32 gap-1 md:gap-2 rounded-xl md:rounded-3xl bg-white/95 backdrop-blur-md border border-white/50 shadow-lg md:shadow-xl cursor-pointer"
-      >
-        <div className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-2xl bg-slate-50 flex items-center justify-center shadow-inner mb-2">
-          <Icon style={{ color }} className="w-6 h-6 md:w-6 md:h-6 stroke-[2.5]" />
-        </div>
-        <span className="text-xs md:text-sm font-saudia font-bold text-slate-800 text-center leading-tight">
-          {label}
-        </span>
-      </motion.div>
-    </motion.div>
-  );
-};
-
+import FeatureChip from './FeatureChip';
 export default function AppSection() {
   const t = useTranslations('AppSection');
 
@@ -79,7 +24,7 @@ export default function AppSection() {
         <div className="text-center mb-8 md:mb-12 relative z-30 font-saudia">
           <span className="text-[#7C3AED] font-bold text-lg md:text-2xl tracking-widest uppercase">{t('tag')}</span>
           <h2 className="text-4xl md:text-6xl font-black mt-2 md:mt-4 text-[#0F172A] leading-tight">{t('title')}</h2>
-          <p className="mt-4 text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed px-2">
+          <p className="mt-4 text-[#62748E] max-w-2xl mx-auto text-lg leading-relaxed px-2">
              {t.rich('description', { highlight: (chunks) => <span className="text-slate-900 font-bold bg-[#D9F99D] px-1">{chunks}</span> })}
           </p>
         </div>

@@ -37,5 +37,58 @@
         "tracking": "Shot Tracking",
         "share": "Share <br></br> Challenge"
         }
+    },
+  "Techs": {
+    "badge": "Technology",
+    "title": "Advanced Tech for Performance",
+    "description": "Combining latest camera technologies and AI to offer you a <highlight> professional training experience. </highlight>",
+    "items": {
+      "liveStats": {
+        "title": "Live Stats",
+        "desc": "Instant data while playing"
+      },
+      "shotTracking": {
+        "title": "Shot Tracking",
+        "desc": "Precise analysis for every shot and move"
+      },
+      "aiAnalysis": {
+        "title": "AI Analysis",
+        "desc": "Advanced AI to improve your performance"
+      },
+      "cameras4k": {
+        "title": "4K Cameras",
+        "desc": "High precision recording for every moment"
+      }
     }
+  },
+  "Courts": {
+    "badge": "Courts",
+    "title": "Discover Our Courts",
+    "viewAll": "View All",
+    "items": {
+      "training": { "name": "Training Academy" },
+      "padel": { "name": "Padel Courts" },
+      "tennis": { "name": "Tennis Courts" }
+    }
+  },
+  "Marquee": {
+    "dataAnalysis": "Data Analysis",
+    "anywhere": "Anywhere",
+    "fastEntry": "Fast Entry",
+    "tennis": "Tennis",
+    "highSecurity": "High Security",
+    "exclusiveDiscounts": "Exclusive Discounts",
+    "continuousSupport": "Continuous Support",
+    "padel": "Padel",
+    "performanceMonitor": "Performance Monitor",
+    "bookingMgmt": "Booking Mgmt",
+    "eventBooking": "Event Booking",
+    "support247": "24/7 Support",
+    "skillRecording": "Skill Recording",
+    "timeMgmt": "Time Mgmt",
+    "easyAccess": "Easy Access",
+    "instantNotif": "Instant Notif",
+    "lifestyle": "Lifestyle",
+    "smoothExp": "Smooth Exp"
+  }
 }
