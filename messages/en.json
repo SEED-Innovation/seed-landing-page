@@ -1,0 +1,41 @@
+{
+  "Index": {
+    "welcome": "Welcome to our platform",
+    "desc": "Building bilingual apps is easy with Next.js."
+  },
+  "Navigation": {
+    "home": "Home",
+    "explore": "Explore Courts",
+    "technology": "Technology",
+    "business": "For Business",
+    "about": "About us",
+    "getApp": "Get App"
+  },
+  "Hero": {
+    "title": "Book Your Court <br></br> Anytime, <highlight>Anywhere.</highlight>",
+    "description": "Step onto your court and book the time you want, everything is fast.",
+    "download": "Download App Now",
+    "findCourt": "Find a Court",
+    "infoBar": {
+      "find": "Find a Court",
+      "findDesc": "Discover nearby courts and available slots",
+      "book": "Book Instantly",
+      "bookDesc": "Choose time, confirm booking, and pay securely",
+      "play": "Play & Enjoy",
+      "playDesc": "Show booking code at arrival and start playing"
+    }
+  },
+  "AppSection": {
+        "tag": "SEED App",
+        "title": "All Courts in Your Pocket",
+        "description": "An integrated experience combining court booking, <highlight>smart camera performance analysis</highlight>, and tracking your level evolution moment by moment.",
+        "features": {
+        "cameras": "4K Cameras",
+        "ai": "AI Analysis",
+        "stats": "Live Stats",
+        "reports": "Performance <br></br> Reports",
+        "tracking": "Shot Tracking",
+        "share": "Share <br></br> Challenge"
+        }
+    }
+}
