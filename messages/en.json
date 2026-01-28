@@ -63,8 +63,16 @@
   },
   "Courts": {
     "badge": "Courts",
-    "title": "Discover Our Courts",
+    "title": "Explore Courts",
     "viewAll": "View All",
+    "locations": {
+      "jeddah": "Jeddah",
+      "riyadh": "Riyadh"
+    },
+    "sessions": {
+      "daily": "Daily Sessions",
+      "courtsCount": "{count} Courts"
+    },
     "items": {
       "training": { "name": "Training Academy" },
       "padel": { "name": "Padel Courts" },
@@ -90,5 +98,21 @@
     "instantNotif": "Instant Notif",
     "lifestyle": "Lifestyle",
     "smoothExp": "Smooth Exp"
+  },
+  "Partners": {
+    "title": "Success Partners"
+  },
+  "Footer": {
+    "description": "Your premier destination for Padel and Tennis court bookings. Smart technologies to analyze your performance and game.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "about": "About Us",
+    "forCompanies": "Corporate",
+    "support": "Support & Help",
+    "faq": "FAQ",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Us",
+    "copyright": "© SEED 2026. All rights reserved."
   }
 }

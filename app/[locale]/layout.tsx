@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Navbar from '@/components/Navbar';
 import "../globals.css";
+import Footer from '@/components/Footer';
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -36,9 +37,7 @@ export default async function LocaleLayout({
 
           <main>{children}</main>
 
-          <footer className="mt-10 p-10 bg-slate-50 text-center">
-            © 2026 Bilingual App
-          </footer>
+        <Footer/>
         </NextIntlClientProvider>
       </body>
     </html>

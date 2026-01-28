@@ -3,6 +3,7 @@ import App from '@/components/landing/App';
 import Courts from '@/components/landing/Courts';
 import Techs from '@/components/landing/Techs';
 import TagSlider from '@/components/landing/TagSlider';
+import Partners from '@/components/landing/Partners';
 // Import other sections as you build them
 // import DiscoverCourts from '@/components/landing/DiscoverCourts';
 // import Features from '@/components/landing/Features';
@@ -30,6 +31,7 @@ export default function LandingPage() {
         <Techs/>
         <Courts/>
         <TagSlider/>
+        <Partners/>
       </section>
 
       {/* Footer is usually in layout.tsx, but can be added here if it's page-specific */}

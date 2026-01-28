@@ -29,7 +29,7 @@ const Techs = () => {
       className="py-20 px-6 md:py-28"
       style={{
         // Responsive CSS radial gradient to mimic the 240px blur glow from Figma
-        backgroundImage: 'radial-gradient(80% 40% at 50% 30%, rgba(243, 232, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%)',
+        backgroundImage: 'radial-gradient(80% 40% at 50% 30%, rgba(243, 232, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%)',
         backgroundColor: '#FFFFFF'
       }}
     >
