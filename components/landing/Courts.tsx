@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
 
 const Courts = () => {
-  const t = useTranslations('Courts');
+  const t = useTranslations('LandingPage.Courts');
 
   const courts = [
     {

@@ -3,7 +3,7 @@ import { Link } from '@/i18n/routing';
 import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Navbar() {
-  const t = useTranslations('Navigation');
+  const t = useTranslations('Common.Navigation');
 
   return (
     <nav className="absolute top-0 w-full z-50 flex items-center justify-between px-6 py-4 md:px-12">

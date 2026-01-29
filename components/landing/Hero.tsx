@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 import InfoBar from './InfoBar';
 
 export default function Hero() {
-  const t = useTranslations('Hero');
+  const t = useTranslations('LandingPage.Hero');
 
   return (
     <section className="relative h-[90vh] min-h-[600px] w-full flex items-center bg-[url('/hero-bg.jpg')] bg-cover bg-center">

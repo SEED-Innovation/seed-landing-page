@@ -1,118 +1,166 @@
 {
-  "Index": {
-    "welcome": "Welcome to our platform",
-    "desc": "Building bilingual apps is easy with Next.js."
-  },
-  "Navigation": {
-    "home": "Home",
-    "explore": "Explore Courts",
-    "technology": "Technology",
-    "business": "For Business",
-    "about": "About us",
-    "getApp": "Get App"
-  },
-  "Hero": {
-    "title": "Book Your Court <br></br> Anytime, <highlight>Anywhere.</highlight>",
-    "description": "Step onto your court and book the time you want, everything is fast.",
-    "download": "Download App Now",
-    "findCourt": "Find a Court",
-    "infoBar": {
-      "find": "Find a Court",
-      "findDesc": "Discover nearby courts and available slots",
-      "book": "Book Instantly",
-      "bookDesc": "Choose time, confirm booking, and pay securely",
-      "play": "Play & Enjoy",
-      "playDesc": "Show booking code at arrival and start playing"
+  "Common": {
+    "Navigation": {
+      "home": "Home",
+      "explore": "Explore Courts",
+      "technology": "Technology",
+      "business": "Seed Business",
+      "about": "About Us",
+      "getApp": "Get App"
+    },
+    "Footer": {
+      "description": "Your premier destination for Padel and Tennis court bookings. Smart technologies to analyze your performance and game.",
+      "quickLinks": "Quick Links",
+      "home": "Home",
+      "about": "About Us",
+      "forCompanies": "Corporate",
+      "support": "Support & Help",
+      "faq": "FAQ",
+      "terms": "Terms of Use",
+      "privacy": "Privacy Policy",
+      "contact": "Contact Us",
+      "copyright": "© SEED 2026. All rights reserved."
     }
   },
-  "AppSection": {
-        "tag": "SEED App",
-        "title": "All Courts in Your Pocket",
-        "description": "An integrated experience combining court booking, <highlight>smart camera performance analysis</highlight>, and tracking your level evolution moment by moment.",
-        "features": {
+  "LandingPage": {
+    "Hero": {
+      "title": "Book Your Court <br></br> Anytime, <highlight>Anywhere.</highlight>",
+      "description": "Step onto your court and book the time you want, everything is fast.",
+      "download": "Download App Now",
+      "findCourt": "Find a Court",
+      "infoBar": {
+        "find": "Find a Court",
+        "findDesc": "Discover nearby courts and available slots",
+        "book": "Book Instantly",
+        "bookDesc": "Choose time, confirm booking, and pay securely",
+        "play": "Play & Enjoy",
+        "playDesc": "Show booking code at arrival and start playing"
+      }
+    },
+    "AppSection": {
+      "tag": "SEED App",
+      "title": "All Courts in Your Pocket",
+      "description": "An integrated experience combining court booking, <highlight>smart camera performance analysis</highlight>, and tracking your level evolution moment by moment.",
+      "features": {
         "cameras": "4K Cameras",
         "ai": "AI Analysis",
         "stats": "Live Stats",
         "reports": "Performance <br></br> Reports",
         "tracking": "Shot Tracking",
         "share": "Share <br></br> Challenge"
-        }
+      }
     },
-  "Techs": {
-    "badge": "Technology",
-    "title": "Advanced Tech for Performance",
-    "description": "Combining latest camera technologies and AI to offer you a <highlight> professional training experience. </highlight>",
-    "items": {
-      "liveStats": {
-        "title": "Live Stats",
-        "desc": "Instant data while playing"
+    "Courts": {
+      "badge": "Courts",
+      "title": "Explore Courts",
+      "viewAll": "View All",
+      "locations": {
+        "jeddah": "Jeddah",
+        "riyadh": "Riyadh"
       },
-      "shotTracking": {
-        "title": "Shot Tracking",
-        "desc": "Precise analysis for every shot and move"
+      "sessions": {
+        "daily": "Daily Sessions",
+        "courtsCount": "{count} Courts"
       },
-      "aiAnalysis": {
-        "title": "AI Analysis",
-        "desc": "Advanced AI to improve your performance"
-      },
-      "cameras4k": {
-        "title": "4K Cameras",
-        "desc": "High precision recording for every moment"
+      "items": {
+        "training": { "name": "Training Academy" },
+        "padel": { "name": "Padel Courts" },
+        "tennis": { "name": "Tennis Courts" }
+      }
+    },
+    "Techs": {
+      "badge": "Technology",
+      "title": "Advanced Tech for Performance",
+      "description": "Combining latest camera technologies and AI to offer you a <highlight> professional training experience. </highlight>",
+      "items": {
+        "liveStats": { "title": "Live Stats", "desc": "Instant data while playing" },
+        "shotTracking": { "title": "Shot Tracking", "desc": "Precise analysis for every shot and move" },
+        "aiAnalysis": { "title": "AI Analysis", "desc": "Advanced AI to improve your performance" },
+        "cameras4k": { "title": "4K Cameras", "desc": "High precision recording for every moment" }
+      }
+    },
+    "Marquee": {
+      "dataAnalysis": "Data Analysis",
+      "anywhere": "Anywhere",
+      "fastEntry": "Fast Entry",
+      "tennis": "Tennis",
+      "highSecurity": "High Security",
+      "exclusiveDiscounts": "Exclusive Discounts",
+      "continuousSupport": "Continuous Support",
+      "padel": "Padel",
+      "performanceMonitor": "Performance Monitor",
+      "bookingMgmt": "Booking Mgmt",
+      "eventBooking": "Event Booking",
+      "support247": "24/7 Support",
+      "skillRecording": "Skill Recording",
+      "timeMgmt": "Time Mgmt",
+      "easyAccess": "Easy Access",
+      "instantNotif": "Instant Notif",
+      "lifestyle": "Lifestyle",
+      "smoothExp": "Smooth Exp"
+    },
+    "Partners": {
+      "title": "Success Partners"
+    }
+  },
+  "TechnologyPage": {
+    "Features": {
+      "badge": "Features",
+      "title": "SEED Tech & Features",
+      "description": "Combining latest camera technologies and AI to offer you a complete sports experience elevating your game.",
+      "items": {
+        "cameras4k": { "title": "4K Cameras in Every Court", "desc": "High precision cameras installed in strategic angles recording every moment of your match with extreme accuracy." },
+        "aiAnalysis": { "title": "Instant AI Analysis", "desc": "Advanced AI system analyzes your performance immediately after match and provides detailed reports and recommendations." },
+        "shotTracking": { "title": "Shot & Ball Tracking", "desc": "Precise tracking for ball path, speed, and rebound area, with analysis for every forehand and backhand." },
+        "performance": { "title": "Physical Performance Stats", "desc": "Measuring distance covered, movement speed, and coverage areas in court during match." },
+        "booking": { "title": "Fast & Easy Booking", "desc": "Book your favorite court in seconds through the app with advance booking up to a week." },
+        "smartApp": { "title": "Integrated Smart App", "desc": "Easy-to-use app combining booking, analysis, videos, and stats in one place." },
+        "challenges": { "title": "Challenges & Competitions", "desc": "Participate in tournaments and challenges with other players and compare stats with community." },
+        "progress": { "title": "Progress Tracking", "desc": "Monitor your level evolution over time through graphs and historical stats." }
+      }
+    },
+    "AISection": {
+      "badge": "Artificial Intelligence",
+      "title": "What does AI analyze?",
+      "description": "Our smart system analyzes every aspect of your game to provide precise insights helping you evolve.",
+      "cards": {
+        "movement": {
+          "title": "Movement Analysis",
+          "desc": "Track your movement in court: Distance covered, Response speed.",
+          "points": {
+            "distance": "Distance Covered",
+            "speed": "Movement Speed",
+            "position": "Positioning"
+          }
+        },
+        "recommendations": {
+          "title": "Smart Recommendations",
+          "desc": "Customized recommendations to improve weaknesses and boost strengths.",
+          "points": {
+            "drills": "Suggested Drills",
+            "tips": "Instant Tips",
+            "plan": "Development Plan"
+          }
+        },
+        "progress": {
+          "title": "Progress Tracking",
+          "desc": "Monitor your level evolution over time with detailed stats.",
+          "points": {
+            "comparison": "Performance Comparison",
+            "rate": "Improvement Rate",
+            "achievements": "Achievements"
+          }
+        },
+        "shot": {
+          "title": "Shot Analysis",
+          "desc": "Precise analysis for every shot: Speed, Spin, Angle, Rebound area.",
+          "points": {
+            "serve": "Serve Speed",
+            "accuracy": "Shot Accuracy",
+            "error": "Error Rate"
+          }
+        }
       }
     }
-  },
-  "Courts": {
-    "badge": "Courts",
-    "title": "Explore Courts",
-    "viewAll": "View All",
-    "locations": {
-      "jeddah": "Jeddah",
-      "riyadh": "Riyadh"
-    },
-    "sessions": {
-      "daily": "Daily Sessions",
-      "courtsCount": "{count} Courts"
-    },
-    "items": {
-      "training": { "name": "Training Academy" },
-      "padel": { "name": "Padel Courts" },
-      "tennis": { "name": "Tennis Courts" }
-    }
-  },
-  "Marquee": {
-    "dataAnalysis": "Data Analysis",
-    "anywhere": "Anywhere",
-    "fastEntry": "Fast Entry",
-    "tennis": "Tennis",
-    "highSecurity": "High Security",
-    "exclusiveDiscounts": "Exclusive Discounts",
-    "continuousSupport": "Continuous Support",
-    "padel": "Padel",
-    "performanceMonitor": "Performance Monitor",
-    "bookingMgmt": "Booking Mgmt",
-    "eventBooking": "Event Booking",
-    "support247": "24/7 Support",
-    "skillRecording": "Skill Recording",
-    "timeMgmt": "Time Mgmt",
-    "easyAccess": "Easy Access",
-    "instantNotif": "Instant Notif",
-    "lifestyle": "Lifestyle",
-    "smoothExp": "Smooth Exp"
-  },
-  "Partners": {
-    "title": "Success Partners"
-  },
-  "Footer": {
-    "description": "Your premier destination for Padel and Tennis court bookings. Smart technologies to analyze your performance and game.",
-    "quickLinks": "Quick Links",
-    "home": "Home",
-    "about": "About Us",
-    "forCompanies": "Corporate",
-    "support": "Support & Help",
-    "faq": "FAQ",
-    "terms": "Terms of Use",
-    "privacy": "Privacy Policy",
-    "contact": "Contact Us",
-    "copyright": "© SEED 2026. All rights reserved."
   }
 }

@@ -31,7 +31,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={direction}>
-      <body className="min-h-screen bg-white text-slate-900">
+      <body className="min-h-screen  text-slate-900">
         <NextIntlClientProvider messages={messages}>
          <Navbar/>
 

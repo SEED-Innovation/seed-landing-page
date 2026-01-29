@@ -13,7 +13,7 @@ const XIcon = ({ className }: { className?: string }) => (
 );
 
 const Footer = () => {
-  const t = useTranslations('Footer');
+  const t = useTranslations('Common.Footer');
 
   return (
     <footer className="bg-[#0F172A] text-white pt-16 pb-8 px-6">

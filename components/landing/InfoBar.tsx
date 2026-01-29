@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 
 export default function InfoBar() {
-  const t = useTranslations('Hero.infoBar');
+  const t = useTranslations('LandingPage.Hero.infoBar');
 
   const items = [
     {

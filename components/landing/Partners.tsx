@@ -8,7 +8,7 @@ const PARTNERS = [
 ];
 
 const Partners = () => {
-  const t = useTranslations('Partners');
+  const t = useTranslations('LandingPage.Partners');
 
   return (
     <section className="py-12 bg-white w-full overflow-hidden">

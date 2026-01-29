@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { Camera, Cpu, Activity, BarChart3, Target, Share2 } from 'lucide-react';
 import FeatureChip from './FeatureChip';
 export default function AppSection() {
-  const t = useTranslations('AppSection');
+  const t = useTranslations('LandingPage.AppSection');
 
   return (
     <section className="relative pt-12 pb-0 md:pt-32 bg-[#F8FAFC] overflow-hidden mt-50 md:mt-0" 

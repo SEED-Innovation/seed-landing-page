@@ -87,7 +87,7 @@ const MarqueeRow = ({ items, reverse = false }) => {
 };
 
 const TagSlider = () => {
-  const t = useTranslations('Marquee');
+  const t = useTranslations('LandingPage.Marquee');
 
   // Rows organized to match the Arabic UI image provided
   const row1Tags = [
