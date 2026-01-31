@@ -161,6 +161,151 @@
           }
         }
       }
+    },
+    "AdvancedAnalytics": {
+      "title": "Advanced Performance Analytics",
+      "description": "Track your performance with precision. From ball speed to distance covered, get professional statistics that help you improve your game in every match.",
+      "matchStats": {
+        "title": "Match Stats",
+        "topSpeed": "MAX SPEED",
+        "distance": "DISTANCE",
+        "accuracy": "SHOT ACCURACY",
+        "playTime": "PLAY TIME",
+        "calories": "CALORIES"
+      },
+      "bottomCards": {
+        "power": {
+          "title": "Power & Speed Analysis",
+          "desc": "Measure your shot precision and smash power with high precision using advanced computer vision."
+        },
+        "heatmap": {
+          "title": "Movement Heatmap",
+          "desc": "Understand your movement patterns on the court and discover your areas of dominance and coverage gaps."
+        },
+        "progress": {
+          "title": "Progress Tracking",
+          "desc": "Monitor your level evolution over time with detailed charts and comparisons against other players."
+        }
+      }
+    }
+  },
+  "BusinessPage": {
+    "badge": "SEED BUSINESS",
+    "title": "Your Partner in Sports Success",
+    "description": "Integrated solutions for companies, court owners, and strategic partners.",
+    "cards": {
+      "partner": {
+        "title": "Join as Partner",
+        "desc": "Be part of our success story and share our growth.",
+        "link": "Contact Us"
+      },
+      "owner": {
+        "title": "Join as Court Owner",
+        "desc": "Manage your court efficiently and increase your revenue.",
+        "link": "Register Court"
+      },
+      "employees": {
+        "title": "Book for Employees",
+        "desc": "Your team relationships, a real investment.",
+        "link": "Request Quote"
+      }
+    },
+    "EmployeesPage": {
+      "back": "Back",
+      "badge": "SEED BUSINESS",
+      "title": "Your Team Relationships, A Real Investment.",
+      "description": "Flexible and exclusive packages for companies. Organize tournaments, open days, or periodic bookings at special rates.",
+      "benefits": {
+        "team": {
+          "title": "Team Building",
+          "desc": "Sports events designed specifically to increase team bonding."
+        },
+        "priority": {
+          "title": "Priority Booking",
+          "desc": "Priority in peak time bookings and organizing private tournaments."
+        },
+        "rates": {
+          "title": "Competitive Rates",
+          "desc": "Discounts up to 30% on periodic bookings and annual packages."
+        }
+      },
+      "form": {
+        "title": "Request a Quote",
+        "companyName": "Company Name",
+        "employeesCount": "Number of Employees",
+        "contactPerson": "Contact Person",
+        "email": "Email Address",
+        "details": "Request Details",
+        "placeholder": {
+          "company": "Enter company name",
+          "employees": "Example: 50",
+          "name": "Your Name",
+          "email": "name@company.com",
+          "details": "Event type, preferred time, or any other details..."
+        },
+        "submit": "Send Request"
+      }
+    },
+    "OwnersPage": {
+      "title": "Register Your Court",
+      "description": "Join the largest network of courts in the kingdom and benefit from our advanced booking management tech.",
+      "form": {
+        "facilityName": "Facility Name",
+        "city": "City",
+        "courtsCount": "Number of Courts",
+        "contactPerson": "Contact Person",
+        "mobile": "Mobile Number",
+        "email": "Email",
+        "submit": "Send Request",
+        "placeholder": {
+          "mobile": "05xxxxxxxx",
+          "email": "name@example.com"
+        }
+      }
+    },
+    "PartnersPage": {
+      "title": "Partner with Us",
+      "description": "Let's build a sports future together. We welcome all partnership and investment opportunities.",
+      "form": {
+        "entityName": "Company / Entity Name",
+        "partnerType": "Partnership Type",
+        "contactPerson": "Contact Person",
+        "mobile": "Mobile Number",
+        "email": "Email",
+        "details": "Proposal Details",
+        "submit": "Send Request"
+      }
+    }
+  },
+  "AboutPage": {
+    "AboutSection":{
+      "Hero": {
+        "badge": "About Us",
+        "title": "Redefining <highlight>Smart Sports</highlight>",
+        "description": "SEED platform combines sports passion with latest AI technologies to offer players a professional experience to develop their skills."
+      },
+      "Stats": {
+        "courts": "Courts",
+        "players": "Active Players",
+        "bookings": "Completed Bookings",
+        "rating": "App Rating"
+      },
+      "VisionMission": {
+        "vision": {
+          "title": "Our Vision",
+          "desc": "To be the leading platform in the region for sports court booking while providing the best AI performance analysis experience for players of all levels."
+        },
+        "mission": {
+          "title": "Our Mission",
+          "desc": "Empowering every player to develop their skills by providing professional courts equipped with latest technologies and smart performance analysis at affordable prices."
+        }
+      },
+      "TechSection": {
+        "badge": "Our Technology",
+        "title": "Powered by Intelligence",
+        "desc": "Our platform uses 4K camera tracking and real-time computer vision to transform your game data into actionable insights.",
+        "link": "Explore Our Tech"
+      }
     }
   }
 }

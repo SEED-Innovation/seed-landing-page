@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Features from '@/components/techs/Features';
 import Ai from '@/components/techs/Ai';
+import AdvancedAnalytics from '@/components/techs/AdvancedAnalytics';
 
 export default function TechsPage() {
   return (
@@ -12,6 +13,7 @@ export default function TechsPage() {
       {/* Features Section (The Techs component we just built) */}
         <Features />
         <Ai/>
+        <AdvancedAnalytics/>
       {/* Artificial Intelligence Section */}
       {/* <AISection />/ */}
 
