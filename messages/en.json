@@ -306,6 +306,66 @@
         "desc": "Our platform uses 4K camera tracking and real-time computer vision to transform your game data into actionable insights.",
         "link": "Explore Our Tech"
       }
+    },
+    "ValuesSection": {
+      "badge": "Our Values",
+      "title": "Why Choose Us",
+      "items": {
+        "innovation": {
+          "title": "Innovation",
+          "desc": "Using latest technologies to deliver unique sports experience"
+        },
+        "quality": {
+          "title": "Quality",
+          "desc": "Committing to highest quality standards in our services and courts"
+        },
+        "development": {
+          "title": "Development",
+          "desc": "Helping players continuously develop their skills"
+        }
+      }
+    },
+    "TechSection": {
+      "badge": "Technology",
+      "title": "Advanced Tech",
+      "items": {
+        "cameras": {
+          "title": "4K",
+          "desc": "High Precision Cameras"
+        },
+        "ai": {
+          "title": "AI",
+          "desc": "Smart Performance Analysis"
+        },
+        "booking": {
+          "title": "24/7",
+          "desc": "24/7 Booking"
+        }
+      }
+    }
+  },
+  "CourtsPage": {
+    "Search": {
+      "title": "Discover Courts",
+      "placeholder": "Search court name or area...",
+      "filter": "Filter",
+      "categories": {
+        "padel": "Padel",
+        "tennis": "Tennis",
+        "indoor": "Indoor",
+        "outdoor": "Outdoor",
+        "academies": "Academies"
+      },
+      "cities": {
+        "all": "All",
+        "riyadh": "Riyadh",
+        "jeddah": "Jeddah",
+        "dammam": "Dammam",
+        "khobar": "Khobar",
+        "makkah": "Makkah",
+        "madinah": "Madinah",
+        "abha": "Abha"
+      }
     }
   }
 }

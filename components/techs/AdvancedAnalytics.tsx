@@ -40,7 +40,7 @@ const AdvancedAnalytics = () => {
                 <div className="absolute w-[200px] md:w-[250px] aspect-[0.58/1] border border-6 border-slate-700/20 rounded-[1.7rem] md:rounded-[2rem] rotate-[6deg]  z-0 top-[100] md:top-[120] ml-15" />
 
                 {/* The Main Image Container */}
-                <div className="relative z-10 w-[240px] md:w-[300px] drop-shadow-[0_20px_0px_rgba(142,81,255,0.2)]">
+                <div className="relative z-10 w-[240px] md:w-[300px]">
                     <img 
                         src="/mobile_tech.png" 
                         alt="Live Analysis" 

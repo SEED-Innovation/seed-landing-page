@@ -3,7 +3,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
-
+import SectionBadge from '../ui/SectionBadge';
 const Courts = () => {
   const t = useTranslations('LandingPage.Courts');
 
@@ -62,9 +62,8 @@ const Courts = () => {
 
       {/* --- Main Content --- */}
       <div className="relative z-10 max-w-7xl mx-auto">
-        <span className="text-[#7C3AED] font-bold text-lg md:text-2xl tracking-widest uppercase mb-2 block ltr:text-left rtl:text-right">
-          {t('badge')}
-        </span>
+          <SectionBadge>{t('badge')}</SectionBadge>
+
         
         <div className="flex flex-row justify-between  md:items-end mb-12 gap-4 " >
           <h2 className="text-4xl md:text-6xl font-black text-[#0F172A] ">

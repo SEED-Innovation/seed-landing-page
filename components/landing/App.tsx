@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Camera, Cpu, Activity, BarChart3, Target, Share2 } from 'lucide-react';
 import FeatureChip from './FeatureChip';
+import SectionBadge from '../ui/SectionBadge';
 export default function AppSection() {
   const t = useTranslations('LandingPage.AppSection');
 
@@ -22,7 +23,7 @@ export default function AppSection() {
       
       <div className="container mx-auto px-6">
         <div className="text-center mb-8 md:mb-12 relative z-30 font-saudia">
-          <span className="text-[#7C3AED] font-bold text-lg md:text-2xl tracking-widest uppercase">{t('tag')}</span>
+          <SectionBadge>{t('tag')}</SectionBadge>
           <h2 className="text-4xl md:text-6xl font-black mt-2 md:mt-4 text-[#0F172A] leading-tight">{t('title')}</h2>
           <p className="mt-4 text-[#62748E] max-w-2xl mx-auto text-lg leading-relaxed px-2">
              {t.rich('description', { highlight: (chunks) => <span className="text-slate-900 font-bold bg-[#D9F99D] px-1">{chunks}</span> })}

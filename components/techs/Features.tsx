@@ -7,7 +7,7 @@ import {
   Calendar, Smartphone, Trophy, TrendingUp 
 } from 'lucide-react';
 import FeatureCard from '../FeatureCard';
-
+import SectionBadge from '../ui/SectionBadge';
 const Features = () => {
   const t = useTranslations('TechnologyPage.Features');
 
@@ -27,9 +27,8 @@ const Features = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header Content */}
         <div className="text-center mb-16">
-          <span className="text-[#7C3AED] font-bold text-sm tracking-widest uppercase mb-4 block">
-            {t('badge')}
-          </span>
+          <SectionBadge>{t('badge')}</SectionBadge>
+
           <h2 className="text-4xl md:text-6xl font-black text-[#0F172A] mb-6">
             {t('title')}
           </h2>

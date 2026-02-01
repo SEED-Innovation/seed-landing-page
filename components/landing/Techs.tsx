@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslations } from 'next-intl';
 import { Activity, Target, Cpu, Camera } from 'lucide-react';
 import FeatureCard from '../FeatureCard'; // Import the new card
-
+import SectionBadge from '../ui/SectionBadge';
 const Techs = () => {
   const t = useTranslations('LandingPage.Techs');
 
@@ -38,9 +38,8 @@ const Techs = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16 md:mb-20">
-            <span className="text-[#7C3AED] font-bold text-lg md:text-2xl tracking-widest uppercase">
-                {t('badge')}
-            </span>
+          <SectionBadge>{t('badge')}</SectionBadge>
+
             <h2 className="text-4xl md:text-6xl font-black mt-2 md:mt-4 text-[#0F172A] leading-tight"> 
                 {t('title')}
             </h2>
