@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import FeatureCard from '../FeatureCard';
 import SectionBadge from '../ui/SectionBadge';
+import SectionTitle from '../ui/SectionTitle';
 const Features = () => {
   const t = useTranslations('TechnologyPage.Features');
 
@@ -28,10 +29,7 @@ const Features = () => {
         {/* Header Content */}
         <div className="text-center mb-16">
           <SectionBadge>{t('badge')}</SectionBadge>
-
-          <h2 className="text-4xl md:text-6xl font-black text-[#0F172A] mb-6">
-            {t('title')}
-          </h2>
+          <SectionTitle>{t('title')}</SectionTitle>
           <p className="text-[#62748E] text-lg max-w-2xl mx-auto leading-relaxed">
             {t('description')}
           </p>

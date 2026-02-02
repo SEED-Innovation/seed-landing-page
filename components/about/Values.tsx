@@ -2,6 +2,7 @@
 import { useTranslations, useLocale } from 'next-intl';
 import { Zap, Award, TrendingUp } from 'lucide-react';
 import SectionBadge from '../ui/SectionBadge';
+import SectionTitle from '../ui/SectionTitle';
 const Values = () => {
   const t = useTranslations('AboutPage.ValuesSection');
   const locale = useLocale();
@@ -30,11 +31,9 @@ const Values = () => {
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
-        <div className="text-center mb-16 font-saudia">
-            <SectionBadge>{t('badge')}</SectionBadge>
-          <h2 className="text-4xl md:text-5xl font-black text-[#0F172A]">
-            {t('title')}
-          </h2>
+        <div className="text-center mb-16">
+          <SectionBadge>{t('badge')}</SectionBadge>
+          <SectionTitle>{t('title')}</SectionTitle>
         </div>
 
         {/* Values Grid */}

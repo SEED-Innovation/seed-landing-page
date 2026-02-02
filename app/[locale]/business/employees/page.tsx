@@ -5,6 +5,8 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Link , useRouter} from '@/i18n/routing';
 import { Users2, CalendarDays, Wallet2, ChevronLeft, ChevronRight } from 'lucide-react';
 import BackButton from '@/components/BackButton';
+import SectionBadge from '@/components/ui/SectionBadge';
+import SectionTitle from '@/components/ui/SectionTitle';
 
 const EmployeesPage = () => {
   const t = useTranslations('BusinessPage.EmployeesPage');
@@ -40,12 +42,8 @@ const EmployeesPage = () => {
         <BackButton/>
         {/* Header Section */}
         <div className={`text-center mb-16 ${isRtl ? 'font-saudia' : ''}`}>
-          <span className="text-[#7C3AED] font-bold text-sm tracking-widest uppercase mb-4 block">
-            {t('badge')}
-          </span>
-          <h1 className="text-4xl md:text-6xl font-black text-[#0F172A] mb-6 leading-tight">
-            {t('title')}
-          </h1>
+          <SectionBadge>{t('badge')}</SectionBadge>
+          <SectionTitle>{t('title')}</SectionTitle>
           <p className="text-slate-500 text-lg max-w-3xl mx-auto leading-relaxed">
             {t('description')}
           </p>
@@ -79,7 +77,7 @@ const EmployeesPage = () => {
 
         {/* Quote Form Container */}
         <div className="bg-white rounded-[40px] p-8 md:p-12 shadow-[0_30px_60px_rgba(124,58,237,0.15)] border border-slate-50 max-w-4xl mx-auto">
-          <h2 className={`text-3xl font-black text-[#0F172A] text-center mb-10 ${isRtl ? 'font-saudia' : ''}`}>
+          <h2 className={`text-3xl font-bold text-[#0F172A] text-center mb-10 ${isRtl ? 'font-saudia' : ''}`}>
             {t('form.title')}
           </h2>
           

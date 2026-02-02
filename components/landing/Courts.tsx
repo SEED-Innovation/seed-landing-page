@@ -4,6 +4,7 @@ import React from 'react';
 import { useTranslations } from 'next-intl';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
 import SectionBadge from '../ui/SectionBadge';
+import SectionTitle from '../ui/SectionTitle';
 const Courts = () => {
   const t = useTranslations('LandingPage.Courts');
 
@@ -66,9 +67,7 @@ const Courts = () => {
 
         
         <div className="flex flex-row justify-between  md:items-end mb-12 gap-4 " >
-          <h2 className="text-4xl md:text-6xl font-black text-[#0F172A] ">
-            {t('title')}
-          </h2>
+          <SectionTitle>{t('title')}</SectionTitle>
           
           <button className="group/btn flex items-center gap-2 text-gray-400 hover:text-purple-600 transition-colors font-medium text-sm md:text-base whitespace-nowrap cursor-pointer">
             {t('viewAll')}

@@ -5,7 +5,8 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { Handshake, Building2, Users2, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useLocale } from 'next-intl';
-
+import SectionBadge from '@/components/ui/SectionBadge';
+import SectionTitle from '@/components/ui/SectionTitle';
 const BusinessPage = () => {
   const t = useTranslations('BusinessPage');
   const locale = useLocale();
@@ -41,12 +42,8 @@ const BusinessPage = () => {
         
         {/* Header Section */}
         <div className="text-center mb-16 font-saudia">
-          <span className="text-[#7C3AED] font-bold text-sm tracking-[0.2em] uppercase block mb-4">
-            {t('badge')}
-          </span>
-          <h1 className="text-4xl md:text-6xl font-black text-[#0F172A] mb-6 leading-tight">
-            {t('title')}
-          </h1>
+          <SectionBadge>{t('badge')}</SectionBadge>
+          <SectionTitle>{t('title')}</SectionTitle>
           <p className="text-[#62748E] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             {t('description')}
           </p>

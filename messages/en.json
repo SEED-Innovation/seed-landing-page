@@ -366,6 +366,16 @@
         "madinah": "Madinah",
         "abha": "Abha"
       }
+    },
+    "Discovery": {
+      "title": "Most Active Courts",
+      "trend": "Trend",
+      "rating": "850",
+      "currency": "SAR",
+      "actions": {
+        "app": "Via App",
+        "web": "Via Web"
+      }
     }
   }
 }

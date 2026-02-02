@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-black/30" />
       
       <div className="relative z-10 px-6 md:px-12 max-w-4xl">
-        <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
+        <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight">
             {/* Use .rich to enable tag parsing */}
             {t.rich('title', {
                 br: () => <br />,

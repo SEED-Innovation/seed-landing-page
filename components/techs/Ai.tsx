@@ -9,6 +9,7 @@ import {
   MessageSquare , GitCompare , ArrowUpRight , 
   CircleCheckBig
 } from 'lucide-react';
+import SectionTitle from '../ui/SectionTitle';
 
 const AISection = () => {
   const t = useTranslations('TechnologyPage.AISection');
@@ -64,9 +65,7 @@ const AISection = () => {
             <Cpu className="w-4 h-4" />
             {t('badge')}
           </div>
-          <h2 className="text-4xl md:text-6xl font-black text-[#0F172A] mb-6">
-            {t('title')}
-          </h2>
+          <SectionTitle>{t('title')}</SectionTitle>
           <p className="text-[#62748E] text-lg max-w-3xl mx-auto leading-relaxed">
             {t('description')}
           </p>

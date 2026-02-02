@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { MapPin, Users, Calendar, Star, Eye, Target } from 'lucide-react';
 import Counter from '../Counter';
 import SectionBadge from '../ui/SectionBadge';
+import SectionTitle from '../ui/SectionTitle';
 const About = () => {
   const t = useTranslations('AboutPage.AboutSection');
   const locale = useLocale();
@@ -24,23 +25,15 @@ const About = () => {
         {/* Hero Section */}
         <div className="text-center mb-20 font-saudia">
           <SectionBadge> {t('Hero.badge')}</SectionBadge>
-           <h1 className="text-5xl md:text-7xl font-black text-[#0F172A] mb-8 leading-tight">
-          {isRtl ? (
-            <>
-              نعيد تعريف{" "}
-              <span className="bg-gradient-to-r from-[#7F22FE] to-[#C800DE] bg-clip-text text-transparent">
-                الرياضة الذكية
-              </span>
-            </>
-          ) : (
-            <>
-              Redefining{" "}
-              <span className="bg-gradient-to-r from-[#7F22FE] to-[#C800DE] bg-clip-text text-transparent">
-                Smart Sports
-              </span>
-            </>
-          )}
-        </h1>
+          <SectionTitle >
+            {t.rich('Hero.title', {
+              highlight: (chunks) => (
+                <span className="bg-gradient-to-r from-[#7F22FE] to-[#C800DE] bg-clip-text text-transparent inline-block">
+                  {chunks}
+                </span>
+              )
+            })}
+          </SectionTitle>
           <p className="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
             {t('Hero.description')}
           </p>

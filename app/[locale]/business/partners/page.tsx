@@ -4,6 +4,7 @@ import React from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Handshake } from 'lucide-react';
 import BackButton from '@/components/BackButton';
+import SectionTitle from '@/components/ui/SectionTitle';
 
 const PartnersPage = () => {
   const t = useTranslations('BusinessPage.PartnersPage');
@@ -22,9 +23,7 @@ const PartnersPage = () => {
           <div className="w-20 h-20 bg-[#F0FDF4] rounded-3xl flex items-center justify-center mb-8 shadow-sm">
             <Handshake className="w-10 h-10 text-[#16A34A]" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-black text-[#0F172A] mb-4 leading-tight">
-            {t('title')}
-          </h1>
+          <SectionTitle>{t('title')}</SectionTitle>
           <p className="text-slate-500 text-lg max-w-2xl leading-relaxed">
             {t('description')}
           </p>

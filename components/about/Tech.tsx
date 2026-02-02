@@ -4,6 +4,7 @@ import React from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Camera, Cpu, Clock } from 'lucide-react';
 import SectionBadge from '../ui/SectionBadge';
+import SectionTitle from '../ui/SectionTitle';
 const Tech = () => {
   const t = useTranslations('AboutPage.TechSection');
   const locale = useLocale();
@@ -35,12 +36,9 @@ const Tech = () => {
       <div className="max-w-7xl mx-auto bg-[#0F172A] rounded-[48px] p-8 py-12 md:p-20 text-center relative overflow-hidden">
         
         {/* Header */}
-        <div className="relative z-10 mb-16 font-saudia">
+        <div className="relative z-10 mb-16 ">
           <SectionBadge>{t('badge')}</SectionBadge>
-
-          <h2 className="text-4xl md:text-5xl font-black text-white">
-            {t('title')}
-          </h2>
+          <SectionTitle className='text-white'>{t('title')}</SectionTitle>
         </div>
 
         {/* Tech Grid */}

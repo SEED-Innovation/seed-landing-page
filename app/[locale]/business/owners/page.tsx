@@ -4,6 +4,7 @@ import React from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Building2 } from 'lucide-react';
 import BackButton from '@/components/BackButton';
+import SectionTitle from '@/components/ui/SectionTitle';
 
 const OwnersPage = () => {
   const t = useTranslations('BusinessPage.OwnersPage');
@@ -22,9 +23,8 @@ const OwnersPage = () => {
           <div className="w-20 h-20 bg-[#EFF6FF] rounded-3xl flex items-center justify-center mb-8 shadow-sm">
             <Building2 className="w-10 h-10 text-[#2563EB]" />
           </div>
-          <h1 className={`text-4xl md:text-5xl font-black text-[#0F172A] mb-4 ${isRtl ? 'font-saudia' : ''}`}>
-            {t('title')}
-          </h1>
+          <SectionTitle>{t('title')}</SectionTitle>
+
           <p className={`text-slate-500 text-lg max-w-2xl leading-relaxed ${isRtl ? 'font-saudia' : ''}`}>
             {t('description')}
           </p>

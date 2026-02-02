@@ -3,6 +3,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { Zap, Move, Target, Timer, Flame, TrendingUp, Map, Activity } from 'lucide-react';
+import SectionTitle from '../ui/SectionTitle';
 
 const AdvancedAnalytics = () => {
   const t = useTranslations('TechnologyPage.AdvancedAnalytics');
@@ -23,9 +24,8 @@ const AdvancedAnalytics = () => {
         style={{ background: '#0F172A' }}
       >
         <div className="text-center mb-16 relative z-10">
-            <h2 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#8E51FF] to-[#C800DE] mb-6">
-                {t('title')}
-            </h2>
+          <SectionTitle>{t('title')}</SectionTitle>
+
             <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
                 {t('description')}
             </p>

@@ -1,4 +1,5 @@
 // app/[locale]/discover/page.tsx
+import CourtDiscovery from "@/components/courts/CourtDiscovery";
 import Search from "@/components/courts/Search";
 export default function Courts() {
   return (
@@ -7,9 +8,7 @@ export default function Courts() {
       <Search /> 
       
       {/* Section 2 */}
-      <section className="max-w-7xl mx-auto py-12 px-6">
-        {/* <CourtGrid /> */}
-      </section>
+        <CourtDiscovery/>
     </main>
   );
 }

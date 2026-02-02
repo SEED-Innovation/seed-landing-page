@@ -14,7 +14,7 @@ const Partners = () => {
     <section className="py-12 bg-white w-full overflow-hidden">
       {/* Section Header */}
       <div className="text-center mb-8">
-        <h3 className="text-gray-400 text-2xl md:text-3xl font-medium uppercase tracking-widest">
+        <h3 className="text-gray-400 text-2xl md:text-3xl font-normal uppercase tracking-widest">
           {t('title')}
         </h3>
       </div>
