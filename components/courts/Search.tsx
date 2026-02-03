@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -23,16 +23,31 @@ import {
 } from 'lucide-react';
 import SectionTitle from '../ui/SectionTitle';
 
-const Search = () => {
+interface SearchProps {
+  onFilterChange: (filters: { query: string; category: string; city: string }) => void;
+}
+
+const Search = ({ onFilterChange }: SearchProps) => {
   const t = useTranslations('CourtsPage.Search');
   const locale = useLocale();
   const isRtl = locale === 'ar';
   
   const [showFilters, setShowFilters] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('padel');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeCategory, setActiveCategory] = useState('all');
   const [activeCity, setActiveCity] = useState('all');
 
+  // Trigger filter update whenever any state changes
+  useEffect(() => {
+    onFilterChange({
+      query: searchTerm,
+      category: activeCategory,
+      city: activeCity
+    });
+  }, [searchTerm, activeCategory, activeCity, onFilterChange]);
+
   const categories = [
+    { id: 'all', icon: <MapIcon size={24} /> }, 
     { id: 'padel', icon: <CircleDot size={24} /> },
     { id: 'tennis', icon: <Activity size={24} /> }, 
     { id: 'indoor', icon: <Home size={24} /> },
@@ -62,8 +77,10 @@ const Search = () => {
             <SearchIcon className={`absolute top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#7C3AED] transition-colors ${isRtl ? 'right-5' : 'left-5'}`} size={22} />
             <input 
               type="text" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               placeholder={t('placeholder')}
-              className={`w-full p-5 rounded-2xl bg-white border border-slate-100 shadow-sm focus:ring-2 focus:ring-[#7C3AED] outline-none transition-all font-saudia text-lg ${isRtl ? 'pr-14 text-right' : 'pl-14 text-left'}`}
+              className={`w-full p-5 rounded-2xl bg-white border border-slate-100 shadow-sm focus:ring-2 focus:ring-[#7C3AED] outline-none transition-all font-saudia text-lg ${isRtl ? 'pr-14 text-right' : 'pl-14 text-left'} text-black`}
             />
           </div>
           
@@ -91,13 +108,7 @@ const Search = () => {
             >
               <div className="py-8 flex flex-col items-center border-b border-slate-100 mb-8">
                 
-                {/* --- Sport Categories Slider --- */}
-                {/* Added 'flex-nowrap' and 'overflow-x-auto' for the slider effect */}
-                <div className={`
-                  flex gap-6 md:gap-10 pb-4 w-full 
-                  overflow-x-auto flex-nowrap scrollbar-hide px-4
-                  justify-start md:justify-center
-                `}>
+                <div className={`flex gap-6 md:gap-10 pb-4 w-full overflow-x-auto flex-nowrap scrollbar-hide px-4 justify-start md:justify-center`}>
                   {categories.map((cat) => (
                     <button 
                       key={cat.id}
@@ -123,30 +134,17 @@ const Search = () => {
                   ))}
                 </div>
 
-                {/* --- City Pill Slider --- */}
-                {/* Added 'flex-nowrap' and 'overflow-x-auto' for the slider effect */}
-                {/* --- City Pill Slider --- */}
-                <div className={`
-                  flex gap-3 w-full 
-                  overflow-x-auto flex-nowrap scrollbar-hide px-4
-                  justify-start md:justify-center pb-4 pt-2
-                `}>
+                <div className={`flex gap-3 w-full overflow-x-auto flex-nowrap scrollbar-hide px-4 justify-start md:justify-center pb-4 pt-2 `}>
                   <AnimatePresence>
                     {cities.map((city, index) => (
                       <motion.button
                         key={city.id}
-                        // Staggered Animation variants
                         initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
-                        animate={{ 
-                          opacity: 1, 
-                          x: 0,
-                          transition: { delay: index * 0.05, duration: 0.3 } 
-                        }}
-                        whileHover={{ y: -2 }} // Small lift on hover
+                        animate={{ opacity: 1, x: 0, transition: { delay: index * 0.05, duration: 0.3 } }}
+                        whileHover={{ y: -2 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setActiveCity(city.id)}
-                        className={`
-                          px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 shrink-0 group font-saudia
+                        className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 shrink-0 group font-saudia
                           ${activeCity === city.id 
                             ? 'bg-[#4C1D95] text-white shadow-[0_10px_20px_rgba(76,29,149,0.2)]' 
                             : 'bg-white text-slate-500 border border-slate-100 hover:border-slate-300 hover:cursor-pointer'
@@ -166,7 +164,6 @@ const Search = () => {
             </motion.div>
           )}
         </AnimatePresence>
-
       </div>
     </section>
   );

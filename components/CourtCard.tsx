@@ -11,9 +11,10 @@ interface CourtCardProps {
   price: number;
   image: string;
   rating: number;
+  category:string;
 }
 
-const CourtCard = ({ name, location, price, image, rating }: CourtCardProps) => {
+const CourtCard = ({ name, location, price, image, rating ,category }: CourtCardProps) => {
   const t = useTranslations('CourtsPage.Discovery');
   const locale = useLocale();
   const isRtl = locale === 'ar';
@@ -42,7 +43,7 @@ const CourtCard = ({ name, location, price, image, rating }: CourtCardProps) => 
           </div>
           <div className="bg-white px-3 py-1 rounded-full flex items-center gap-1.5 text-[#7C3AED] text-xs font-md">
             <CircleDot size={12} />
-            <span>Padel</span>
+            <span> {category}</span>
           </div>
         </div>
       </div>

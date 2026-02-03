@@ -1,6 +1,6 @@
 {
   "Common": {
-    "Navigation": {
+    "Navbar": {
       "home": "الرئيسية",
       "explore": "استكشف الملاعب",
       "technology": "التقنيات",
@@ -350,6 +350,7 @@
       "placeholder": "ابحث عن اسم الملعب أو المنطقة...",
       "filter": "الفلتر",
       "categories": {
+        "all": "كل الرياضات",
         "padel": "بادل",
         "tennis": "تنس",
         "indoor": "ملاعب مغلقة",

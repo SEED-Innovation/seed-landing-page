@@ -1,6 +1,6 @@
 {
   "Common": {
-    "Navigation": {
+    "Navbar": {
       "home": "Home",
       "explore": "Explore Courts",
       "technology": "Technology",
@@ -350,6 +350,7 @@
       "placeholder": "Search court name or area...",
       "filter": "Filter",
       "categories": {
+        "all": "All Sports",
         "padel": "Padel",
         "tennis": "Tennis",
         "indoor": "Indoor",

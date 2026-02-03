@@ -23,9 +23,10 @@ const AdvancedAnalytics = () => {
         className="rounded-[30px] md:rounded-[60px] py-8 p-4 md:p-16 relative overflow-hidden max-w-7xl w-full mx-auto"
         style={{ background: '#0F172A' }}
       >
-        <div className="text-center mb-16 relative z-10">
-          <SectionTitle>{t('title')}</SectionTitle>
-
+        <div className="text-center mb-16 relative z-10 text-white">
+          <span className="bg-gradient-to-r from-[#7F22FE] to-[#C800DE] bg-clip-text text-transparent inline-block">
+          <SectionTitle className='mt-4'>{t('title')}</SectionTitle>
+        </span>
             <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
                 {t('description')}
             </p>
@@ -78,10 +79,10 @@ const AdvancedAnalytics = () => {
 
                         {/* Center: Metric Data */}
                         <div className="flex flex-col items-start flex-grow px-6">
-                            <span className="text-[10px] md:text-xs text-slate-500 mb-0.5 ltr:font-sans rtl:font-saudia uppercase tracking-wider">
+                            <span className="text-xs text-slate-500 my-1 uppercase tracking-wider">
                                 {t(`matchStats.${stat.key}`)}
                             </span>
-                            <span className="text-xl md:text-2xl font-black text-white tracking-tight">
+                            <span className="text-xl md:text-2xl font-bold text-white tracking-tight">
                                 {stat.value}
                             </span>
                         </div>
