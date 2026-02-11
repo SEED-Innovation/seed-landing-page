@@ -23,11 +23,8 @@ const Footer = () => {
           
           {/* Brand & Description */}
           <div className="flex flex-col gap-6">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                 <span className="text-black font-bold text-xl">S</span>
-              </div>
-              <span className="text-2xl font-black tracking-tighter">SEED</span>
+            <div className="flex items-center ">
+              <img src="/whiteLogo.png" alt="logo" className='w-48 h-auto ' />
             </div>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
               {t('description')}

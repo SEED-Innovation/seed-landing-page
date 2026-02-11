@@ -378,5 +378,13 @@
         "web": "Via Web"
       }
     }
+  },
+  "DownloadModal": {
+    "title": "Download App Now",
+    "description": "Enjoy easier and faster booking experience. Get exclusive offers and track your bookings anytime.",
+    "buttons": {
+      "apple": "Download on the App Store",
+      "google": "GET IT ON Google Play"
+    }
   }
 }
