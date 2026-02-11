@@ -59,7 +59,6 @@ const About = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-saudia">
           {/* Card 1: Vision (Glow in Top Right) */}
           <div className="relative overflow-hidden bg-[#0F172A] rounded-[48px] p-10 md:p-16 group border border-white/5 shadow-2xl">
-            {/* Radial Glow - Top Right Corner */}
             <div 
               className={`absolute w-96 h-96 blur-[100px] pointer-events-none rounded-full
                 -top-24 
@@ -79,7 +78,6 @@ const About = () => {
 
           {/* Card 2: Mission (Glow in Bottom Left) */}
           <div className="relative overflow-hidden bg-[#0F172A] rounded-[48px] p-10 md:p-16 group border border-white/5 shadow-2xl">
-            {/* Radial Glow - Bottom Left Corner */}
             <div 
               className={`absolute w-96 h-96 blur-[100px] pointer-events-none rounded-full
                 -bottom-24 

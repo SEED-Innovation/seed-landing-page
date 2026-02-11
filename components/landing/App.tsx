@@ -12,10 +12,6 @@ export default function AppSection() {
     <section className="relative pt-12 pb-0 md:pt-32 bg-[#F8FAFC] overflow-hidden mt-50 md:mt-0" 
     style={{
     backgroundColor: '#F8FAFC',
-    /* Using two radial gradients: 
-       1. Top Right: Starts at 0% (strongest) and fades out by 50%
-       2. Bottom Left: Starts at 0% (strongest) and fades out by 50%
-    */
     backgroundImage: `
       radial-gradient(circle at top right, #E9D4FF66 20%, transparent 50%),
       radial-gradient(circle at bottom left, #BEDBFF66 20%, transparent 60%)

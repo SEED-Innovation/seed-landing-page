@@ -4,8 +4,8 @@ interface FeatureCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
-  width?: string;  // Allows custom width like "w-full" or "w-80"
-  height?: string; // Allows custom height like "h-full" or "h-[400px]"
+  width?: string; 
+  height?: string;
 }
 
 const FeatureCard = ({ icon, title, description, width = "w-full", height = "h-auto" }: FeatureCardProps) => {

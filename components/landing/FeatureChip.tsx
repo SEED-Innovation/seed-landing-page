@@ -1,9 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// 1. Define the props clearly
 type FeatureChipProps = {
-  icon: React.ElementType; // Better than 'any' for Lucide/Icon components
+  icon: React.ElementType; 
   label: React.ReactNode;
   className?: string;
   color: string;
@@ -13,7 +12,6 @@ type FeatureChipProps = {
   driftY: number;
 };
 
-// 2. Apply the props to the function
 export default function FeatureChip({ 
   icon: Icon, 
   label, 
@@ -23,9 +21,8 @@ export default function FeatureChip({
   side, 
   driftX, 
   driftY 
-}: FeatureChipProps) { // Use the type here!
+}: FeatureChipProps) { 
   return (
-    /* OUTER DIV: Handles the Fly-out (Phase 1) */
     <motion.div
       initial={{ opacity: 0, scale: 0, x: side === 'left' ? 150 : -150, y: 50 }}
       whileInView={{ opacity: 1, scale: 1, x: 0, y: 0 }}
@@ -33,7 +30,6 @@ export default function FeatureChip({
       transition={{ type: "spring", stiffness: 50, damping: 20, delay }}
       className={`absolute z-50 ${className}`}
     >
-      {/* INNER DIV: Handles Infinite Float (Phase 2) */}
       <motion.div
         animate={{
           x: [0, driftX, 0, -driftX, 0],

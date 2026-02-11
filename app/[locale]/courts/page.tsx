@@ -5,6 +5,12 @@ import CourtCard from "@/components/CourtCard";
 import Search from "@/components/courts/Search";
 import { useLocale } from 'next-intl';
 
+interface FilterParams {
+  query: string;
+  category: string;
+  city: string;
+}
+
 export default function Courts() {
   const locale = useLocale();
   const isRtl = locale === 'ar';
@@ -61,14 +67,11 @@ export default function Courts() {
     setFilteredCourts(ALL_COURTS);
   }, [ALL_COURTS]);
 
-  // English-commented callback to prevent the infinite loop error
-  const handleFilterChange = useCallback(({ query, category, city }) => {
-    const results = ALL_COURTS.filter((court) => {
-      // Basic text search on court names
+  
+  const handleFilterChange = useCallback(({ query, category, city }: FilterParams) => {     
+      const results = ALL_COURTS.filter((court) => {
       const matchesQuery = court.name.toLowerCase().includes(query.toLowerCase());
-      // Category filter matching 'padel', 'tennis', 'indoor', 'outdoor', or 'academies'
       const matchesCategory = category === 'all' || court.category === category;
-      // City filter matching the specific Saudi cities
       const matchesCity = city === 'all' || court.city === city;
       
       return matchesQuery && matchesCategory && matchesCity;

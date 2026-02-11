@@ -59,7 +59,7 @@ const DownloadModal = ({ isOpen, onClose }: DownloadModalProps) => {
               {t('description')}
             </p>
 
-            {/* Buttons: Responsive arrangement */}
+            
             <div className={`flex flex-col md:flex-row gap-4 justify-center items-stretch w-full max-w-md mx-auto`}>
               <a 
                 href="#" 

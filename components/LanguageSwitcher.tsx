@@ -12,7 +12,6 @@ export default function LanguageSwitcher() {
   
   const [visualLocale, setVisualLocale] = useState(locale);
   const isRtl = visualLocale === 'ar';
-  // Treat Arabic as the 'active' (purple) state
   const isPurple = visualLocale === 'en';
 
   useEffect(() => {

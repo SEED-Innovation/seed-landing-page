@@ -3,11 +3,10 @@
 import { useInView, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-const Counter = ({ value }) => {
-  const ref = useRef(null);
+const Counter = ({ value }: { value: string }) => {
+  const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
-  // 1. Extract number and suffix
   const numericMatch = value.match(/(\d+\.?\d*)/);
   const numericPart = numericMatch ? numericMatch[0] : "0";
   const suffix = value.split(numericPart)[1] || "";
@@ -17,15 +16,14 @@ const Counter = ({ value }) => {
 
   useEffect(() => {
     if (inView && ref.current) {
-      // 2. Animate directly to avoid spring "lag" at the end
       const controls = animate(0, targetNumber, {
         duration: 1.5, // Faster, linear feel
         ease: "easeOut", // Smooth start, clean stop
-        onUpdate: (latest) => {
+        onUpdate: (latestValue) => {
           if (ref.current) {
             const formatted = isDecimal 
-              ? latest.toFixed(1) 
-              : Math.floor(latest).toLocaleString();
+              ? latestValue.toFixed(1) 
+              : Math.floor(latestValue).toLocaleString();
             
             ref.current.textContent = `${formatted}${suffix}`;
           }
@@ -37,7 +35,7 @@ const Counter = ({ value }) => {
   }, [inView, targetNumber, isDecimal, suffix]);
 
   return (
-    <span ref={ref} className="tabular-nums">
+    <span ref={ref} className="tabular-nums font-bold">
       0{suffix}
     </span>
   );

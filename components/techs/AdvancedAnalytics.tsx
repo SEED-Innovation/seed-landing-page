@@ -18,7 +18,6 @@ const AdvancedAnalytics = () => {
 
   return (
     <section className="relative py-24 px-6 overflow-hidden ">
-      {/* Container with Dark Linear Gradient */}
       <div 
         className="rounded-[30px] md:rounded-[60px] py-8 p-4 md:p-16 relative overflow-hidden max-w-7xl w-full mx-auto"
         style={{ background: '#0F172A' }}

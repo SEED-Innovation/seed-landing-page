@@ -28,7 +28,6 @@ const Tech = () => {
     }
   ];
 
-  // Reordering for RTL if necessary to match the visual flow of your screenshots
   const items = isRtl ? [...techItems].reverse() : techItems;
 
   return (
