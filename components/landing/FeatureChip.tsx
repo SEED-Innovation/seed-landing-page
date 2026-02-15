@@ -22,28 +22,34 @@ export default function FeatureChip({
   driftX, 
   driftY 
 }: FeatureChipProps) { 
+  
+  // Reduce the drift by 50% to make it stay "closer"
+  const tightDriftX = driftX * 0.5;
+  const tightDriftY = driftY * 0.5;
+
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0, x: side === 'left' ? 150 : -150, y: 50 }}
+      initial={{ opacity: 0, scale: 0, x: side === 'left' ? 100 : -100, y: 30 }}
       whileInView={{ opacity: 1, scale: 1, x: 0, y: 0 }}
       viewport={{ once: true }}
-      transition={{ type: "spring", stiffness: 50, damping: 20, delay }}
+      transition={{ type: "spring", stiffness: 60, damping: 25, delay }}
       className={`absolute z-50 ${className}`}
+      style={{ willChange: "transform" }} // Keeps text from blurring/shaking
     >
       <motion.div
         animate={{
-          x: [0, driftX, 0, -driftX, 0],
-          y: [0, driftY, 0, -driftY, 0],
+          x: [0, tightDriftX, 0, -tightDriftX, 0],
+          y: [0, tightDriftY, 0, -tightDriftY, 0],
         }}
         whileHover={{ 
-          x: 0, 
-          y: 0, 
-          scale: 1.05,
-          transition: { duration: 0.3, ease: "easeOut" } 
+          scale: 1.08,
+          transition: { duration: 0.2 } 
         }}
         transition={{
-          x: { duration: 10, repeat: Infinity, ease: "easeInOut", delay: delay + 0.8 },
-          y: { duration: 12, repeat: Infinity, ease: "easeInOut", delay: delay + 0.8 },
+          // Slightly faster durations (8s and 10s instead of 10s and 12s)
+          // makes the "tight" movement feel more energetic
+          x: { duration: 8, repeat: Infinity, ease: "easeInOut", delay: delay },
+          y: { duration: 10, repeat: Infinity, ease: "easeInOut", delay: delay },
         }}
         className="flex flex-col items-center justify-center p-1.5 md:p-4 w-24 md:w-32 h-24 md:h-32 gap-1 md:gap-2 rounded-xl md:rounded-3xl bg-white/95 backdrop-blur-md border border-white/50 shadow-lg md:shadow-xl cursor-pointer"
       >

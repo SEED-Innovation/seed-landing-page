@@ -1,10 +1,11 @@
 "use client";
 
-import React from 'react';
+import { useState } from 'react';
+import BookingModal from './courts/BookingModal';
 import { useTranslations, useLocale } from 'next-intl';
 import { Heart, Star, MapPin, CircleDot } from 'lucide-react';
 import Image from 'next/image';
-
+import { Link } from '@/i18n/routing';
 interface CourtCardProps {
   name: string;
   location: string;
@@ -16,10 +17,12 @@ interface CourtCardProps {
 
 const CourtCard = ({ name, location, price, image, rating ,category }: CourtCardProps) => {
   const t = useTranslations('CourtsPage.Discovery');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const locale = useLocale();
   const isRtl = locale === 'ar';
 
   return (
+    <>
     <div className="bg-white rounded-[32px] p-4 shadow-sm border border-slate-50 hover:shadow-md transition-all group">
       {/* Image Container */}
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[24px] mb-4">
@@ -67,12 +70,25 @@ const CourtCard = ({ name, location, price, image, rating ,category }: CourtCard
           <button className="bg-[#1E293B] text-white py-3 rounded-2xl text-xs font-saudia font-medium hover:bg-[#0F172A] transition-colors hover:cursor-pointer">
             {t('actions.app')}
           </button>
-          <button className="bg-[#7C3AED] text-white py-3 rounded-2xl text-xs font-medium hover:bg-[#6D28D9] transition-colors shadow-lg shadow-purple-100 hover:cursor-pointer">
-            {t('actions.web')}
+          <button 
+          onClick={() => setIsModalOpen(true)}
+          className="bg-[#7C3AED] text-white py-3 rounded-2xl text-xs font-medium hover:bg-[#6D28D9] transition-colors shadow-lg shadow-purple-100 hover:cursor-pointer">
+            <Link href={"/courts"}>
+            <span>{t('actions.web')}</span>
+            </Link>
+            
           </button>
         </div>
       </div>
     </div>
+    {/* The Modal */}
+      <BookingModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        courtName={name} 
+        price={price} 
+      />
+      </>
   );
 };
 
