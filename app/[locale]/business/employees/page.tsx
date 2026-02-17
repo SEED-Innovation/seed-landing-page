@@ -7,7 +7,8 @@ import { Users2, CalendarDays, Wallet2, ChevronLeft, ChevronRight } from 'lucide
 import BackButton from '@/components/BackButton';
 import SectionBadge from '@/components/ui/SectionBadge';
 import SectionTitle from '@/components/ui/SectionTitle';
-
+import BusinessForm from '@/components/BusinessForm';
+import { EmployeesSchema } from '@/schemas/business';
 const EmployeesPage = () => {
   const t = useTranslations('BusinessPage.EmployeesPage');
   const locale = useLocale();
@@ -74,43 +75,20 @@ const EmployeesPage = () => {
             </div>
           ))}
         </div>
-
-        {/* Quote Form Container */}
-        <div className="bg-white rounded-[40px] p-8 md:p-12 shadow-[0_30px_60px_rgba(124,58,237,0.15)] border border-slate-50 max-w-4xl mx-auto">
-          <h2 className={`text-3xl font-bold text-[#0F172A] text-center mb-10 ${isRtl ? 'font-saudia' : ''}`}>
-            {t('form.title')}
-          </h2>
-          
-          <form className={`space-y-6 ${isRtl ? 'font-saudia text-right' : 'text-left'}`}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 block">{t('form.companyName')}</label>
-                <input type="text" dir={isRtl ? 'rtl' : 'ltr'} placeholder={t('form.placeholder.company')} className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-purple-500 outline-none transition-all" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 block">{t('form.employeesCount')}</label>
-                <input type="text" dir={isRtl ? 'rtl' : 'ltr'} placeholder={t('form.placeholder.employees')} className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-purple-500 outline-none transition-all" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 block">{t('form.contactPerson')}</label>
-                <input type="text" dir={isRtl ? 'rtl' : 'ltr'} placeholder={t('form.placeholder.name')} className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-purple-500 outline-none transition-all" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 block">{t('form.email')}</label>
-                <input type="email" dir="ltr" placeholder={t('form.placeholder.email')} className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-purple-500 outline-none transition-all text-left" />
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-slate-700 block">{t('form.details')}</label>
-              <textarea rows={4} dir={isRtl ? 'rtl' : 'ltr'} placeholder={t('form.placeholder.details')} className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-purple-500 outline-none transition-all resize-none"></textarea>
-            </div>
-
-            <button type="submit" className="w-full bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-black py-5 rounded-2xl shadow-lg shadow-purple-200 transition-all active:scale-[0.98]">
-              {t('form.submit')}
-            </button>
-          </form>
-        </div>
+        <BusinessForm 
+          type="Employees"
+          schema={EmployeesSchema}
+          accentColor="#7C3AED"
+          shadowColor="rgba(124,58,237,0.15)"
+          fields={[
+            { name: 'companyName', labelKey: 'companyName', placeholderKey: 'placeholder.company' },
+            { name: 'employeesCount', labelKey: 'employeesCount', placeholderKey: 'placeholder.employees' },
+            { name: 'contactPerson', labelKey: 'contactPerson', placeholderKey: 'placeholder.name' },
+            { name: 'email', labelKey: 'email', placeholderKey: 'placeholder.email', type: 'email' },
+            { name: 'details', labelKey: 'details', placeholderKey: 'placeholder.details', type: 'textarea', fullWidth: true },
+          ]}
+          showTitle={true}
+        />
       </div>
     </div>
   );

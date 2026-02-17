@@ -377,6 +377,24 @@
         "app": "Via App",
         "web": "Via Web"
       }
+    },
+    "BookingModal": {
+      "title": "Book via Web",
+      "form": {
+        "nameLabel": "Full Name",
+        "phoneLabel": "Mobile Number",
+        "emailLabel": "Email",
+        "cityLabel": "City",
+        "dateLabel": "Date",
+        "placeholderName": "Full Name",
+        "placeholderCity": "Where do you live",
+        "submit": "Confirm & Pay"
+      },
+      "summary": {
+        "price": "Booking Price",
+        "tax": "Tax (15%)",
+        "total": "Total"
+      }
     }
   },
   "DownloadModal": {

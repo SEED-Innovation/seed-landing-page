@@ -3,6 +3,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
+import { Link } from '@/i18n/routing';
 import SectionBadge from '../ui/SectionBadge';
 import SectionTitle from '../ui/SectionTitle';
 const Courts = () => {
@@ -62,11 +63,12 @@ const Courts = () => {
         
         <div className="flex flex-row justify-between  md:items-end mb-12 gap-4 " >
           <SectionTitle>{t('title')}</SectionTitle>
-          
-          <button className="group/btn flex items-center gap-2 text-gray-400 hover:text-purple-600 transition-colors font-medium text-sm md:text-base whitespace-nowrap cursor-pointer">
-            {t('viewAll')}
-            <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
-          </button>
+          <Link href="/courts">
+            <button className="group/btn flex items-center gap-2 text-gray-400 hover:text-purple-600 transition-colors font-medium text-sm md:text-base whitespace-nowrap cursor-pointer">
+              {t('viewAll')}
+              <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
+            </button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

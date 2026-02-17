@@ -38,7 +38,7 @@ const DownloadModal = ({ isOpen, onClose }: DownloadModalProps) => {
             {/* Close Button */}
             <button 
               onClick={onClose}
-              className={`absolute top-8 ${isRtl ? 'left-8' : 'right-8'} p-2 hover:bg-slate-50 rounded-full transition-colors`}
+              className={`absolute top-8 ${isRtl ? 'left-8' : 'right-8'} p-2 hover:bg-slate-50 rounded-full transition-colors  hover:cursor-pointer`}
             >
               <X size={24} className="text-slate-400" />
             </button>
@@ -62,7 +62,9 @@ const DownloadModal = ({ isOpen, onClose }: DownloadModalProps) => {
             
             <div className={`flex flex-col md:flex-row gap-4 justify-center items-stretch w-full max-w-md mx-auto`}>
               <a 
-                href="#" 
+                href="https://apps.apple.com/sa/app/seed-%D8%B3%D9%8A%D9%8A%D8%AF/id6754299638" 
+                target="_blank" 
+                rel="noopener noreferrer"
                 className="flex-1 bg-[#0F172A] hover:bg-slate-800 text-white rounded-2xl py-4 px-6 flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-apple" viewBox="0 0 16 16">
@@ -76,7 +78,9 @@ const DownloadModal = ({ isOpen, onClose }: DownloadModalProps) => {
               </a>
 
               <a 
-                href="#" 
+                href="https://play.google.com/store/apps/details?id=com.devarch.tennis2&hl=ar" 
+                target="_blank" 
+                rel="noopener noreferrer"
                 className="flex-1 bg-[#0F172A] hover:bg-slate-800 text-white rounded-2xl py-4 px-6 flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-google-play" viewBox="0 0 16 16">

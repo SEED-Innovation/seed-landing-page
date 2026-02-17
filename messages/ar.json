@@ -377,6 +377,24 @@
         "app": "عبر التطبيق",
         "web": "عبر الموقع"
       }
+    },
+    "BookingModal": {
+      "title": "حجز عبر الموقع",
+      "form": {
+        "nameLabel": "الاسم الكامل",
+        "phoneLabel": "رقم الجوال",
+        "emailLabel": "البريد الإلكتروني",
+        "cityLabel": "المدينة",
+        "dateLabel": "التاريخ",
+        "placeholderName": "الاسم الثلاثي",
+        "placeholderCity": "اختر المدينة",
+        "submit": "تأكيد الحجز والدفع"
+      },
+      "summary": {
+        "price": "سعر الحجز",
+        "tax": "الضريبة (15%)",
+        "total": "الإجمالي"
+      }
     }
   },
   "DownloadModal": {

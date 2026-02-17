@@ -5,6 +5,8 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Handshake } from 'lucide-react';
 import BackButton from '@/components/BackButton';
 import SectionTitle from '@/components/ui/SectionTitle';
+import BusinessForm from '@/components/BusinessForm';
+import { PartnersSchema } from '@/schemas/business';
 
 const PartnersPage = () => {
   const t = useTranslations('BusinessPage.PartnersPage');
@@ -30,53 +32,20 @@ const PartnersPage = () => {
         </div>
 
         {/* Partnership Form Container */}
-        <div className="bg-white rounded-[40px] p-8 md:p-12 shadow-[0_30px_60px_rgba(22,163,74,0.15)] border border-slate-50 max-w-4xl mx-auto font-saudia">
-          <form className={`space-y-6 ${isRtl ? 'text-right' : 'text-left'}`}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              {/* Entity Name */}
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 block">{t('form.entityName')}</label>
-                <input type="text" dir={isRtl ? 'rtl' : 'ltr'} className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-green-500 outline-none transition-all" />
-              </div>
-
-              {/* Partnership Type */}
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 block">{t('form.partnerType')}</label>
-                <input type="text" dir={isRtl ? 'rtl' : 'ltr'} className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-green-500 outline-none transition-all" />
-              </div>
-
-              {/* Contact Person */}
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 block">{t('form.contactPerson')}</label>
-                <input type="text" dir={isRtl ? 'rtl' : 'ltr'} className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-green-500 outline-none transition-all" />
-              </div>
-
-              {/* Mobile Number */}
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 block">{t('form.mobile')}</label>
-                <input type="tel" dir="ltr" placeholder="05xxxxxxxx" className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-green-500 outline-none transition-all ltr:text-left rtl:text-right" />
-              </div>
-            </div>
-
-            {/* Email */}
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-slate-700 block">{t('form.email')}</label>
-              <input type="email" dir="ltr" placeholder="name@company.com" className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-green-500 outline-none transition-all text-left" />
-            </div>
-
-            {/* Proposal Details */}
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-slate-700 block">{t('form.details')}</label>
-              <textarea rows={5} dir={isRtl ? 'rtl' : 'ltr'} className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 focus:ring-2 focus:ring-green-500 outline-none transition-all resize-none"></textarea>
-            </div>
-
-            {/* Submit Button */}
-            <button type="submit" className="w-full bg-[#16A34A] hover:bg-[#15803D] text-white font-black py-5 rounded-2xl shadow-lg shadow-green-100 transition-all active:scale-[0.98] mt-4">
-              {t('form.submit')}
-            </button>
-          </form>
-        </div>
+        <BusinessForm 
+          type="Partners"
+          schema={PartnersSchema}
+          accentColor="#16A34A"
+          shadowColor="rgba(22, 163, 74, 0.15)"
+          fields={[
+            { name: 'entityName', labelKey: 'entityName' },
+            { name: 'partnerType', labelKey: 'partnerType' },
+            { name: 'contactPerson', labelKey: 'contactPerson' },
+            { name: 'mobile', labelKey: 'mobile', type: 'tel' },
+            { name: 'email', labelKey: 'email', type: 'email', fullWidth: true },
+            { name: 'details', labelKey: 'details', type: 'textarea', fullWidth: true },
+          ]}
+        />
       </div>
     </div>
   );
