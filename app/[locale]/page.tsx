@@ -4,9 +4,7 @@ import Courts from '@/components/landing/Courts';
 import Techs from '@/components/landing/Techs';
 import TagSlider from '@/components/landing/TagSlider';
 import Partners from '@/components/landing/Partners';
-// Import other sections as you build them
-// import DiscoverCourts from '@/components/landing/DiscoverCourts';
-// import Features from '@/components/landing/Features';
+
 
 export default function LandingPage() {
   return (

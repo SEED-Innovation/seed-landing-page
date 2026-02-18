@@ -9,7 +9,7 @@ export default function AppSection() {
   const t = useTranslations('LandingPage.AppSection');
 
   return (
-    <section className="relative pt-12 pb-0 md:pt-32 bg-[#F8FAFC] overflow-hidden mt-50 md:mt-0" 
+    <section className="relative pb-0 bg-[#F8FAFC] overflow-hidden pt-70 md:pt-40 lg:pt-32" 
     style={{
     backgroundColor: '#F8FAFC',
     backgroundImage: `

@@ -52,10 +52,6 @@ export default function LanguageSwitcher() {
           className="relative w-5 h-5 bg-white rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.15)] z-10"
           initial={false}
           animate={{ 
-            /* IMPORTANT: In RTL, x: 24 moves the dot to the LEFT. 
-               In LTR, x: 24 moves the dot to the RIGHT.
-               We use negative values for Arabic to keep it inside the track.
-            */
             x: isRtl ? (locale === 'ar' ? -24 : 0) : (locale === 'en' ? 24 : 0),
           }}
           transition={{ 

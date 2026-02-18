@@ -19,7 +19,7 @@ const About = () => {
   ];
 
   return (
-    <div className={`min-h-screen bg-white py-20 px-6 ${isRtl ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen  py-20 px-6 ${isRtl ? 'rtl' : 'ltr'}`}>
       <div className="max-w-7xl mx-auto">
         
         {/* Hero Section */}
@@ -42,7 +42,7 @@ const About = () => {
         {/* Stats Grid with Animated Numbers */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
           {stats.map((stat) => (
-            <div key={stat.key} className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow group">
+            <div key={stat.key} className=" p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow group">
               <div className="w-12 h-12 bg-[#F5F3FF] rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110">
                 {stat.icon}
               </div>
@@ -66,7 +66,7 @@ const About = () => {
               style={{ backgroundColor: 'rgba(127, 34, 254, 0.2)' }} 
             />
             <div className="relative z-10">
-              <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110">
+              <div className="w-14 h-14 /5 border border-white/10 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110">
                 <Eye className="text-[#A684FF]" size={28} />
               </div>
               <h2 className="text-3xl font-black text-white mb-6">{t('VisionMission.vision.title')}</h2>
@@ -86,7 +86,7 @@ const About = () => {
             />
             
             <div className="relative z-10">
-              <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110">
+              <div className="w-14 h-14 /5 border border-white/10 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110">
                 <Target className="text-[#C800DE]" size={28} />
               </div>
               <h2 className="text-3xl font-black text-white mb-6">

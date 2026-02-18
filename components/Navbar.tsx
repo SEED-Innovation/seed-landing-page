@@ -27,8 +27,6 @@ const Navbar = () => {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isOpen]);
 
-  // Updated navLinks: Remove the `/${locale}` prefix. 
-  // The localized Link component handles this automatically.
   const navLinks = [
     { name: t('home'), href: '/' },
     { name: t('explore'), href: '/courts' },
@@ -77,7 +75,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 ">
           <div className="hidden lg:block">
             <LanguageSwitcher />
           </div>

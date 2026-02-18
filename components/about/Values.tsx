@@ -27,7 +27,7 @@ const Values = () => {
   ];
 
   return (
-    <section className={`py-24 px-6 bg-white ${isRtl ? 'rtl' : 'ltr'}`}>
+    <section className={`py-24 px-6  ${isRtl ? 'rtl' : 'ltr'}`}>
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
@@ -41,7 +41,7 @@ const Values = () => {
           {values.map((val) => (
             <div 
               key={val.key} 
-              className="bg-white p-10 rounded-[32px] border border-slate-50 shadow-[0_20px_50px_rgba(0,0,0,0.04)] flex flex-col items-center text-center group transition-all hover:translate-y-[-8px]"
+              className=" p-10 rounded-[32px] border border-slate-50 shadow-[0_20px_50px_rgba(0,0,0,0.04)] flex flex-col items-center text-center group transition-all hover:translate-y-[-8px]"
             >
               {/* Icon Container with Soft Purple Background */}
               <div className="w-20 h-20 rounded-full bg-[#F5F3FF] flex items-center justify-center mb-8 transition-transform group-hover:scale-110">

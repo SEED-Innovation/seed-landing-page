@@ -11,7 +11,7 @@ const Partners = () => {
   const t = useTranslations('LandingPage.Partners');
 
   return (
-    <section className="py-12 bg-white w-full overflow-hidden">
+    <section className="py-12  w-full overflow-hidden">
       {/* Section Header */}
       <div className="text-center mb-8">
         <h3 className="text-gray-400 text-2xl md:text-3xl font-normal uppercase tracking-widest">

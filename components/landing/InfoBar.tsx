@@ -42,7 +42,7 @@ export default function InfoBar() {
           {items.map((item, index) => (
             <div key={index} className="flex flex-col gap-2 px-4 group cursor-pointer">
               <div className="flex items-center gap-3">
-                <span className="p-2 bg-white/5 rounded-lg group-hover:bg-[#C27AFF]/40 transition-colors">
+                <span className="p-2 /5 rounded-lg group-hover:bg-[#C27AFF]/40 transition-colors">
                   {item.icon}
                 </span>
                 <h3 className="text-[#C27AFF] font-saudia font-bold text-lg">

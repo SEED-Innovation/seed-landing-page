@@ -55,13 +55,13 @@ const AISection = () => {
   ];
 
   return (
-    <section className="relative py-24 px-6 overflow-hidden   ">
-      <div className="relative z-10 max-w-7xl w-full mx-auto bg-[#F5F3FF] rounded-[40px] md:rounded-[60px] p-4 md:p-8" style={{
+    <section className="relative py-24 px-6 ">
+      <div className="relative z-10 max-w-7xl w-full mx-auto rounded-[40px] md:rounded-[60px] p-4 md:p-8" style={{
           background: 'linear-gradient(135deg, rgba(127, 34, 254, 0.05) 0%, rgba(200, 0, 222, 0.05) 100%)',
         }}>
         {/* Header Section */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EDE9FE] border border-purple-100 text-[#7C3AED] text-sm font-bold mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EDE9FE]  border-purple-100 text-[#7C3AED] text-sm font-bold mb-6">
             <Cpu className="w-4 h-4" />
             {t('badge')}
           </div>

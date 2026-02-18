@@ -85,7 +85,7 @@ export default function Courts() {
       <Search onFilterChange={handleFilterChange} />
       
       <div className="max-w-7xl mx-auto px-6 pb-20">
-        <h2 className={`text-2xl font-black text-[#0F172A] mb-8 ${isRtl ? 'text-right' : 'text-left'}`}>
+        <h2 className={`text-2xl font-bold text-[#0F172A] mb-8 ${isRtl ? 'text-right' : 'text-left'}`}>
           {isRtl ? "الملاعب المتاحة" : "Available Courts"}
         </h2>
 

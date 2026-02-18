@@ -122,7 +122,7 @@ const TagSlider = () => {
   ];
 
   return (
-    <section className="py-20 bg-white overflow-hidden w-full">
+    <section className="py-20  overflow-hidden w-full">
       <div className="flex flex-col gap-4 md:gap-6">
         <MarqueeRow items={row1Tags} />
         <MarqueeRow items={row2Tags} reverse={true} />

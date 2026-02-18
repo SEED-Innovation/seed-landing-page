@@ -1,22 +1,15 @@
-import React from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
 import Features from '@/components/techs/Features';
-import Ai from '@/components/techs/Ai';
+import AISection from '@/components/techs/Ai';
 import AdvancedAnalytics from '@/components/techs/AdvancedAnalytics';
 
 export default function TechsPage() {
   return (
-    <main className="min-h-screen">
-      {/* <N /> */}
+    <main className="">
       
-      {/* Features Section (The Techs component we just built) */}
         <Features />
-        <Ai/>
+        <AISection/>
         <AdvancedAnalytics/>
-      {/* Artificial Intelligence Section */}
-      {/* <AISection />/ */}
-
     </main>
   );
 }

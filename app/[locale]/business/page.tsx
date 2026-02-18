@@ -37,7 +37,7 @@ const BusinessPage = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-white min-h-screen">
+    <section className="py-20 px-6  min-h-screen">
       <div className="max-w-7xl mx-auto">
         
         {/* Header Section */}
@@ -55,7 +55,7 @@ const BusinessPage = () => {
             <Link 
               key={card.key}
               href={card.path}
-              className="bg-white rounded-[32px] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.05)] 
+              className=" rounded-[32px] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.05)] 
                          border border-slate-50 flex flex-col items-center text-center 
                          cursor-pointer transition-all duration-500 ease-out
                          hover:shadow-[0_30px_60px_rgba(124,58,237,0.12)] hover:-translate-y-3 group"

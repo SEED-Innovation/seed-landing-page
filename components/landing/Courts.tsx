@@ -10,28 +10,31 @@ const Courts = () => {
   const t = useTranslations('LandingPage.Courts');
 
   const courts = [
-    {
-      key: 'training',
-      locationKey: 'jeddah',
-      sessionText: t('sessions.daily'),
-      image: '/acadimy.jpg' 
-    },
-    {
-      key: 'padel',
-      locationKey: 'jeddah',
-      sessionText: t('sessions.courtsCount', { count: 8 }),
-      image: '/court.png'
-    },
-    {
-      key: 'tennis',
-      locationKey: 'riyadh',
-      sessionText: t('sessions.courtsCount', { count: 12 }),
-      image: '/tinnes.png'
-    }
-  ];
+  {
+    key: 'training',
+    category: 'academies', 
+    locationKey: 'jeddah',
+    sessionText: t('sessions.daily'),
+    image: '/acadimy.jpg' 
+  },
+  {
+    key: 'padel',
+    category: 'padel', 
+    locationKey: 'jeddah',
+    sessionText: t('sessions.courtsCount', { count: 8 }),
+    image: '/court.png'
+  },
+  {
+    key: 'tennis',
+    category: 'tennis', 
+    locationKey: 'riyadh',
+    sessionText: t('sessions.courtsCount', { count: 12 }),
+    image: '/tinnes.png'
+  }
+];
 
   return (
-    <section className="relative py-20 px-6 bg-white overflow-hidden">
+    <section className="relative py-20 px-6  overflow-hidden">
       <div 
         className="absolute -top-[10%] -left-[5%] w-[400px] h-[400px] pointer-events-none opacity-40"
         style={{
@@ -73,9 +76,13 @@ const Courts = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {courts.map((court) => (
-            <div 
+            <Link 
               key={court.key}
               className="group relative h-[450px] rounded-[32px] overflow-hidden bg-gray-200 shadow-sm hover:shadow-2xl hover:-translate-y-3 hover:scale-[1.02] transition-all duration-500 ease-out cursor-pointer"
+              href={{
+                pathname: '/courts',
+                query: { category: court.category }
+              }}
             >
               {/* Image Layer */}
               <div className="absolute inset-0 z-0">
@@ -94,7 +101,7 @@ const Courts = () => {
                     <MapPin className="w-3 h-3" />
                     {t(`locations.${court.locationKey}`)}
                   </span>
-                  <span className="w-1 h-1 bg-white rounded-full" />
+                  <span className="w-1 h-1  rounded-full" />
                   <span className="flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
                     {court.sessionText}
@@ -104,7 +111,7 @@ const Courts = () => {
                   {t(`items.${court.key}.name`)}
                 </h3>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

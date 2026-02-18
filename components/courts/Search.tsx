@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation'; // Added for URL params
 import { useTranslations, useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -27,17 +28,31 @@ interface SearchProps {
   onFilterChange: (filters: { query: string; category: string; city: string }) => void;
 }
 
-const Search = ({ onFilterChange }: SearchProps) => {
+// Separate component to handle Search logic within Suspense
+const SearchContent = ({ onFilterChange }: SearchProps) => {
   const t = useTranslations('CourtsPage.Search');
   const locale = useLocale();
   const isRtl = locale === 'ar';
-  
-  const [showFilters, setShowFilters] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [activeCity, setActiveCity] = useState('all');
+  const searchParams = useSearchParams();
 
-  // Trigger filter update whenever any state changes
+  /* --- Initializing state from URL Parameters --- */
+  const initialCategory = searchParams.get('category') || 'all';
+  const initialCity = searchParams.get('city') || 'all';
+  
+  const [showFilters, setShowFilters] = useState(initialCategory !== 'all' || initialCity !== 'all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
+  const [activeCity, setActiveCity] = useState(initialCity);
+
+  // Sync state if user clicks a different card while already on the page
+  useEffect(() => {
+    const cat = searchParams.get('category');
+    const cit = searchParams.get('city');
+    if (cat) setActiveCategory(cat);
+    if (cit) setActiveCity(cit);
+    if (cat || cit) setShowFilters(true);
+  }, [searchParams]);
+
   useEffect(() => {
     onFilterChange({
       query: searchTerm,
@@ -55,7 +70,7 @@ const Search = ({ onFilterChange }: SearchProps) => {
     { id: 'academies', icon: <GraduationCap size={24} /> },
   ];
 
-  const cities = [
+  const citiesList = [
     { id: 'all', icon: <MapIcon size={16} /> },
     { id: 'riyadh', icon: <Building2 size={16} /> },
     { id: 'jeddah', icon: <Waves size={16} /> },
@@ -69,7 +84,6 @@ const Search = ({ onFilterChange }: SearchProps) => {
   return (
     <section className="pt-16 pb-12 px-6 bg-[#FBFCFE]">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
-        
         <SectionTitle>{t('title')}</SectionTitle>
 
         <div className={`flex items-center gap-3 w-full max-w-3xl mt-10 mb-8 ${isRtl ? 'flex-row-reverse' : 'flex-row'}`}>
@@ -88,7 +102,7 @@ const Search = ({ onFilterChange }: SearchProps) => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setShowFilters(!showFilters)}
-            className={`px-6 py-5 rounded-2xl flex items-center gap-2 hover:cursor-pointer shadow-lg transition-all duration-300 font-saudia  ${
+            className={`px-6 py-5 rounded-2xl flex items-center gap-2 hover:cursor-pointer shadow-lg transition-all duration-300 font-saudia ${
               showFilters ? 'bg-[#4C1D95] text-white shadow-purple-900/20' : 'bg-[#7C3AED] text-white shadow-purple-200'
             }`}
           >
@@ -102,13 +116,13 @@ const Search = ({ onFilterChange }: SearchProps) => {
             <motion.div 
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="w-full overflow-hidden"
             >
               <div className="py-8 flex flex-col items-center border-b border-slate-100 mb-8">
-                
-                <div className={`flex gap-6 md:gap-10 pb-4 w-full overflow-x-auto flex-nowrap scrollbar-hide px-4 justify-start md:justify-center`}>
+                {/* Category Selection */}
+                <div className="flex gap-6 md:gap-10 pb-4 w-full overflow-x-auto flex-nowrap scrollbar-hide px-4 justify-start md:justify-center">
                   {categories.map((cat) => (
                     <button 
                       key={cat.id}
@@ -117,7 +131,7 @@ const Search = ({ onFilterChange }: SearchProps) => {
                     >
                       <div className={`w-16 h-16 rounded-[24px] flex items-center justify-center transition-all duration-300 relative ${
                         activeCategory === cat.id 
-                        ? 'bg-[#F5F3FF] text-[#7C3AED] shadow-sm ' 
+                        ? 'bg-[#F5F3FF] text-[#7C3AED] shadow-sm' 
                         : 'bg-white text-slate-300 hover:bg-slate-50 border border-slate-50'
                       }`}>
                         {cat.icon}
@@ -134,31 +148,30 @@ const Search = ({ onFilterChange }: SearchProps) => {
                   ))}
                 </div>
 
-                <div className={`flex gap-3 w-full overflow-x-auto flex-nowrap scrollbar-hide px-4 justify-start md:justify-center pb-4 pt-2 `}>
-                  <AnimatePresence>
-                    {cities.map((city, index) => (
-                      <motion.button
-                        key={city.id}
-                        initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
-                        animate={{ opacity: 1, x: 0, transition: { delay: index * 0.05, duration: 0.3 } }}
-                        whileHover={{ y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setActiveCity(city.id)}
-                        className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 shrink-0 group font-saudia
-                          ${activeCity === city.id 
-                            ? 'bg-[#4C1D95] text-white shadow-[0_10px_20px_rgba(76,29,149,0.2)]' 
-                            : 'bg-white text-slate-500 border border-slate-100 hover:border-slate-300 hover:cursor-pointer'
-                          } 
-                          ${isRtl ? 'flex-row-reverse' : 'flex-row'}
-                        `}
-                      >
-                        <span>{t(`cities.${city.id}`)}</span>
-                        <span className={`transition-colors ${activeCity === city.id ? 'text-white' : 'text-slate-400 group-hover:text-slate-600'}`}>
-                          {city.icon}
-                        </span>
-                      </motion.button>
-                    ))}
-                  </AnimatePresence>
+                {/* City Selection */}
+                <div className="flex gap-3 w-full overflow-x-auto flex-nowrap scrollbar-hide px-4 justify-start md:justify-center pb-4 pt-2">
+                  {citiesList.map((city, index) => (
+                    <motion.button
+                      key={city.id}
+                      initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                      animate={{ opacity: 1, x: 0, transition: { delay: index * 0.05, duration: 0.3 } }}
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setActiveCity(city.id)}
+                      className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 shrink-0 group font-saudia
+                        ${activeCity === city.id 
+                          ? 'bg-[#4C1D95] text-white shadow-[0_10px_20px_rgba(76,29,149,0.2)]' 
+                          : 'bg-white text-slate-500 border border-slate-100 hover:border-slate-300 hover:cursor-pointer'
+                        } 
+                        ${isRtl ? 'flex-row-reverse' : 'flex-row'}
+                      `}
+                    >
+                      <span>{t(`cities.${city.id}`)}</span>
+                      <span className={`transition-colors ${activeCity === city.id ? 'text-white' : 'text-slate-400 group-hover:text-slate-600'}`}>
+                        {city.icon}
+                      </span>
+                    </motion.button>
+                  ))}
                 </div>
               </div>
             </motion.div>
@@ -168,5 +181,12 @@ const Search = ({ onFilterChange }: SearchProps) => {
     </section>
   );
 };
+
+// Standard wrapper export
+const Search = (props: SearchProps) => (
+  <Suspense fallback={<div className="h-40 w-full animate-pulse bg-slate-50" />}>
+    <SearchContent {...props} />
+  </Suspense>
+);
 
 export default Search;

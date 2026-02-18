@@ -23,20 +23,11 @@ const CourtCard = ({ name, location, price, image, rating ,category }: CourtCard
 
   return (
     <>
-    <div className="bg-white rounded-[32px] p-4 shadow-sm border border-slate-50 hover:shadow-md transition-all group">
+    <div className="rounded-[32px] p-4 shadow-sm border border-slate-50 hover:shadow-md transition-all group">
       {/* Image Container */}
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[24px] mb-4">
         <Image src={image} alt={name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
         
-        {/* Floating Badges */}
-        <div className={`absolute top-4 ${isRtl ? 'left-4' : 'right-4'}`}>
-           <span className="bg-[#7C3AED] text-white text-xs font-light px-3 py-1.5 rounded-full shadow-lg">
-             {t('trend')}
-           </span>
-        </div>
-        <button className={`absolute top-4 ${isRtl ? 'right-4' : 'left-4'} bg-black/20 backdrop-blur-md p-2 rounded-full text-white hover:bg-red-500 transition-colors`}>
-          <Heart size={18} />
-        </button>
 
         {/* Rating & Sport Overlay */}
         <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
@@ -44,7 +35,7 @@ const CourtCard = ({ name, location, price, image, rating ,category }: CourtCard
             <span>{t('rating')} {rating}</span>
             <Star size={12} className="fill-yellow-400 stroke-yellow-400" />
           </div>
-          <div className="bg-white px-3 py-1 rounded-full flex items-center gap-1.5 text-[#7C3AED] text-xs font-md">
+          <div className=" px-3 py-1 rounded-full flex items-center gap-1.5 text-[#7C3AED] text-xs font-md">
             <CircleDot size={12} />
             <span> {category}</span>
           </div>

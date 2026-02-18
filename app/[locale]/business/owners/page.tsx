@@ -3,7 +3,7 @@
 import React from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Building2 } from 'lucide-react';
-import BackButton from '@/components/BackButton';
+import BackButton from '@/components/ui/BackButton';
 import SectionTitle from '@/components/ui/SectionTitle';
 import BusinessForm from '@/components/BusinessForm';
 import { OwnersSchema } from '@/schemas/business';

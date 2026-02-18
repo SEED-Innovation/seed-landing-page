@@ -51,7 +51,7 @@ export default function FeatureChip({
           x: { duration: 8, repeat: Infinity, ease: "easeInOut", delay: delay },
           y: { duration: 10, repeat: Infinity, ease: "easeInOut", delay: delay },
         }}
-        className="flex flex-col items-center justify-center p-1.5 md:p-4 w-24 md:w-32 h-24 md:h-32 gap-1 md:gap-2 rounded-xl md:rounded-3xl bg-white/95 backdrop-blur-md border border-white/50 shadow-lg md:shadow-xl cursor-pointer"
+        className="flex flex-col items-center justify-center p-1.5 md:p-4 w-24 md:w-32 h-24 md:h-32 gap-1 md:gap-2 rounded-xl md:rounded-3xl /95 backdrop-blur-md border border-white/50 shadow-lg md:shadow-xl cursor-pointer"
       >
         <div className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-2xl bg-slate-50 flex items-center justify-center shadow-inner mb-2">
           <Icon style={{ color }} className="w-6 h-6 md:w-6 md:h-6 stroke-[2.5]" />

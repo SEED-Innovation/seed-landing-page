@@ -12,7 +12,7 @@ const AboutUsPage = () => {
   const isRtl = locale === 'ar';
 
   return (
-    <main className={`min-h-screen bg-white ${isRtl ? 'rtl' : 'ltr'}`}>
+    <main className={`min-h-screen  ${isRtl ? 'rtl' : 'ltr'}`}>
       {/* Section 1: Hero & Story (Your imported code) */}
       <About/>
       <Values/>

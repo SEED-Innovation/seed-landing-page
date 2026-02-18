@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link , useRouter} from '@/i18n/routing';
 import { Users2, CalendarDays, Wallet2, ChevronLeft, ChevronRight } from 'lucide-react';
-import BackButton from '@/components/BackButton';
+import BackButton from '@/components/ui/BackButton';
 import SectionBadge from '@/components/ui/SectionBadge';
 import SectionTitle from '@/components/ui/SectionTitle';
 import BusinessForm from '@/components/BusinessForm';
@@ -53,7 +53,7 @@ const EmployeesPage = () => {
         {/* Benefits Grid with Glowing Icons */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {benefits.map((item) => (
-            <div key={item.key} className="bg-white p-8 rounded-[32px] border border-slate-100 text-center shadow-sm hover:shadow-md transition-all duration-300 group">
+            <div key={item.key} className=" p-8 rounded-[32px] border border-slate-100 text-center shadow-sm hover:shadow-md transition-all duration-300 group">
               <div 
                 className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 transition-all duration-300 group-hover:scale-110"
                 style={{ 
