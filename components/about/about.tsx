@@ -42,7 +42,7 @@ const About = () => {
         {/* Stats Grid with Animated Numbers */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
           {stats.map((stat) => (
-            <div key={stat.key} className=" p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow group">
+            <div key={stat.key} className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow group">
               <div className="w-12 h-12 bg-[#F5F3FF] rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110">
                 {stat.icon}
               </div>

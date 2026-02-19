@@ -36,16 +36,16 @@ export default function InfoBar() {
   ];
 
   return (
-    <div className="absolute bottom-[-50] md:bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[80%] max-w-8xl z-30">
+    <div className="absolute bottom-[-50] md:bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[80%] max-w-8xl z-30 mt-6 md:mt-0">
       <div className="bg-[#0F172A] border border-white/10 rounded-2xl md:rounded-3xl p-5 shadow-2xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:divide-x md:divide-white/10 rtl:md:divide-x-reverse">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
           {items.map((item, index) => (
             <div key={index} className="flex flex-col gap-2 px-4 group cursor-pointer">
               <div className="flex items-center gap-3">
-                <span className="p-2 /5 rounded-lg group-hover:bg-[#C27AFF]/40 transition-colors">
+                <span className="p-2 rounded-lg group-hover:bg-[#C27AFF]/40 transition-colors">
                   {item.icon}
                 </span>
-                <h3 className="text-[#C27AFF] font-saudia font-bold text-lg">
+                <h3 className="text-[#C27AFF] font-bold text-lg">
                   {item.title}
                 </h3>
               </div>

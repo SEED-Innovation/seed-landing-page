@@ -12,18 +12,31 @@ export default function Hero() {
 const [isModalOpen, setIsModalOpen] = useState(false);
   return (
 
-    <section className="relative h-[90vh] min-h-[600px] w-full flex items-center bg-black ">
+    <section className="relative h-[90vh] min-h-[600px] w-full flex items-center bg-[#7c3aed] ">
       {/* Background Video */}
-      <video 
+<video 
         key={isRtl ? 'rtl-vid' : 'ltr-vid'}
-        autoPlay muted loop playsInline 
+        autoPlay 
+        muted 
+        loop 
+        playsInline 
         className={`absolute inset-0 w-full h-full object-cover z-0 ${
           isRtl 
-            ? 'object-[20%_center]' // 15% from the left for Arabic
-            : 'object-[75%_center]' // 85% from the left (near the right) for English
+            ? 'object-[20%_center]' // Focus for Arabic
+            : 'object-[75%_center]' // Focus for English
         }`}
       >
-        <source src={isRtl ? "/videos/hero-rtl.webm" : "/videos/hero-ltr.webm"} type="video/mp4" />
+        {/* WebM first for performance on supported browsers */}
+        <source 
+          src={isRtl ? "/videos/hero-rtl.webm" : "/videos/hero-ltr.webm"} 
+          type="video/webm" 
+        />
+        
+        {/* MP4 fallback for iOS and older browsers */}
+        <source 
+          src={isRtl ? "/videos/hero-rtl.mp4" : "/videos/hero-ltr.mp4"} 
+          type="video/mp4" 
+        />
       </video>
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black opacity-60 md:opacity-30 z-[5] transition-opacity duration-500" />
@@ -50,10 +63,10 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 
             <Link 
             href="/courts" 
-            className="group h-14 w-52 cursor-pointer /10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-between ps-6 pe-2 transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group bg-white/10 h-14 w-52 cursor-pointer /10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-between ps-6 pe-2 transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span className="text-white font-medium text-lg whitespace-nowrap">{t('findCourt')}</span>
-            <div className=" w-10 h-10 rounded-full flex items-center justify-center text-slate-900 transition-all duration-300 rtl:-scale-x-100 group-hover:translate-x-1">
+            <div className="bg-white w-10 h-10 rounded-full flex items-center justify-center text-slate-900 transition-all duration-300 rtl:-scale-x-100 group-hover:translate-x-1">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </div>
             </Link>
