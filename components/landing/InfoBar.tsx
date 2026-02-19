@@ -36,7 +36,7 @@ export default function InfoBar() {
   ];
 
   return (
-    <div className="absolute bottom-[-50] md:bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[80%] max-w-8xl z-30 mt-6 md:mt-0">
+    <div className="absolute bottom-[-50] md:bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[80%] max-w-8xl z-30 ">
       <div className="bg-[#0F172A] border border-white/10 rounded-2xl md:rounded-3xl p-5 shadow-2xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
           {items.map((item, index) => (

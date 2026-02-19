@@ -14,7 +14,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 
     <section className="relative h-[90vh] min-h-[600px] w-full flex items-center bg-[#7c3aed] ">
       {/* Background Video */}
-<video 
+      <video 
         key={isRtl ? 'rtl-vid' : 'ltr-vid'}
         autoPlay 
         muted 
@@ -77,7 +77,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
       {isModalOpen && <DownloadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
 
       <div className="absolute bottom-0 left-0 w-full translate-y-1/2 z-20">
-        <div className="container mx-auto px-6 md:px-12">
+        <div className="container mx-auto px-6 md:px-12 mt-6">
            <InfoBar />
         </div>
       </div>
