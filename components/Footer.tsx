@@ -27,6 +27,12 @@ const Whatsapp = ({ className }: { className?: string }) => (
 const Footer = () => {
   const t = useTranslations('Common.Footer');
 
+  const legalLinks = [
+      { name: t('terms_service'), href: '/terms-of-service' },
+      { name: t('terms_use'), href: '/terms-of-use' },
+      { name: t('privacy'), href: '/privacy' },
+      { name: t('refund'), href: '/refund-policy' },
+    ];
   return (
     <footer className="bg-[#0F172A] text-white pt-16 pb-8 px-6">
       <div className="max-w-7xl mx-auto">
@@ -60,8 +66,16 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold mb-6">{t('support')}</h4>
             <ul className="flex flex-col gap-4 text-gray-400 text-sm">
-              <li><Link href="/terms" className="hover:text-white transition-colors">{t('terms')}</Link></li>
-              <li><Link href="/privacy" className="hover:text-white transition-colors">{t('privacy')}</Link></li>
+              {legalLinks.map((link) => (
+              <li key={link.href}>
+                <Link 
+                  href={link.href} 
+                  className="hover:text-indigo-400 transition-colors"
+                >
+                  {link.name}
+                </Link>
+              </li>
+              ))}
             </ul>
           </div>
 
@@ -69,16 +83,32 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold mb-6 ">{t('contact')}</h4>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+              <a 
+              href="https://www.linkedin.com/company/seed-innovation-1/posts/?feedView=all"
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-all">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+              <a 
+              href="https://x.com/seed_innov?s=11&t=JjPvq3FYq9btqsDb2rHLVQ" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-all">
                 <XIcon className="w-4 h-4" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+              <a 
+              href="https://www.instagram.com/seed.innovation"                 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-all">
                 <Insta className="w-4 h-4" />
               </a>
-              <a href="https://api.whatsapp.com/qr/3OG3VARU4HULI1?autoload=1&app_absent=0" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+              <a 
+              href="https://api.whatsapp.com/qr/3OG3VARU4HULI1?autoload=1&app_absent=0" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-all">
                 <Whatsapp className="w-4 h-4" />
               </a>
             </div>

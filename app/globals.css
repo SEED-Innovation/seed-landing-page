@@ -21,6 +21,15 @@
   font-style: normal;
 }
 
+html {
+  /* Default to auto so page jumps are instant and accurate */
+  scroll-behavior: smooth;
+}
+
+html.is-ready {
+  /* Only smooth when we add this class */
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--background) ;

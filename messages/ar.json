@@ -18,8 +18,10 @@
       "business": "سييد الأعمال",
       "support": "الدعم والمساعدة",
       "faq": "الأسئلة الشائعة",
-      "terms": "شروط الاستخدام",
+      "terms_use": "شروط الاستخدام",
+      "terms_service": "شروط الخدمة",
       "privacy": "سياسة الخصوصية",
+      "refund": "سياسة الاسترجاع",
       "contact": "تواصل معنا",
       "copyright": "جميع الحقوق محفوظة. SEED 2026 ©"
     }
@@ -238,6 +240,7 @@
         "contactPerson": "اسم المسؤول",
         "email": "البريد الإلكتروني",
         "details": "تفاصيل الطلب",
+        "mobile": "رقم الجوال",
         "placeholder": {
           "company": "أدخل اسم الشركة",
           "employees": "مثال: 50",
@@ -259,6 +262,8 @@
         "mobile": "رقم الجوال",
         "email": "البريد الإلكتروني",
         "submit": "إرسال طلب الانضمام",
+        "message": "تفاصيل الطلب",
+        "courtType":"نوع الملاعب",
         "placeholder": {
           "mobile": "05xxxxxxxx",
           "email": "name@example.com"

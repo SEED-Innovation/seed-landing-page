@@ -4,7 +4,10 @@ import React from 'react';
 import { useTranslations } from 'next-intl';
 
 const PARTNERS = [
-  "WILSON", "ADIDAS", "NIKE", "NOX", "BABOLAT", "SIUX", "STARVIE", "TECHNIFIBRE"
+  "images/partners/MCIT.png",
+  "images/partners/Monshaat.png", 
+  "images/partners/NTDP.png", 
+  "images/partners/The_Garage.png"
 ];
 
 const Partners = () => {
@@ -21,14 +24,14 @@ const Partners = () => {
 
       {/* Marquee Container */}
       <div className="marquee-wrapper w-full">
-        <div className="marquee-content my-10">
+        <div className="marquee-content">
           {/* Tripled logos for a seamless infinite loop */}
           {[...PARTNERS, ...PARTNERS, ...PARTNERS].map((partner, idx) => (
-            <div 
-              key={`${partner}-${idx}`} 
-              className="partner-logo px-8 md:px-12 text-2xl md:text-4xl font-black text-slate-200 select-none transition-colors hover:text-purple-500"
-            >
-              {partner}
+            <div key={`${partner}-${idx}`} >
+              <img 
+              src={partner} 
+              alt={partner} 
+              className="w-64 h-auto mx-2 opacity-60 hover:opacity-100 filter grayscale hover:grayscale-0 transition-all duration-200"/>
             </div>
           ))}
         </div>
@@ -52,12 +55,12 @@ const Partners = () => {
 
         /* LTR Animation */
         :global([dir="ltr"]) .marquee-content {
-          animation: scroll-ltr 25s linear infinite;
+          animation: scroll-ltr 15s linear infinite;
         }
 
         /* RTL Animation */
         :global([dir="rtl"]) .marquee-content {
-          animation: scroll-rtl 25s linear infinite;
+          animation: scroll-rtl 15s linear infinite;
         }
 
         @keyframes scroll-ltr {

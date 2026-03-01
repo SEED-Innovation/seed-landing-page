@@ -3,19 +3,19 @@
 import { useState } from 'react';
 import BookingModal from './courts/BookingModal';
 import { useTranslations, useLocale } from 'next-intl';
-import { Heart, Star, MapPin, CircleDot } from 'lucide-react';
-import Image from 'next/image';
+import { Star, MapPin, CircleDot } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 interface CourtCardProps {
+  id: number; 
   name: string;
   location: string;
   price: number;
   image: string;
   rating: number;
-  category:string;
+  category: string;
+  facilityName:string;
 }
-
-const CourtCard = ({ name, location, price, image, rating ,category }: CourtCardProps) => {
+const CourtCard = ({ id, name, location, price, image, rating, category, facilityName }: CourtCardProps) => {
   const t = useTranslations('CourtsPage.Discovery');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const locale = useLocale();
@@ -26,18 +26,18 @@ const CourtCard = ({ name, location, price, image, rating ,category }: CourtCard
     <div className="rounded-[32px] p-4 shadow-sm border border-slate-50 hover:shadow-md transition-all group">
       {/* Image Container */}
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[24px] mb-4">
-        <Image src={image} alt={name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+        <img src={image} alt={name}  className="h-100 object-cover group-hover:scale-105 transition-transform duration-500" />
         
 
         {/* Rating & Sport Overlay */}
         <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
           <div className="bg-black/40 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1 text-white text-xs font-bold">
-            <span>{t('rating')} {rating}</span>
+            <span className='mt-[2px]'> {rating}</span>
             <Star size={12} className="fill-yellow-400 stroke-yellow-400" />
           </div>
-          <div className=" px-3 py-1 rounded-full flex items-center gap-1.5 text-[#7C3AED] text-xs font-md">
-            <CircleDot size={12} />
-            <span> {category}</span>
+          <div className=" px-3 py-1 rounded-full flex items-center gap-1.5 text-[#7C3AED] text-xs font-md bg-[#F3E8FF]">
+            <CircleDot size={16} />
+            <span className='mt-[2px]'> {category}</span>
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@ const CourtCard = ({ name, location, price, image, rating ,category }: CourtCard
       {/* Content Section */}
       <div className="px-1">
         <div className="flex justify-between items-start mb-1">
-          <h3 className="font-saudia font-bold text-lg text-[#0F172A]">{name}</h3>
+          <h3 className="font-bold text-lg text-[#7C3AED] me-3">{name}</h3>
           <div className="flex items-baseline gap-1">
             <span className="font-saudia font-bold text-[#7C3AED] text-xl">{price}</span>
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{t('currency')}</span>
@@ -76,8 +76,10 @@ const CourtCard = ({ name, location, price, image, rating ,category }: CourtCard
       <BookingModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
+        courtId={id}// Pass the ID here
         courtName={name} 
         price={price} 
+        facilityId={1}
       />
       </>
   );

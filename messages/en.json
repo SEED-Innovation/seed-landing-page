@@ -18,8 +18,10 @@
       "business": "Seed Business",
       "support": "Support & Help",
       "faq": "FAQ",
-      "terms": "Terms of Use",
+      "terms_use": "Terms of Use",
+      "terms_service": "Terms of Service",
       "privacy": "Privacy Policy",
+      "refund": "Refund Policy",
       "contact": "Contact Us",
       "copyright": "© SEED 2026. All rights reserved."
     }
@@ -238,6 +240,7 @@
         "contactPerson": "Contact Person",
         "email": "Email Address",
         "details": "Request Details",
+        "mobile": "Mobile Number",
         "placeholder": {
           "company": "Enter company name",
           "employees": "Example: 50",
@@ -259,6 +262,8 @@
         "mobile": "Mobile Number",
         "email": "Email",
         "submit": "Send Request",
+        "message": "Request Details",
+        "courtType":"Court type",
         "placeholder": {
           "mobile": "05xxxxxxxx",
           "email": "name@example.com"

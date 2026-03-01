@@ -40,11 +40,12 @@ const OwnersPage = () => {
           shadowColor="rgba(37, 99, 235, 0.15)"
           fields={[
             { name: 'facilityName', labelKey: 'facilityName' },
-            { name: 'city', labelKey: 'city' },
             { name: 'courtsCount', labelKey: 'courtsCount', type: 'number' },
+            { name: 'courtType', labelKey: 'courtType', type: 'select' },  // 🆕
             { name: 'contactPerson', labelKey: 'contactPerson' },
             { name: 'mobile', labelKey: 'mobile', type: 'tel', placeholderKey: 'placeholder.mobile' },
             { name: 'email', labelKey: 'email', type: 'email', placeholderKey: 'placeholder.email' },
+            { name: 'message', labelKey: 'message', type: 'textarea', fullWidth: true },  // 🆕
           ]}
         />
       </div>

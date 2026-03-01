@@ -81,11 +81,12 @@ const EmployeesPage = () => {
           accentColor="#7C3AED"
           shadowColor="rgba(124,58,237,0.15)"
           fields={[
-            { name: 'companyName', labelKey: 'companyName', placeholderKey: 'placeholder.company' },
+            { name: 'companyName', labelKey: 'companyName', },
             { name: 'employeesCount', labelKey: 'employeesCount', placeholderKey: 'placeholder.employees' },
-            { name: 'contactPerson', labelKey: 'contactPerson', placeholderKey: 'placeholder.name' },
-            { name: 'email', labelKey: 'email', placeholderKey: 'placeholder.email', type: 'email' },
-            { name: 'details', labelKey: 'details', placeholderKey: 'placeholder.details', type: 'textarea', fullWidth: true },
+            { name: 'contactPerson', labelKey: 'contactPerson',  },
+            { name: 'mobile', labelKey: 'mobile', type: 'tel' },
+            { name: 'email', labelKey: 'email', placeholderKey: 'placeholder.email', type: 'email', fullWidth: true},
+            { name: 'details', labelKey: 'details', type: 'textarea', fullWidth: true },
           ]}
           showTitle={true}
         />
