@@ -155,7 +155,7 @@ const BookingModal = ({
       : `+966${rawPhone.replace(/^0/, '')}`;
 
     try {
-      const res = await fetch(`${BASE_URL}/api/admin/payment-links`, {
+      const res = await fetch(`https://api.seedco.sa/api/admin/payment-links`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
