@@ -66,7 +66,8 @@ export default function Courts() {
           {!isLoading ? filteredFacilities.map(facility => (
             <CourtCard
               key={facility.id}
-              id={facility.courts[0]?.id || facility.id} // We pass the first court ID for the booking logic
+              id={facility.courts[0]?.id || facility.id}
+              facilityId={facility.id}
               name={isRtl ? facility.nameAr : facility.name}
               facilityName={isRtl ? facility.nameAr : facility.name}
               location={facility.location}
