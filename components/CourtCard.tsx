@@ -6,16 +6,17 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Star, MapPin, CircleDot } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 interface CourtCardProps {
-  id: number; 
+  id: number;
   name: string;
   location: string;
   price: number;
+  startingFrom?: boolean;
   image: string;
   rating: number;
   category: string;
   facilityName:string;
 }
-const CourtCard = ({ id, name, location, price, image, rating, category, facilityName }: CourtCardProps) => {
+const CourtCard = ({ id, name, location, price, startingFrom, image, rating, category, facilityName }: CourtCardProps) => {
   const t = useTranslations('CourtsPage.Discovery');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const locale = useLocale();
@@ -46,9 +47,14 @@ const CourtCard = ({ id, name, location, price, image, rating, category, facilit
       <div className="px-1">
         <div className="flex justify-between items-start mb-1">
           <h3 className="font-bold text-lg text-[#7C3AED] me-3">{name}</h3>
-          <div className="flex items-baseline gap-1">
-            <span className="font-saudia font-bold text-[#7C3AED] text-xl">{price}</span>
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{t('currency')}</span>
+          <div className="flex flex-col items-end">
+            {startingFrom && (
+              <span className="text-[10px] text-slate-400 font-medium">{t('startingFrom')}</span>
+            )}
+            <div className="flex items-baseline gap-1">
+              <span className="font-saudia font-bold text-[#7C3AED] text-xl">{price}</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{t('currency')}</span>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-1 text-slate-400 mb-6">

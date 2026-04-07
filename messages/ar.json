@@ -380,6 +380,7 @@
       "trend": "ترند",
       "rating": "850",
       "currency": "ر.س",
+      "startingFrom": "يبدأ من",
       "actions": {
         "app": "عبر التطبيق",
         "web": "عبر الموقع"

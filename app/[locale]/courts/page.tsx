@@ -64,13 +64,24 @@ export default function Courts() {
       <div className="max-w-7xl mx-auto px-6 pb-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {!isLoading ? filteredFacilities.map(facility => (
-            <CourtCard 
-              key={facility.id} 
+            <CourtCard
+              key={facility.id}
               id={facility.courts[0]?.id || facility.id} // We pass the first court ID for the booking logic
               name={isRtl ? facility.nameAr : facility.name}
               facilityName={isRtl ? facility.nameAr : facility.name}
-              location={facility.location} 
-              price={facility.courts[0]?.pricePerHour || 0} // From API: pricePerHour
+              location={facility.location}
+              price={(() => {
+                const prices = facility.courts
+                  .map((c: any) => c.hourlyFee)
+                  .filter((p: number) => p > 0);
+                return prices.length > 0 ? Math.min(...prices) : 0;
+              })()}
+              startingFrom={(() => {
+                const prices = facility.courts
+                  .map((c: any) => c.hourlyFee)
+                  .filter((p: number) => p > 0);
+                return new Set(prices).size > 1;
+              })()}
               image={facility.imageUrl || '/images/court3.png'}
               rating={facility.averageRating || 4.8}
               category={facility.courts[0]?.sportType || "TENNIS"}

@@ -380,6 +380,7 @@
       "trend": "Trend",
       "rating": "850",
       "currency": "SAR",
+      "startingFrom": "Starting from",
       "actions": {
         "app": "Via App",
         "web": "Via Web"
