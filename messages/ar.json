@@ -405,6 +405,18 @@
       }
     }
   },
+  "FacilityPage": {
+    "back": "العودة",
+    "bookNow": "احجز الآن",
+    "about": "عن الملعب",
+    "amenities": "المرافق والخدمات",
+    "courts": "الملاعب",
+    "gallery": "الصور",
+    "hours": "ساعات العمل",
+    "startingFrom": "يبدأ من",
+    "currency": "ر.س",
+    "callFacility": "اتصل بالملعب"
+  },
   "DownloadModal": {
     "title": "حمل التطبيق الآن",
     "description": "استمتع بتجربة حجز أسهل وأسرع. احصل على عروض حصرية وتابع حجوزاتك في أي وقت.",

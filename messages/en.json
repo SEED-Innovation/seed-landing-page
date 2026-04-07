@@ -405,6 +405,18 @@
       }
     }
   },
+  "FacilityPage": {
+    "back": "Back",
+    "bookNow": "Book Now",
+    "about": "About",
+    "amenities": "Facilities & Amenities",
+    "courts": "Courts",
+    "gallery": "Gallery",
+    "hours": "Opening Hours",
+    "startingFrom": "Starting from",
+    "currency": "SAR",
+    "callFacility": "Call Facility"
+  },
   "DownloadModal": {
     "title": "Download App Now",
     "description": "Enjoy easier and faster booking experience. Get exclusive offers and track your bookings anytime.",
