@@ -119,6 +119,7 @@ export default async function FacilityDetails({
                 <img
                   src={src}
                   alt={`Photo ${i + 1}`}
+                  loading="lazy"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>

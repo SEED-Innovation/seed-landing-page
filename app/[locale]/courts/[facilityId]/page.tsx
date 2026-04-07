@@ -14,9 +14,13 @@ export default async function FacilityDetailPage({ params }: PageProps) {
   const id = parseInt(facilityId, 10);
   if (isNaN(id)) notFound();
 
-  // 2. Fetch facility data (fresh, no cache)
+  // 2. Guard API URL environment variable
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!apiUrl) notFound();
+
+  // 3. Fetch facility data (fresh, no cache)
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/facilities/${id}`,
+    `${apiUrl}/facilities/${id}`,
     { cache: 'no-store' }
   );
   if (!res.ok) notFound();
@@ -26,7 +30,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
   const facility = data.data ?? data;
   if (!facility?.id) notFound();
 
-  // 3. Compute lowest-priced court (graceful — a facility may have 0 courts configured)
+  // 4. Compute lowest-priced court (graceful — a facility may have 0 courts configured)
   const courts: Array<{ id: number; name: string; sportType: string; hourlyFee: number }> =
     facility.courts ?? [];
 
@@ -36,7 +40,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
   const lowestPricedCourt = sorted[0] ?? null;
   const hasVariedPrices = new Set(courts.map((c) => c.hourlyFee)).size > 1;
 
-  // 4. Locale-aware facility name
+  // 5. Locale-aware facility name
   const locale = await getLocale();
   const facilityName = locale === 'ar' ? (facility.nameAr ?? facility.name) : facility.name;
 

@@ -30,6 +30,7 @@ export default async function FacilityHero({
         <img
           src={imageUrl}
           alt={facilityName}
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
         />
       ) : (

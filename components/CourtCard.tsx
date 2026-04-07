@@ -26,7 +26,7 @@ const CourtCard = ({ id, facilityId, name, location, price, startingFrom, image,
     <div className="rounded-[32px] p-4 shadow-sm border border-slate-50 hover:shadow-md transition-all group">
       {/* Image Container */}
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[24px] mb-4">
-        <img src={image} alt={name} className="h-100 object-cover group-hover:scale-105 transition-transform duration-500" />
+        <img src={image} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
 
         {/* Rating & Sport Overlay */}
         <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
