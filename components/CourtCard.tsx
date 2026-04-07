@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from 'react';
-import BookingModal from './courts/BookingModal';
 import { useTranslations, useLocale } from 'next-intl';
 import { Star, MapPin, CircleDot } from 'lucide-react';
 import { Link } from '@/i18n/routing';
+
 interface CourtCardProps {
   id: number;
+  facilityId: number;
   name: string;
   location: string;
   price: number;
@@ -14,31 +14,29 @@ interface CourtCardProps {
   image: string;
   rating: number;
   category: string;
-  facilityName:string;
+  facilityName: string;
 }
-const CourtCard = ({ id, name, location, price, startingFrom, image, rating, category, facilityName }: CourtCardProps) => {
+
+const CourtCard = ({ id, facilityId, name, location, price, startingFrom, image, rating, category, facilityName }: CourtCardProps) => {
   const t = useTranslations('CourtsPage.Discovery');
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const locale = useLocale();
   const isRtl = locale === 'ar';
 
   return (
-    <>
     <div className="rounded-[32px] p-4 shadow-sm border border-slate-50 hover:shadow-md transition-all group">
       {/* Image Container */}
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[24px] mb-4">
-        <img src={image} alt={name}  className="h-100 object-cover group-hover:scale-105 transition-transform duration-500" />
-        
+        <img src={image} alt={name} className="h-100 object-cover group-hover:scale-105 transition-transform duration-500" />
 
         {/* Rating & Sport Overlay */}
         <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
           <div className="bg-black/40 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1 text-white text-xs font-bold">
-            <span className='mt-[2px]'> {rating}</span>
+            <span className='mt-[2px]'>{rating}</span>
             <Star size={12} className="fill-yellow-400 stroke-yellow-400" />
           </div>
-          <div className=" px-3 py-1 rounded-full flex items-center gap-1.5 text-[#7C3AED] text-xs font-md bg-[#F3E8FF]">
+          <div className="px-3 py-1 rounded-full flex items-center gap-1.5 text-[#7C3AED] text-xs font-md bg-[#F3E8FF]">
             <CircleDot size={16} />
-            <span className='mt-[2px]'> {category}</span>
+            <span className='mt-[2px]'>{category}</span>
           </div>
         </div>
       </div>
@@ -67,27 +65,15 @@ const CourtCard = ({ id, name, location, price, startingFrom, image, rating, cat
           <button className="bg-[#1E293B] text-white py-3 rounded-2xl text-xs font-saudia font-medium hover:bg-[#0F172A] transition-colors hover:cursor-pointer">
             {t('actions.app')}
           </button>
-          <button 
-          onClick={() => setIsModalOpen(true)}
-          className="bg-[#7C3AED] text-white py-3 rounded-2xl text-xs font-medium hover:bg-[#6D28D9] transition-colors shadow-lg shadow-purple-100 hover:cursor-pointer">
-            <Link href={"/courts"}>
-            <span>{t('actions.web')}</span>
-            </Link>
-            
-          </button>
+          <Link
+            href={`/courts/${facilityId}`}
+            className="bg-[#7C3AED] text-white py-3 rounded-2xl text-xs font-medium hover:bg-[#6D28D9] transition-colors shadow-lg shadow-purple-100 hover:cursor-pointer text-center"
+          >
+            {t('actions.web')}
+          </Link>
         </div>
       </div>
     </div>
-    {/* The Modal */}
-      <BookingModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        courtId={id}// Pass the ID here
-        courtName={name} 
-        price={price} 
-        facilityId={1}
-      />
-      </>
   );
 };
 
