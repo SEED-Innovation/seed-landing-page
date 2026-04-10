@@ -46,22 +46,7 @@ interface AuthContextType {
   signOut: () => void;
 }
 
-const AuthContext = createContext<AuthContextType>({
-  user: null,
-  authLoading: true,
-  pendingUsername: null,
-  isOpen: false,
-  view: 'signin',
-  openAuth: () => {},
-  closeAuth: () => {},
-  switchView: () => {},
-  cancelConfirm: () => {},
-  signIn: async () => ({ ok: false }),
-  signUp: async () => ({ ok: false }),
-  confirmEmail: async () => ({ ok: false }),
-  resendVerification: async () => ({ ok: false }),
-  signOut: () => {},
-});
+const AuthContext = createContext<AuthContextType | null>(null);
 
 function codeToErrorKey(code: string): string {
   switch (code) {
@@ -82,11 +67,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pendingPasswordRef  = useRef<string | null>(null);
   const pendingUserDataRef  = useRef<SignUpData | null>(null);
   const refreshTimerRef     = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const clearPendingRefs = () => {
-    pendingPasswordRef.current = null;
-    pendingUserDataRef.current = null;
-  };
 
   const scheduleRefresh = useCallback((accessToken: string, storedRefreshToken: string) => {
     if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
@@ -109,6 +89,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         scheduleRefresh(next.accessToken, next.refreshToken);
       } catch {
         // Refresh failed — sign out
+        refreshTimerRef.current = null;
         setUser(null);
         localStorage.removeItem(STORAGE_USER);
         localStorage.removeItem(STORAGE_TOKENS);
@@ -118,6 +99,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Hydrate session from localStorage on mount
   useEffect(() => {
+    let cancelled = false;
     const hydrate = async () => {
       try {
         const savedUser   = localStorage.getItem(STORAGE_USER);
@@ -127,7 +109,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const tokens: LoginResponse = JSON.parse(savedTokens);
 
         if (isTokenExpired(tokens.accessToken, 0)) {
-          // bufferMs=0: only refresh if truly expired, not just within the 60 s window
           try {
             const fresh = await refreshTokens(tokens.refreshToken);
             const next: LoginResponse = {
@@ -136,25 +117,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               refreshToken: fresh.refreshToken ?? tokens.refreshToken,
               userId:       fresh.userId ?? tokens.userId,
             };
-            localStorage.setItem(STORAGE_TOKENS, JSON.stringify(next));
-            setUser(JSON.parse(savedUser));
-            scheduleRefresh(next.accessToken, next.refreshToken);
+            if (!cancelled) {
+              localStorage.setItem(STORAGE_TOKENS, JSON.stringify(next));
+              setUser(JSON.parse(savedUser));
+              scheduleRefresh(next.accessToken, next.refreshToken);
+            }
           } catch {
-            localStorage.removeItem(STORAGE_USER);
-            localStorage.removeItem(STORAGE_TOKENS);
+            if (!cancelled) {
+              localStorage.removeItem(STORAGE_USER);
+              localStorage.removeItem(STORAGE_TOKENS);
+            }
           }
         } else {
-          setUser(JSON.parse(savedUser));
-          scheduleRefresh(tokens.accessToken, tokens.refreshToken);
+          if (!cancelled) {
+            setUser(JSON.parse(savedUser));
+            scheduleRefresh(tokens.accessToken, tokens.refreshToken);
+          }
         }
       } catch {
         // Ignore malformed data
       } finally {
-        setAuthLoading(false);
+        if (!cancelled) setAuthLoading(false);
       }
     };
     hydrate();
-    return () => { if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current); };
+    return () => {
+      cancelled = true;
+      if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
+    };
   }, [scheduleRefresh]);
 
   const finalizeLogin = useCallback((newUser: User, tokens: LoginResponse) => {
@@ -163,7 +153,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(STORAGE_TOKENS, JSON.stringify(tokens));
     scheduleRefresh(tokens.accessToken, tokens.refreshToken);
     setPendingUsername(null);
-    clearPendingRefs();
+    pendingPasswordRef.current = null;
+    pendingUserDataRef.current = null;
     setIsOpen(false);
   }, [scheduleRefresh]);
 
@@ -175,7 +166,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const closeAuth = useCallback(() => {
     setIsOpen(false);
     setPendingUsername(null);
-    clearPendingRefs();
+    pendingPasswordRef.current = null;
+    pendingUserDataRef.current = null;
     setView('signin');
   }, []);
 
@@ -185,7 +177,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const cancelConfirm = useCallback(() => {
     setPendingUsername(null);
-    clearPendingRefs();
+    pendingPasswordRef.current = null;
+    pendingUserDataRef.current = null;
     setView('signin');
     // Does NOT close the modal — user stays in the open modal
   }, []);
@@ -195,6 +188,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const tokens = await login(identifier, password);
       const isEmail = EMAIL_RE.test(identifier);
       const isPhone = SAUDI_PHONE.test(identifier.replace(/\s/g, ''));
+      // Note: LoginResponse does not return full profile data.
+      // phone is always ''; username is inferred from the identifier type.
       const newUser: User = {
         userId:   tokens.userId,
         username: isEmail ? identifier.split('@')[0] : isPhone ? '' : identifier,
@@ -283,7 +278,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [pendingUsername]);
 
   const signOut = useCallback(() => {
-    if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
+    if (refreshTimerRef.current) {
+      clearTimeout(refreshTimerRef.current);
+      refreshTimerRef.current = null;
+    }
     setUser(null);
     localStorage.removeItem(STORAGE_USER);
     localStorage.removeItem(STORAGE_TOKENS);
