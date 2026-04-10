@@ -14,7 +14,7 @@ const SAUDI_PHONE = /^05\d{8}$/;
 const signUpSchema = z.object({
   username: z
     .string()
-    .min(3, 'usernameMin')
+    .min(3, 'invalidUsername')
     .regex(/^[a-zA-Z0-9_]+$/, 'invalidUsername'),
   email: z
     .string()
@@ -26,7 +26,10 @@ const signUpSchema = z.object({
     .regex(SAUDI_PHONE, 'invalidPhone'),
   password: z
     .string()
-    .min(8, 'passwordMin'),
+    .min(8, 'passwordWeak')
+    .regex(/[A-Z]/, 'passwordWeak')
+    .regex(/[a-z]/, 'passwordWeak')
+    .regex(/[0-9]/, 'passwordWeak'),
   agreedToTerms: z
     .boolean()
     .refine((v) => v === true, 'mustAgree'),
@@ -34,11 +37,26 @@ const signUpSchema = z.object({
 
 type SignUpData = z.infer<typeof signUpSchema>;
 
+function pwScore(pw: string): 0 | 1 | 2 | 3 | 4 {
+  if (!pw) return 0;
+  let s = 0;
+  if (pw.length >= 8)    s++;
+  if (/[A-Z]/.test(pw))  s++;
+  if (/[a-z]/.test(pw))  s++;
+  if (/[0-9]/.test(pw))  s++;
+  return s as 0 | 1 | 2 | 3 | 4;
+}
+
+const STRENGTH_COLOR = ['', 'bg-red-500', 'bg-orange-400', 'bg-yellow-400', 'bg-green-500'] as const;
+const STRENGTH_KEY   = ['', 'weak', 'fair', 'good', 'strong'] as const;
+
 export default function AuthSignUpForm() {
   const t = useTranslations('Auth');
   const locale = useLocale();
-  const { switchView, closeAuth } = useAuth();
+  const { switchView, signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading]           = useState(false);
+  const [apiError, setApiError]         = useState<string | null>(null);
 
   const {
     register,
@@ -52,13 +70,10 @@ export default function AuthSignUpForm() {
   });
 
   const agreedToTerms = watch('agreedToTerms');
+  const password      = watch('password') ?? '';
+  const score         = pwScore(password);
 
-  const onSubmit = (data: SignUpData) => {
-    console.log('Sign up data:', data);
-    closeAuth();
-  };
-
-  type ErrKey = 'required' | 'invalidEmail' | 'invalidPhone' | 'passwordMin' | 'mustAgree' | 'usernameMin' | 'invalidUsername';
+  type ErrKey = 'required' | 'invalidEmail' | 'invalidPhone' | 'passwordWeak' | 'mustAgree' | 'invalidUsername';
 
   const fieldError = (key: keyof SignUpData) => {
     const msg = errors[key]?.message as ErrKey | undefined;
@@ -68,6 +83,22 @@ export default function AuthSignUpForm() {
         {t(`errors.${msg}`)}
       </p>
     );
+  };
+
+  const onSubmit = async (data: SignUpData) => {
+    setApiError(null);
+    setLoading(true);
+    const result = await signUp({
+      username: data.username,
+      email:    data.email,
+      phone:    data.phone,
+      password: data.password,
+    });
+    setLoading(false);
+    if (!result.ok && !result.needsConfirm) {
+      setApiError(t(`errors.${result.errorKey ?? 'signUpFailed'}` as Parameters<typeof t>[0]));
+    }
+    // needsConfirm: context sets pendingUsername → modal switches to confirm view
   };
 
   return (
@@ -195,6 +226,28 @@ export default function AuthSignUpForm() {
               {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
             </button>
           </div>
+
+          {/* Password strength meter */}
+          {password.length > 0 && (
+            <div className="flex items-center gap-2 mt-1.5">
+              <div className="flex gap-1 flex-1">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className={`h-1 flex-1 rounded-full transition-colors ${
+                      score >= i ? STRENGTH_COLOR[score] : 'bg-slate-200'
+                    }`}
+                  />
+                ))}
+              </div>
+              {score > 0 && (
+                <span className="text-[10px] text-slate-500 font-medium whitespace-nowrap">
+                  {t(`passwordStrength.${STRENGTH_KEY[score]}`)}
+                </span>
+              )}
+            </div>
+          )}
+
           {fieldError('password')}
         </div>
 
@@ -247,13 +300,18 @@ export default function AuthSignUpForm() {
         </div>
         {fieldError('agreedToTerms')}
 
+        {/* API error */}
+        {apiError && (
+          <p className="text-red-500 text-xs text-center">{apiError}</p>
+        )}
+
         {/* Submit */}
         <button
           type="submit"
-          disabled={!agreedToTerms}
+          disabled={!agreedToTerms || loading}
           className="w-full py-3 bg-gradient-to-r from-[#7C3AED] to-[#9333ea] text-white font-bold text-sm rounded-xl shadow-lg shadow-purple-200 hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed mt-1"
         >
-          {t('createAccount')}
+          {loading ? '…' : t('createAccount')}
         </button>
       </form>
 
