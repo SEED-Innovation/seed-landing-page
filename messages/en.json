@@ -38,7 +38,7 @@
     "continueWithApple": "Continue with Apple",
     "orContinueWith": "or continue with",
     "orFillDetails": "or fill in your details",
-    "emailOrPhone": "Email or Phone Number",
+    "emailOrPhone": "Email, Phone, or Username",
     "password": "Password",
     "forgotPassword": "Forgot password?",
     "username": "Username",
@@ -51,16 +51,38 @@
     "showPassword": "Show password",
     "hidePassword": "Hide password",
     "close": "Close",
+    "confirm": {
+      "title": "Check your email",
+      "subtitle": "We sent a 6-digit code to your email. Enter it below.",
+      "codeLabel": "Verification code",
+      "codePlaceholder": "123456",
+      "verify": "Verify",
+      "resend": "Resend code",
+      "resendSuccess": "Code resent! Check your inbox.",
+      "backToSignIn": "Back to sign in"
+    },
     "errors": {
-      "required": "This field is required",
-      "invalidEmail": "Please enter a valid email",
-      "invalidPhone": "Enter a valid Saudi number (05XXXXXXXX)",
-      "invalidEmailOrPhone": "Enter a valid email or Saudi phone number (05XXXXXXXX)",
-      "passwordMin": "Password must be at least 8 characters",
-      "mustAgree": "You must agree to the policies",
-      "usernameMin": "Username must be at least 3 characters",
-      "invalidUsername": "Username can only contain letters, numbers, and underscores"
-    }
+      "required": "This field is required.",
+      "invalidEmailOrPhone": "Enter a valid email, Saudi phone (05XXXXXXXX), or username.",
+      "invalidEmail": "Enter a valid email address.",
+      "invalidPhone": "Enter a valid Saudi phone number (05XXXXXXXX).",
+      "invalidUsername": "Username must be 3–30 characters: letters, numbers, or underscores.",
+      "passwordWeak": "Password must be 8+ characters with uppercase, lowercase, and a number.",
+      "mustAgree": "You must agree to the policies to continue.",
+      "signInFailed": "Incorrect credentials. Please try again.",
+      "signUpFailed": "Sign up failed. Please try again.",
+      "invalidCode": "Invalid or expired code. Try again.",
+      "usernameTaken": "That username is already taken.",
+      "phoneInUse": "That phone number is already registered.",
+      "accountExists": "An account with this email already exists."
+    },
+    "passwordStrength": {
+      "weak": "Weak",
+      "fair": "Fair",
+      "good": "Good",
+      "strong": "Strong"
+    },
+    "signOut": "Sign Out"
   },
   "LandingPage": {
     "Hero": {
