@@ -25,6 +25,7 @@ export default function AuthModal() {
   // Close on Escape + focus trap (Tab / Shift+Tab cycling)
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
+      if (!isOpen) return;
       if (e.key === 'Escape') {
         closeAuth();
         return;
@@ -50,7 +51,7 @@ export default function AuthModal() {
     };
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
-  }, [closeAuth]);
+  }, [isOpen, closeAuth]);
 
   // Move initial focus into the panel when it opens
   useEffect(() => {
@@ -100,7 +101,7 @@ export default function AuthModal() {
               <button
                 onClick={closeAuth}
                 aria-label={t('close')}
-                className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors z-10"
+                className="absolute top-4 end-4 p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors z-10"
               >
                 <X size={18} />
               </button>

@@ -129,14 +129,14 @@ export default function AuthSignInForm() {
               autoComplete="current-password"
               placeholder="••••••••"
               {...register('password')}
-              className={`w-full px-3 py-2.5 text-sm border rounded-xl bg-slate-50 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 focus:border-[#7C3AED] transition-colors pr-10 ${
+              className={`w-full px-3 py-2.5 text-sm border rounded-xl bg-slate-50 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 focus:border-[#7C3AED] transition-colors pe-10 ${
                 errors.password ? 'border-red-400' : 'border-slate-200'
               }`}
             />
             <button
               type="button"
               onClick={() => setShowPassword((v) => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              className="absolute end-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
               aria-label={showPassword ? t('hidePassword') : t('showPassword')}
             >
               {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
