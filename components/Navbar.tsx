@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import LanguageSwitcher from './LanguageSwitcher';
 import DownloadModal from '@/app/[locale]/download/page';
+import { useAuth } from '@/components/AuthContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,7 @@ const Navbar = () => {
   const locale = useLocale();
   const pathname = usePathname();
   const isRtl = locale === 'ar';
+  const { openAuth } = useAuth();
 
   useEffect(() => {
     if (isOpen) {
@@ -83,7 +85,15 @@ const Navbar = () => {
             <LanguageSwitcher />
           </div>
           <div className="hidden lg:block">
-            <button 
+            <button
+              onClick={() => openAuth('signin')}
+              className="border border-[#7C3AED] text-[#7C3AED] px-5 py-2.5 rounded-full font-bold text-sm hover:bg-[#7C3AED]/5 transition-colors"
+            >
+              {t('signIn')}
+            </button>
+          </div>
+          <div className="hidden lg:block">
+            <button
               onClick={() => setIsModalOpen(true)}
               className="bg-[#1E293B] text-white px-6 py-3 rounded-full flex items-center gap-2 hover:cursor-pointer transition-transform active:scale-95"
             >
@@ -150,7 +160,13 @@ const Navbar = () => {
                   <span className="text-sm font-bold text-slate-500">{isRtl ? 'اللغة' : 'Language'}</span>
                   <LanguageSwitcher />
                 </div>
-                <button 
+                <button
+                  onClick={() => { setIsOpen(false); openAuth('signin'); }}
+                  className="border-2 border-[#7C3AED] text-[#7C3AED] px-6 py-4 rounded-2xl flex items-center gap-2 w-full justify-center font-bold hover:bg-[#7C3AED]/5 transition-colors"
+                >
+                  {t('signIn')}
+                </button>
+                <button
                   onClick={() => { setIsOpen(false); setIsModalOpen(true); }}
                   className="bg-[#1E293B] text-white px-6 py-4 rounded-2xl flex items-center gap-2 w-full justify-center font-bold"
                 >
