@@ -5,6 +5,8 @@ import { routing } from '@/i18n/routing';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ClientWrapper from '@/components/ClientWrapper';
+import { AuthProvider } from '@/components/AuthContext';
+import AuthModal from '@/components/AuthModal';
 import "../globals.css";
 import { Metadata } from 'next';
 
@@ -220,11 +222,14 @@ export default async function LocaleLayout({
       <body className="min-h-screen text-slate-900 bg-white antialiased">
         <NextIntlClientProvider messages={messages}>
           <ClientWrapper>
-            <Navbar />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
+            <AuthProvider>
+              <AuthModal />
+              <Navbar />
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </AuthProvider>
           </ClientWrapper>
         </NextIntlClientProvider>
       </body>
