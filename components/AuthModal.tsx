@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useAuth } from '@/components/AuthContext';
 import AuthSignInForm from '@/components/AuthSignInForm';
 import AuthSignUpForm from '@/components/AuthSignUpForm';
+import AuthConfirmForm from '@/components/AuthConfirmForm';
 
 const FOCUSABLE = [
   'a[href]',
@@ -19,41 +20,32 @@ const FOCUSABLE = [
 
 export default function AuthModal() {
   const t = useTranslations('Auth');
-  const { isOpen, view, closeAuth } = useAuth();
+  const { isOpen, view, pendingUsername, closeAuth } = useAuth();
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // Close on Escape + focus trap (Tab / Shift+Tab cycling)
+  const activeView: 'signin' | 'signup' | 'confirm' = pendingUsername ? 'confirm' : view;
+
+  // Close on Escape + focus trap
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (!isOpen) return;
-      if (e.key === 'Escape') {
-        closeAuth();
-        return;
-      }
+      if (e.key === 'Escape') { closeAuth(); return; }
       if (e.key !== 'Tab' || !panelRef.current) return;
-      const focusable = Array.from(
-        panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)
-      );
-      if (focusable.length === 0) return;
+      const focusable = Array.from(panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE));
+      if (!focusable.length) return;
       const first = focusable[0];
-      const last = focusable[focusable.length - 1];
+      const last  = focusable[focusable.length - 1];
       if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
       } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
       }
     };
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
   }, [isOpen, closeAuth]);
 
-  // Move initial focus into the panel when it opens
+  // Move initial focus into panel when it opens
   useEffect(() => {
     if (!isOpen || !panelRef.current) return;
     const first = panelRef.current.querySelector<HTMLElement>(FOCUSABLE);
@@ -91,7 +83,11 @@ export default function AuthModal() {
             transition={{ duration: 0.2, ease: 'easeOut' }}
             role="dialog"
             aria-modal="true"
-            aria-label={view === 'signin' ? t('signIn') : t('signUp')}
+            aria-label={
+              activeView === 'confirm' ? t('confirm.title') :
+              activeView === 'signin'  ? t('signIn') :
+                                         t('signUp')
+            }
             ref={panelRef}
             tabIndex={-1}
             className="fixed inset-0 flex items-center justify-center z-[201] p-4 pointer-events-none"
@@ -106,27 +102,27 @@ export default function AuthModal() {
                 <X size={18} />
               </button>
 
-              {/* Swap between sign in and sign up */}
+              {/* 3-view swap */}
               <AnimatePresence mode="wait" initial={false}>
-                {view === 'signin' ? (
-                  <motion.div
-                    key="signin"
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 16 }}
-                    transition={{ duration: 0.15 }}
-                  >
+                {activeView === 'signin' && (
+                  <motion.div key="signin"
+                    initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 16 }} transition={{ duration: 0.15 }}>
                     <AuthSignInForm />
                   </motion.div>
-                ) : (
-                  <motion.div
-                    key="signup"
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -16 }}
-                    transition={{ duration: 0.15 }}
-                  >
+                )}
+                {activeView === 'signup' && (
+                  <motion.div key="signup"
+                    initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.15 }}>
                     <AuthSignUpForm />
+                  </motion.div>
+                )}
+                {activeView === 'confirm' && (
+                  <motion.div key="confirm"
+                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.15 }}>
+                    <AuthConfirmForm />
                   </motion.div>
                 )}
               </AnimatePresence>
