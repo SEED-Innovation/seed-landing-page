@@ -6,7 +6,8 @@
       "technology": "Technology",
       "business": "Seed Business",
       "about": "About Us",
-      "getApp": "Get App"
+      "getApp": "Get App",
+      "signIn": "Sign In"
     },
     "Footer": {
       "description": "Your premier destination for Padel and Tennis court bookings. Smart technologies to analyze your performance and game.",
@@ -24,6 +25,41 @@
       "refund": "Refund Policy",
       "contact": "Contact Us",
       "copyright": "© SEED 2026. All rights reserved."
+    }
+  },
+  "Auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "welcomeBack": "Welcome back",
+    "welcomeBackSubtitle": "Sign in to your Seed account",
+    "createAccount": "Create Account",
+    "createAccountSubtitle": "Join Seed and start booking",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithApple": "Continue with Apple",
+    "orContinueWith": "or continue with",
+    "orFillDetails": "or fill in your details",
+    "emailOrPhone": "Email or Phone Number",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "username": "Username",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "phoneSaudi": "Saudi",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "agreeToTerms": "I agree to the <tos>Terms of Service</tos>, <tou>Terms of Use</tou>, <privacy>Privacy Policy</privacy>, and <refund>Refund Policy</refund>",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "close": "Close",
+    "errors": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email",
+      "invalidPhone": "Enter a valid Saudi number (05XXXXXXXX)",
+      "invalidEmailOrPhone": "Enter a valid email or Saudi phone number (05XXXXXXXX)",
+      "passwordMin": "Password must be at least 8 characters",
+      "mustAgree": "You must agree to the policies",
+      "usernameMin": "Username must be at least 3 characters",
+      "invalidUsername": "Username can only contain letters, numbers, and underscores"
     }
   },
   "LandingPage": {
@@ -408,6 +444,7 @@
   "FacilityPage": {
     "back": "Back",
     "bookNow": "Book Now",
+    "payNow": "Pay Now",
     "about": "About",
     "amenities": "Facilities & Amenities",
     "courts": "Courts",
@@ -415,7 +452,17 @@
     "hours": "Opening Hours",
     "startingFrom": "Starting from",
     "currency": "SAR",
-    "callFacility": "Call Facility"
+    "callFacility": "Call Facility",
+    "selectCourt": "Select court",
+    "selectDate": "Select date",
+    "bookingHint": "Select a date to proceed",
+    "chooseSport": "Choose Sport Type",
+    "chooseCourt": "Choose Court",
+    "chooseDuration": "Choose Duration",
+    "chooseDate": "Choose Date",
+    "chooseTime": "Choose Time Slot",
+    "hour": "hr",
+    "hours": "hrs"
   },
   "DownloadModal": {
     "title": "Download App Now",

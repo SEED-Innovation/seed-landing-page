@@ -6,7 +6,8 @@
       "technology": "التقنيات",
       "business": "سييد الأعمال",
       "about": "من نحن",
-      "getApp": "حمل التطبيق"
+      "getApp": "حمل التطبيق",
+      "signIn": "تسجيل الدخول"
     },
     "Footer": {
       "description": "وجهتك الأولى لحجز ملاعب البادل والتنس. تقنيات ذكية لتحليل أدائك ولعبك.",
@@ -24,6 +25,41 @@
       "refund": "سياسة الاسترجاع",
       "contact": "تواصل معنا",
       "copyright": "جميع الحقوق محفوظة. SEED 2026 ©"
+    }
+  },
+  "Auth": {
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "welcomeBack": "مرحباً بعودتك",
+    "welcomeBackSubtitle": "سجّل دخولك إلى حساب سييد",
+    "createAccount": "إنشاء حساب",
+    "createAccountSubtitle": "انضم إلى سييد وابدأ الحجز",
+    "continueWithGoogle": "المتابعة مع Google",
+    "continueWithApple": "المتابعة مع Apple",
+    "orContinueWith": "أو تابع باستخدام",
+    "orFillDetails": "أو أدخل بياناتك",
+    "emailOrPhone": "البريد الإلكتروني أو رقم الجوال",
+    "password": "كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "username": "اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "phoneNumber": "رقم الجوال",
+    "phoneSaudi": "سعودي",
+    "noAccount": "ليس لديك حساب؟",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "agreeToTerms": "أوافق على <tos>شروط الخدمة</tos> و<tou>شروط الاستخدام</tou> و<privacy>سياسة الخصوصية</privacy> و<refund>سياسة الاسترداد</refund>",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور",
+    "close": "إغلاق",
+    "errors": {
+      "required": "هذا الحقل مطلوب",
+      "invalidEmail": "أدخل بريداً إلكترونياً صحيحاً",
+      "invalidPhone": "أدخل رقم جوال سعودي صحيح (05XXXXXXXX)",
+      "invalidEmailOrPhone": "أدخل بريداً إلكترونياً أو رقم جوال سعودي صحيح (05XXXXXXXX)",
+      "passwordMin": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+      "mustAgree": "يجب الموافقة على السياسات",
+      "usernameMin": "اسم المستخدم يجب أن يكون 3 أحرف على الأقل",
+      "invalidUsername": "اسم المستخدم يمكن أن يحتوي على أحرف وأرقام وشرطة سفلية فقط"
     }
   },
   "LandingPage": {
@@ -408,6 +444,7 @@
   "FacilityPage": {
     "back": "العودة",
     "bookNow": "احجز الآن",
+    "payNow": "ادفع الآن",
     "about": "عن الملعب",
     "amenities": "المرافق والخدمات",
     "courts": "الملاعب",
@@ -415,7 +452,17 @@
     "hours": "ساعات العمل",
     "startingFrom": "يبدأ من",
     "currency": "ر.س",
-    "callFacility": "اتصل بالملعب"
+    "callFacility": "اتصل بالملعب",
+    "selectCourt": "اختر الملعب",
+    "selectDate": "اختر التاريخ",
+    "bookingHint": "اختر تاريخاً للمتابعة",
+    "chooseSport": "اختر نوع الرياضة",
+    "chooseCourt": "اختر الملعب",
+    "chooseDuration": "اختر المدة",
+    "chooseDate": "اختر التاريخ",
+    "chooseTime": "اختر الوقت",
+    "hour": "ساعة",
+    "hours": "ساعات"
   },
   "DownloadModal": {
     "title": "حمل التطبيق الآن",
