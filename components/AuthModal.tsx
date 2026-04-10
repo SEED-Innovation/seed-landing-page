@@ -50,7 +50,7 @@ export default function AuthModal() {
     if (!isOpen || !panelRef.current) return;
     const first = panelRef.current.querySelector<HTMLElement>(FOCUSABLE);
     (first ?? panelRef.current).focus();
-  }, [isOpen]);
+  }, [isOpen, activeView]);
 
   // Prevent body scroll while modal is open
   useEffect(() => {

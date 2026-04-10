@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '@/components/AuthContext';
 
@@ -13,6 +13,12 @@ export default function AuthConfirmForm() {
   const [error, setError]             = useState<string | null>(null);
   const [resendLoading, setResendLoading] = useState(false);
   const [resendMsg, setResendMsg]     = useState<{ ok: boolean; text: string } | null>(null);
+
+  const resendTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => { if (resendTimerRef.current) clearTimeout(resendTimerRef.current); };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +43,8 @@ export default function AuthConfirmForm() {
     } else {
       setResendMsg({ ok: false, text: t('errors.signUpFailed') });
     }
-    setTimeout(() => setResendMsg(null), 4000);
+    if (resendTimerRef.current) clearTimeout(resendTimerRef.current);
+    resendTimerRef.current = setTimeout(() => setResendMsg(null), 4000);
   };
 
   const handleBack = () => {
