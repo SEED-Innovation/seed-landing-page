@@ -151,7 +151,7 @@ Pure API + utility functions. No React. All functions are named exports.
 **Module-level regex constants** (defined once here, imported where needed — do not duplicate):
 ```ts
 export const EMAIL_RE    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-export const SAUDI_PHONE = /^(?:\+966|966|0)(5[0-9])\d{7}$/;
+export const SAUDI_PHONE = /^(?:\+966|966|0)5\d{7,8}$/;   // matches 05XXXXXXXX, +9665XXXXXXXX, 9665XXXXXXXX
 export const USERNAME_RE = /^[a-zA-Z0-9_]{3,30}$/;
 ```
 
@@ -220,10 +220,10 @@ Both refs are cleared in: `closeAuth`, `cancelConfirm`, and `finalizeLogin`.
 
 **`signIn` logic:**
 1. Call `login(identifier, password)`.
-2. On success → build `User`. Three cases based on identifier format:
+2. On success → build `User`. Three cases based on identifier format (import `EMAIL_RE` and `SAUDI_PHONE` from `lib/auth-api.ts` — do not redefine):
    ```ts
    const isEmail = EMAIL_RE.test(identifier);
-   const isPhone = /^(\+966|966|0)5\d{7,8}$/.test(identifier.replace(/\s/g, ''));
+   const isPhone = SAUDI_PHONE.test(identifier.replace(/\s/g, ''));
    const newUser: User = {
      userId: tokens.userId,
      username: isEmail ? identifier.split('@')[0] : isPhone ? '' : identifier,
@@ -240,7 +240,7 @@ Both refs are cleared in: `closeAuth`, `cancelConfirm`, and `finalizeLogin`.
 
 **`signUp` logic:**
 1. `const phone = normalizeSaudiPhone(data.phone)`
-2. Call `register({ ...data, phone, confirmPassword: data.password })`.
+2. Call `register({ ...data, phone, confirmPassword: data.password })`. Note: `SignUpData` has no `confirmPassword` field, so the spread `...data` does not produce one; the explicit `confirmPassword: data.password` is the sole assignment — the API receives `password === confirmPassword`.
 3. On success → `setPendingUsername(data.username)`, `pendingPasswordRef.current = data.password`, `pendingUserDataRef.current = data`. Return `{ ok: true, needsConfirm: true }`.
 4. On `ACCOUNT_EXISTS_UNVERIFIED` → set same pending state, call `resendCode(apiErr.pendingUsername ?? data.username)` silently. Return `{ ok: false, needsConfirm: true }`.
 5. Other errors → return `{ ok: false, errorKey: mapped key from error table }`.
