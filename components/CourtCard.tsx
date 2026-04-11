@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Star, MapPin, CircleDot } from 'lucide-react';
 import { Link } from '@/i18n/routing';
+import DownloadModal from '@/components/DownloadModal';
 
 interface CourtCardProps {
   id: number;
@@ -21,6 +23,7 @@ const CourtCard = ({ id, facilityId, name, location, price, startingFrom, image,
   const t = useTranslations('CourtsPage.Discovery');
   const locale = useLocale();
   const isRtl = locale === 'ar';
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
 
   return (
     <div className="rounded-[32px] shadow-sm border border-slate-50 hover:shadow-md transition-all group">
@@ -63,9 +66,15 @@ const CourtCard = ({ id, facilityId, name, location, price, startingFrom, image,
         </div>
       </Link>
 
+      {/* Download Modal */}
+      <DownloadModal isOpen={showDownloadModal} onClose={() => setShowDownloadModal(false)} />
+
       {/* Action Buttons — outside the link to avoid nested interactive elements */}
       <div className="grid grid-cols-2 gap-2 font-bold px-4 pb-4">
-        <button className="bg-[#1E293B] text-white py-3 rounded-2xl text-xs font-saudia font-medium hover:bg-[#0F172A] transition-colors hover:cursor-pointer">
+        <button
+          onClick={() => setShowDownloadModal(true)}
+          className="bg-[#1E293B] text-white py-3 rounded-2xl text-xs font-saudia font-medium hover:bg-[#0F172A] transition-colors hover:cursor-pointer"
+        >
           {t('actions.app')}
         </button>
         <Link
