@@ -333,6 +333,7 @@
       "title": "Everything You Need to Run Your Facility",
       "subtitle": "SEED gives court owners a complete toolkit to manage bookings, grow revenue, and delight players.",
       "cta": "Register Your Court",
+      "subscriptionNote": "All of this with one subscription",
       "features": {
         "booking":       { "title": "Smart Booking Management",       "desc": "Real-time reservations, cancellations, and rescheduling in one dashboard" },
         "revenue":       { "title": "Revenue & Earnings Dashboard",   "desc": "Track daily income, payouts, and financial summaries at a glance" },

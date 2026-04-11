@@ -5,30 +5,26 @@ import { Link } from '@/i18n/routing';
 import SectionBadge from '@/components/ui/SectionBadge';
 import SectionTitle from '@/components/ui/SectionTitle';
 import {
-  CalendarCheck, DollarSign, BadgePercent, BarChart3, Layers, Tag,
-  Users, Clock, ShieldCheck, CreditCard, Smartphone, BrainCircuit,
-  Bell, Star, ListOrdered, FileText, Headphones, QrCode, MapPin, Megaphone,
+  CalendarCheck, DollarSign, BarChart3, Layers,
+  Users, Clock, CreditCard, Smartphone, BrainCircuit,
+  Bell, FileText, Headphones, LogIn, MapPin, Megaphone,
+  Check,
 } from 'lucide-react';
 
 const FEATURES = [
   { key: 'booking',       Icon: CalendarCheck  },
   { key: 'revenue',       Icon: DollarSign     },
-  { key: 'pricing',       Icon: BadgePercent   },
   { key: 'analytics',     Icon: BarChart3      },
   { key: 'multicourt',    Icon: Layers         },
-  { key: 'promotions',    Icon: Tag            },
   { key: 'customers',     Icon: Users          },
   { key: 'scheduling',    Icon: Clock          },
-  { key: 'staff',         Icon: ShieldCheck    },
   { key: 'payments',      Icon: CreditCard     },
   { key: 'mobile',        Icon: Smartphone     },
   { key: 'ai',            Icon: BrainCircuit   },
   { key: 'notifications', Icon: Bell           },
-  { key: 'reviews',       Icon: Star           },
-  { key: 'waitlist',      Icon: ListOrdered    },
   { key: 'reports',       Icon: FileText       },
   { key: 'support',       Icon: Headphones     },
-  { key: 'qr',            Icon: QrCode         },
+  { key: 'qr',            Icon: LogIn          },
   { key: 'discovery',     Icon: MapPin         },
   { key: 'marketing',     Icon: Megaphone      },
 ] as const;
@@ -40,47 +36,54 @@ export default function FeaturesTable() {
 
   return (
     <section className="py-20 px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto">
 
         {/* Section header */}
-        <div className={`text-center mb-14 font-saudia`}>
+        <div className="text-center mb-12 font-saudia">
           <SectionBadge>{t('badge')}</SectionBadge>
           <SectionTitle>{t('title')}</SectionTitle>
-          <p className="text-[#62748E] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+          <p className="text-[#62748E] text-lg max-w-2xl mx-auto leading-relaxed">
             {t('subtitle')}
           </p>
         </div>
 
-        {/* Features grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-14">
-          {FEATURES.map(({ key, Icon }) => (
+        {/* Table */}
+        <div className="rounded-[24px] border border-slate-200 overflow-hidden shadow-sm">
+          {FEATURES.map(({ key, Icon }, idx) => (
             <div
               key={key}
-              className={`bg-white rounded-[24px] border border-slate-100 shadow-sm p-6
-                          flex flex-col gap-3 transition-all duration-300
-                          hover:-translate-y-1 hover:shadow-md
-                          ${isRtl ? 'text-right' : 'text-left'}`}
+              className={`flex items-center gap-4 px-6 py-4 transition-colors hover:bg-[#F8F5FF]
+                ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}
+                ${idx !== FEATURES.length - 1 ? 'border-b border-slate-100' : ''}
+                ${isRtl ? 'flex-row-reverse text-right' : 'text-left'}
+              `}
             >
               {/* Icon */}
-              <div className="w-11 h-11 rounded-xl bg-[#EFF6FF] flex items-center justify-center shrink-0">
-                <Icon size={20} className="text-[#2563EB]" />
+              <div className="w-9 h-9 rounded-xl bg-[#EFF6FF] flex items-center justify-center shrink-0">
+                <Icon size={17} className="text-[#2563EB]" />
               </div>
 
-              {/* Text */}
-              <div>
-                <h4 className="font-bold text-[#0F172A] text-sm leading-snug mb-1">
+              {/* Feature name */}
+              <div className={`flex-1 ${isRtl ? 'pr-1' : 'pl-1'}`}>
+                <span className="font-bold text-sm text-[#0F172A]">
                   {t(`features.${key}.title`)}
-                </h4>
-                <p className="text-xs text-[#62748E] leading-relaxed">
+                </span>
+                <span className={`text-xs text-[#62748E] block mt-0.5`}>
                   {t(`features.${key}.desc`)}
-                </p>
+                </span>
+              </div>
+
+              {/* Check */}
+              <div className="w-6 h-6 rounded-full bg-[#DCFCE7] flex items-center justify-center shrink-0">
+                <Check size={13} className="text-[#16A34A]" strokeWidth={3} />
               </div>
             </div>
           ))}
         </div>
 
         {/* CTA */}
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center gap-3 mt-10">
+          <p className="text-sm text-slate-400">{t('subscriptionNote')}</p>
           <Link
             href="/business/owners"
             className="bg-[#2563EB] text-white rounded-2xl px-10 py-4 font-bold text-base
