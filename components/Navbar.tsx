@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { Smartphone, Menu, X, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -13,11 +13,14 @@ import { useAuth } from '@/components/AuthContext';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('Common.Navbar');
   const locale = useLocale();
   const pathname = usePathname();
   const isRtl = locale === 'ar';
-  const { openAuth } = useAuth();
+  const { openAuth, user, authLoading, signOut } = useAuth();
+  const tAuth = useTranslations('Auth');
 
   useEffect(() => {
     if (isOpen) {
@@ -27,6 +30,17 @@ const Navbar = () => {
     }
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isDropdownOpen) return;
+    const handle = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handle);
+    return () => document.removeEventListener('mousedown', handle);
+  }, [isDropdownOpen]);
 
   const navLinks = [
     { name: t('home'), href: '/' },
@@ -84,14 +98,43 @@ const Navbar = () => {
           <div className="hidden lg:block">
             <LanguageSwitcher />
           </div>
-          <div className="hidden lg:block">
-            <button
-              onClick={() => openAuth('signin')}
-              className="border border-[#7C3AED] text-[#7C3AED] px-5 py-2.5 rounded-full font-bold text-sm hover:bg-[#7C3AED]/5 transition-colors"
-            >
-              {t('signIn')}
-            </button>
-          </div>
+          {authLoading ? (
+            <div className="w-9 h-9 rounded-full bg-slate-200 animate-pulse hidden lg:block" />
+          ) : user ? (
+            <div className="relative hidden lg:block" ref={dropdownRef}>
+              <button
+                onClick={() => setIsDropdownOpen((v) => !v)}
+                className="w-9 h-9 rounded-full bg-[#7C3AED] text-white font-bold text-sm flex items-center justify-center hover:opacity-90 transition-opacity"
+                aria-label="Account menu"
+              >
+                {(user.username[0] ?? user.email[0] ?? '?').toUpperCase()}
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute top-full end-0 mt-2 w-48 rounded-xl shadow-lg bg-white border border-slate-100 z-50 overflow-hidden">
+                  <div className="px-4 pt-3 pb-2">
+                    <p className="font-semibold text-slate-900 text-sm truncate">{user.username || '—'}</p>
+                    <p className="text-slate-400 text-xs truncate">{user.email || '—'}</p>
+                  </div>
+                  <hr className="border-slate-100" />
+                  <button
+                    onClick={() => { signOut(); setIsDropdownOpen(false); }}
+                    className="w-full text-start px-4 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-50 transition-colors"
+                  >
+                    {tAuth('signOut')}
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="hidden lg:block">
+              <button
+                onClick={() => openAuth('signin')}
+                className="border border-[#7C3AED] text-[#7C3AED] px-5 py-2.5 rounded-full font-bold text-sm hover:bg-[#7C3AED]/5 transition-colors"
+              >
+                {t('signIn')}
+              </button>
+            </div>
+          )}
           <div className="hidden lg:block">
             <button
               onClick={() => setIsModalOpen(true)}
@@ -160,12 +203,26 @@ const Navbar = () => {
                   <span className="text-sm font-bold text-slate-500">{isRtl ? 'اللغة' : 'Language'}</span>
                   <LanguageSwitcher />
                 </div>
-                <button
-                  onClick={() => { setIsOpen(false); openAuth('signin'); }}
-                  className="border-2 border-[#7C3AED] text-[#7C3AED] px-6 py-4 rounded-2xl flex items-center gap-2 w-full justify-center font-bold hover:bg-[#7C3AED]/5 transition-colors"
-                >
-                  {t('signIn')}
-                </button>
+                {authLoading ? null : user ? (
+                  <>
+                    <span className="font-semibold text-slate-900 text-sm px-1 block truncate">
+                      {user.username || user.email || '—'}
+                    </span>
+                    <button
+                      onClick={() => { signOut(); setIsOpen(false); }}
+                      className="border-2 border-red-400 text-red-500 px-6 py-4 rounded-2xl flex items-center gap-2 w-full justify-center font-bold hover:bg-red-50 transition-colors"
+                    >
+                      {tAuth('signOut')}
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => { setIsOpen(false); openAuth('signin'); }}
+                    className="border-2 border-[#7C3AED] text-[#7C3AED] px-6 py-4 rounded-2xl flex items-center gap-2 w-full justify-center font-bold hover:bg-[#7C3AED]/5 transition-colors"
+                  >
+                    {t('signIn')}
+                  </button>
+                )}
                 <button
                   onClick={() => { setIsOpen(false); setIsModalOpen(true); }}
                   className="bg-[#1E293B] text-white px-6 py-4 rounded-2xl flex items-center gap-2 w-full justify-center font-bold"
