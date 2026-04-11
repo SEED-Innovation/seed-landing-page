@@ -532,11 +532,28 @@
     "expires": "ينتهي في",
     "copyLink": "نسخ الرابط",
     "done": "إغلاق",
+    "payWith": "ادفع بـ",
+    "methodApplePay": "Apple Pay",
+    "methodCard": "البطاقة",
+    "cardNumber": "رقم البطاقة",
+    "cardNumberPlaceholder": "1234 5678 9012 3456",
+    "nameOnCard": "الاسم على البطاقة",
+    "nameOnCardPlaceholder": "كما هو مطبوع على البطاقة",
+    "expiry": "تاريخ الانتهاء",
+    "expiryPlaceholder": "MM/YY",
+    "cvv": "CVV",
+    "cvvPlaceholder": "123",
+    "saveCard": "حفظ البطاقة",
+    "saveCardSub": "للدفع بسرعة في المرة القادمة",
     "errors": {
       "nameRequired": "يرجى إدخال الاسم الكامل",
       "phoneRequired": "يرجى إدخال رقم الجوال",
       "emailRequired": "يرجى إدخال البريد الإلكتروني",
-      "noBooking": "لم يتم العثور على حجز. يرجى اختيار ملعب أولاً."
+      "noBooking": "لم يتم العثور على حجز. يرجى اختيار ملعب أولاً.",
+      "cardNumberRequired": "يرجى إدخال رقم البطاقة",
+      "cardNameRequired": "يرجى إدخال الاسم على البطاقة",
+      "cardExpiryRequired": "يرجى إدخال تاريخ انتهاء صالح (MM/YY)",
+      "cardCvvRequired": "يرجى إدخال رمز CVV"
     }
   },
   "DownloadModal": {

@@ -532,11 +532,28 @@
     "expires": "Expires",
     "copyLink": "Copy Link",
     "done": "Done",
+    "payWith": "Pay with",
+    "methodApplePay": "Apple Pay",
+    "methodCard": "Card",
+    "cardNumber": "Card Number",
+    "cardNumberPlaceholder": "1234 5678 9012 3456",
+    "nameOnCard": "Name on Card",
+    "nameOnCardPlaceholder": "As printed on card",
+    "expiry": "Expiry",
+    "expiryPlaceholder": "MM/YY",
+    "cvv": "CVV",
+    "cvvPlaceholder": "123",
+    "saveCard": "Save card",
+    "saveCardSub": "Pay faster next time",
     "errors": {
       "nameRequired": "Please enter your full name",
       "phoneRequired": "Please enter your mobile number",
       "emailRequired": "Please enter your email address",
-      "noBooking": "No booking found. Please select a court first."
+      "noBooking": "No booking found. Please select a court first.",
+      "cardNumberRequired": "Please enter your card number",
+      "cardNameRequired": "Please enter the name on your card",
+      "cardExpiryRequired": "Please enter a valid expiry date (MM/YY)",
+      "cardCvvRequired": "Please enter your CVV"
     }
   },
   "DownloadModal": {
