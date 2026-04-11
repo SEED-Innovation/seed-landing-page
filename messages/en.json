@@ -515,6 +515,30 @@
     "hour": "hr",
     "hours": "hrs"
   },
+  "CheckoutPage": {
+    "title": "Complete Your Booking",
+    "back": "Back",
+    "bookingSummary": "Booking Summary",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Your full name",
+    "mobile": "Mobile",
+    "email": "Email",
+    "courtPrice": "Court Price",
+    "recording": "SEED Recording",
+    "total": "Total",
+    "paymentLinkCreated": "Payment Link Created!",
+    "shareLink": "Share the link below via WhatsApp or SMS",
+    "paymentLink": "Payment Link",
+    "expires": "Expires",
+    "copyLink": "Copy Link",
+    "done": "Done",
+    "errors": {
+      "nameRequired": "Please enter your full name",
+      "phoneRequired": "Please enter your mobile number",
+      "emailRequired": "Please enter your email address",
+      "noBooking": "No booking found. Please select a court first."
+    }
+  },
   "DownloadModal": {
     "title": "Download App Now",
     "description": "Enjoy easier and faster booking experience. Get exclusive offers and track your bookings anytime.",

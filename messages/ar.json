@@ -515,6 +515,30 @@
     "hour": "ساعة",
     "hours": "ساعات"
   },
+  "CheckoutPage": {
+    "title": "أكمل حجزك",
+    "back": "العودة",
+    "bookingSummary": "تفاصيل الحجز",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "اسمك الكامل",
+    "mobile": "الجوال",
+    "email": "البريد",
+    "courtPrice": "سعر الملعب",
+    "recording": "SEED تسجيل",
+    "total": "الإجمالي",
+    "paymentLinkCreated": "تم إنشاء رابط الدفع!",
+    "shareLink": "شارك الرابط أدناه عبر واتساب أو رسالة نصية",
+    "paymentLink": "رابط الدفع",
+    "expires": "ينتهي في",
+    "copyLink": "نسخ الرابط",
+    "done": "إغلاق",
+    "errors": {
+      "nameRequired": "يرجى إدخال الاسم الكامل",
+      "phoneRequired": "يرجى إدخال رقم الجوال",
+      "emailRequired": "يرجى إدخال البريد الإلكتروني",
+      "noBooking": "لم يتم العثور على حجز. يرجى اختيار ملعب أولاً."
+    }
+  },
   "DownloadModal": {
     "title": "حمل التطبيق الآن",
     "description": "استمتع بتجربة حجز أسهل وأسرع. احصل على عروض حصرية وتابع حجوزاتك في أي وقت.",
