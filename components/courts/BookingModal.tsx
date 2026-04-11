@@ -108,7 +108,8 @@ export default function BookingModal({
     return dt.toISOString().slice(0, 19);
   };
 
-  const total = price + (selectedRecording ? RECORDING_PRICE : 0);
+  const courtTotal = price * selectedDuration;
+  const total = courtTotal + (selectedRecording ? RECORDING_PRICE : 0);
 
   // ── Submit ────────────────────────────────────────────────────────────────
   const handleSubmit = async (e: React.FormEvent) => {
@@ -361,8 +362,11 @@ export default function BookingModal({
                   {/* Price summary */}
                   <div className="bg-slate-50 rounded-[24px] p-5 space-y-2">
                     <div className={`flex justify-between items-center text-sm font-semibold ${isRtl ? 'flex-row-reverse' : ''}`}>
-                      <span className="text-slate-400">{isRtl ? 'سعر الملعب' : 'Court Price'}</span>
-                      <span>{price} SAR</span>
+                      <span className="text-slate-400">
+                        {isRtl ? 'سعر الملعب' : 'Court Price'}
+                        <span className="font-normal text-slate-300 ms-1">{price} × {selectedDuration}h</span>
+                      </span>
+                      <span>{courtTotal} SAR</span>
                     </div>
                     {selectedRecording && (
                       <div className={`flex justify-between items-center text-sm font-semibold ${isRtl ? 'flex-row-reverse' : ''}`}>

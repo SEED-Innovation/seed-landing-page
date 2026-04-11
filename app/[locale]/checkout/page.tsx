@@ -156,7 +156,8 @@ export default function CheckoutPage() {
     return dt.toISOString().slice(0, 19);
   };
 
-  const total      = booking.price + (booking.recording ? RECORDING_PRICE : 0);
+  const courtTotal = booking.price * booking.duration;
+  const total      = courtTotal + (booking.recording ? RECORDING_PRICE : 0);
   const cardNet    = detectCardNetwork(cardNumber);
 
   // ── Submit ────────────────────────────────────────────────────────────────
@@ -373,8 +374,13 @@ export default function CheckoutPage() {
                 {/* Price breakdown */}
                 <div className="bg-slate-50 rounded-[24px] p-5 space-y-2">
                   <div className={`flex justify-between items-center text-sm font-semibold ${isRtl ? 'flex-row-reverse' : ''}`}>
-                    <span className="text-slate-400">{t('courtPrice')}</span>
-                    <span>{booking.price} SAR</span>
+                    <span className="text-slate-400">
+                      {t('courtPrice')}
+                      <span className="font-normal text-slate-300 ms-1">
+                        {booking.price} × {booking.duration}h
+                      </span>
+                    </span>
+                    <span>{courtTotal} SAR</span>
                   </div>
                   {booking.recording && (
                     <div className={`flex justify-between items-center text-sm font-semibold ${isRtl ? 'flex-row-reverse' : ''}`}>
@@ -515,27 +521,28 @@ export default function CheckoutPage() {
                         <button
                           type="button"
                           onClick={() => setSaveCard(s => !s)}
-                          className={`w-full flex items-center justify-between rounded-2xl px-4 py-3.5 transition-all border-2 ${
-                            saveCard
-                              ? 'border-[#7C3AED]/30 bg-[#F8F5FF]'
-                              : 'border-slate-100 bg-slate-50 hover:border-slate-200'
-                          } ${isRtl ? 'flex-row-reverse' : ''}`}
+                          className={`w-full rounded-2xl p-4 transition-all duration-200 bg-[#6D28D9] ${isRtl ? 'text-right' : 'text-left'}`}
                         >
-                          <div className={`flex items-center gap-3 ${isRtl ? 'flex-row-reverse' : ''}`}>
-                            <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors ${saveCard ? 'bg-[#7C3AED]' : 'bg-slate-200'}`}>
-                              <CreditCard size={14} className={saveCard ? 'text-white' : 'text-slate-400'} />
+                          <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
+                            {/* Left: icon + text */}
+                            <div className={`flex items-center gap-3 ${isRtl ? 'flex-row-reverse' : ''}`}>
+                              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-white/20">
+                                <CreditCard size={18} className="text-[#ECDCFF]" />
+                              </div>
+                              <div className={isRtl ? 'text-right' : 'text-left'}>
+                                <p className="text-sm font-bold leading-tight text-white">{t('saveCard')}</p>
+                                <p className="text-xs mt-0.5 text-[#D08CFF]">{t('saveCardSub')}</p>
+                              </div>
                             </div>
-                            <div className={isRtl ? 'text-right' : 'text-left'}>
-                              <p className="text-sm font-bold text-slate-800">{t('saveCard')}</p>
-                              <p className="text-xs text-slate-400">{t('saveCardSub')}</p>
+                            {/* Emoji + toggle */}
+                            <div className={`flex items-center gap-2 ${isRtl ? 'flex-row-reverse' : ''}`}>
+                              <span className="text-lg leading-none">{saveCard ? '🔥' : ''}</span>
+                              <div className={`relative w-11 h-6 rounded-full shrink-0 transition-colors duration-200 ${saveCard ? 'bg-[#ECDCFF]' : 'bg-white/30'}`}>
+                                <span className={`absolute top-1 w-4 h-4 rounded-full shadow transition-all duration-200 bg-white ${
+                                  saveCard ? (isRtl ? 'right-1' : 'left-6') : (isRtl ? 'right-6' : 'left-1')
+                                }`} />
+                              </div>
                             </div>
-                          </div>
-                          {/* Toggle */}
-                          <div className={`relative w-10 h-5.5 rounded-full shrink-0 transition-colors duration-200 ${saveCard ? 'bg-[#7C3AED]' : 'bg-slate-200'}`}
-                            style={{ height: '22px' }}>
-                            <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all duration-200 ${
-                              saveCard ? (isRtl ? 'right-0.5' : 'left-5') : (isRtl ? 'right-5' : 'left-0.5')
-                            }`} />
                           </div>
                         </button>
 
