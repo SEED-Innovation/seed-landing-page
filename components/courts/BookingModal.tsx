@@ -16,6 +16,8 @@ interface BookingModalProps {
   facilityId: number; // ← added (required for payment API)
   courtId: number;
   courtName: string;
+  facilityName: string;
+  location: string;
   price: number;
 }
 
@@ -45,6 +47,8 @@ const BookingModal = ({
   facilityId,
   courtId,
   courtName,
+  facilityName,
+  location,
   price,
 }: BookingModalProps) => {
   const t = useTranslations('CourtsPage.BookingModal');
@@ -227,10 +231,10 @@ const BookingModal = ({
             {/* ── Header ── */}
             <div className="p-6 md:p-8 flex justify-between items-center border-b border-slate-100">
               <div className={isRtl ? 'text-right' : 'text-left'}>
-                <h2 className="text-2xl font-bold text-slate-900 leading-tight">{t('title')}</h2>
+                <h2 className="text-2xl font-bold text-slate-900 leading-tight">{facilityName}</h2>
                 <div className={`flex items-center gap-2 text-[#7C3AED] mt-1 ${isRtl ? 'flex-row-reverse' : ''}`}>
                   <MapPin size={14} />
-                  <span className="text-sm font-bold">{courtName}</span>
+                  <span className="text-sm font-bold">{location}</span>
                 </div>
               </div>
               <button

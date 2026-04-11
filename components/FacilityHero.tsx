@@ -10,6 +10,17 @@ interface FacilityHeroProps {
   category: string;
 }
 
+const SPORT_TYPE_AR: Record<string, string> = {
+  TENNIS: 'تنس',
+  PADEL: 'بادل',
+  SQUASH: 'إسكواش',
+  FOOTBALL: 'كرة قدم',
+  BASKETBALL: 'كرة سلة',
+  VOLLEYBALL: 'كرة طائرة',
+  BADMINTON: 'ريشة طائرة',
+  TABLE_TENNIS: 'تنس طاولة',
+};
+
 export default async function FacilityHero({
   imageUrl,
   nameAr,
@@ -22,6 +33,9 @@ export default async function FacilityHero({
   const isRtl = locale === 'ar';
   const facilityName = isRtl ? nameAr : name;
   const BackIcon = isRtl ? ChevronRight : ChevronLeft;
+  const categoryLabel = isRtl
+    ? (SPORT_TYPE_AR[category?.toUpperCase()] ?? category)
+    : category;
 
   return (
     <div className="relative w-full h-64 md:h-80 overflow-hidden rounded-b-[40px]">
@@ -51,7 +65,7 @@ export default async function FacilityHero({
 
       {/* Category pill */}
       <div className="absolute top-4 end-4 bg-[#7C3AED] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">
-        {category}
+        {categoryLabel}
       </div>
 
       {/* Facility name + location */}
