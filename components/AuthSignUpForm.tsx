@@ -8,14 +8,12 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '@/components/AuthContext';
 import { GoogleIcon, AppleIcon } from '@/components/AuthIcons';
-
-const SAUDI_PHONE = /^05\d{8}$/;
+import { SAUDI_PHONE, USERNAME_RE } from '@/lib/auth-api';
 
 const signUpSchema = z.object({
   username: z
     .string()
-    .min(3, 'invalidUsername')
-    .regex(/^[a-zA-Z0-9_]+$/, 'invalidUsername'),
+    .regex(USERNAME_RE, 'invalidUsername'),
   email: z
     .string()
     .min(1, 'required')
@@ -79,7 +77,7 @@ export default function AuthSignUpForm() {
     const msg = errors[key]?.message as ErrKey | undefined;
     if (!msg) return null;
     return (
-      <p className="text-red-500 text-[10px] mt-1">
+      <p role="alert" className="text-red-500 text-[10px] mt-1">
         {t(`errors.${msg}`)}
       </p>
     );
@@ -151,7 +149,7 @@ export default function AuthSignUpForm() {
             type="text"
             autoComplete="username"
             placeholder="@username"
-            {...register('username')}
+            {...register('username', { onChange: () => setApiError(null) })}
             className={`w-full px-3 py-2.5 text-sm border rounded-xl bg-slate-50 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 focus:border-[#7C3AED] transition-colors ${
               errors.username ? 'border-red-400' : 'border-slate-200'
             }`}
@@ -169,7 +167,7 @@ export default function AuthSignUpForm() {
             type="email"
             autoComplete="email"
             placeholder="name@email.com"
-            {...register('email')}
+            {...register('email', { onChange: () => setApiError(null) })}
             className={`w-full px-3 py-2.5 text-sm border rounded-xl bg-slate-50 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 focus:border-[#7C3AED] transition-colors ${
               errors.email ? 'border-red-400' : 'border-slate-200'
             }`}
@@ -192,7 +190,7 @@ export default function AuthSignUpForm() {
               type="tel"
               autoComplete="tel"
               placeholder="05XXXXXXXX"
-              {...register('phone')}
+              {...register('phone', { onChange: () => setApiError(null) })}
               className={`flex-1 px-3 py-2.5 text-sm border rounded-xl bg-slate-50 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 focus:border-[#7C3AED] transition-colors ${
                 errors.phone ? 'border-red-400' : 'border-slate-200'
               }`}
@@ -302,16 +300,17 @@ export default function AuthSignUpForm() {
 
         {/* API error */}
         {apiError && (
-          <p className="text-red-500 text-xs text-center">{apiError}</p>
+          <p role="alert" className="text-red-500 text-xs text-center">{apiError}</p>
         )}
 
         {/* Submit */}
         <button
           type="submit"
           disabled={!agreedToTerms || loading}
+          aria-busy={loading}
           className="w-full py-3 bg-gradient-to-r from-[#7C3AED] to-[#9333ea] text-white font-bold text-sm rounded-xl shadow-lg shadow-purple-200 hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed mt-1"
         >
-          {loading ? '…' : t('createAccount')}
+          {loading ? <><span aria-hidden="true">…</span><span className="sr-only">Loading…</span></> : t('createAccount')}
         </button>
       </form>
 

@@ -52,7 +52,7 @@ export default function AuthSignInForm() {
   const fieldError = (key: keyof SignInData) => {
     const msg = errors[key]?.message as ErrKey | undefined;
     if (!msg) return null;
-    return <p className="text-red-500 text-[10px] mt-1">{t(`errors.${msg}`)}</p>;
+    return <p role="alert" className="text-red-500 text-[10px] mt-1">{t(`errors.${msg}`)}</p>;
   };
 
   return (
@@ -142,13 +142,13 @@ export default function AuthSignInForm() {
 
         {/* API error */}
         {apiError && (
-          <p className="text-red-500 text-xs text-center">{apiError}</p>
+          <p role="alert" className="text-red-500 text-xs text-center">{apiError}</p>
         )}
 
         {/* Submit */}
-        <button type="submit" disabled={loading}
+        <button type="submit" disabled={loading} aria-busy={loading}
           className="w-full py-3 bg-gradient-to-r from-[#7C3AED] to-[#9333ea] text-white font-bold text-sm rounded-xl shadow-lg shadow-purple-200 hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed mt-1">
-          {loading ? '…' : t('signIn')}
+          {loading ? <><span aria-hidden="true">…</span><span className="sr-only">Loading…</span></> : t('signIn')}
         </button>
       </form>
 
