@@ -59,8 +59,8 @@ export default function FeaturesTable() {
               `}
             >
               {/* Icon */}
-              <div className="w-9 h-9 rounded-xl bg-[#EFF6FF] flex items-center justify-center shrink-0">
-                <Icon size={17} className="text-[#2563EB]" />
+              <div className="w-9 h-9 rounded-xl bg-[#F3EEFF] flex items-center justify-center shrink-0">
+                <Icon size={17} className="text-[#7c55cc]" />
               </div>
 
               {/* Feature name */}
