@@ -292,25 +292,35 @@ export default function BookingFlow({ courts, currency }: BookingFlowProps) {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-2 max-h-52 overflow-y-auto pr-1">
-              {displaySlots.map(slot => (
-                <button
-                  key={slot.value}
-                  dir="ltr"
-                  onClick={() => slot.available && setSelectedTime(slot.value)}
-                  disabled={!slot.available}
-                  className={`rounded-2xl py-2.5 text-[11px] font-bold transition-all duration-150 border-2 ${
-                    !slot.available
-                      ? 'bg-white border-slate-100 text-slate-300 cursor-not-allowed line-through'
-                      : selectedTime === slot.value
-                      ? 'bg-[#7C3AED] text-white border-[#7C3AED] shadow-md shadow-purple-100'
-                      : 'bg-white border-slate-100 text-slate-600 hover:border-[#7C3AED]/40 hover:text-[#7C3AED] cursor-pointer'
-                  }`}
-                >
-                  {slot.label}
-                </button>
-              ))}
-            </div>
+            <>
+              <p className={`text-[10px] text-slate-400 mb-2 ${isRtl ? 'text-right' : 'text-left'}`}>
+                {isRtl ? '* الأوقات المعروضة هي وقت بداية الحجز' : '* Times shown are the start time of the booking'}
+              </p>
+              <div className="grid grid-cols-3 gap-2 max-h-52 overflow-y-auto pr-1">
+                {displaySlots.map(slot => {
+                  const startTime = slot.value.includes('T')
+                    ? slot.value.split('T')[1].slice(0, 5)
+                    : slot.value.slice(0, 5);
+                  return (
+                    <button
+                      key={slot.value}
+                      dir="ltr"
+                      onClick={() => slot.available && setSelectedTime(slot.value)}
+                      disabled={!slot.available}
+                      className={`rounded-2xl py-2.5 text-[11px] font-bold transition-all duration-150 border-2 ${
+                        !slot.available
+                          ? 'bg-white border-slate-100 text-slate-300 cursor-not-allowed line-through'
+                          : selectedTime === slot.value
+                          ? 'bg-[#7C3AED] text-white border-[#7C3AED] shadow-md shadow-purple-100'
+                          : 'bg-white border-slate-100 text-slate-600 hover:border-[#7C3AED]/40 hover:text-[#7C3AED] cursor-pointer'
+                      }`}
+                    >
+                      {startTime}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
           )}
         </div>
       )}
