@@ -33,13 +33,20 @@ const Navbar = () => {
 
   useEffect(() => {
     if (!isDropdownOpen) return;
-    const handle = (e: MouseEvent) => {
+    const handleMouse = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsDropdownOpen(false);
       }
     };
-    document.addEventListener('mousedown', handle);
-    return () => document.removeEventListener('mousedown', handle);
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsDropdownOpen(false);
+    };
+    document.addEventListener('mousedown', handleMouse);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handleMouse);
+      document.removeEventListener('keydown', handleKey);
+    };
   }, [isDropdownOpen]);
 
   const navLinks = [
@@ -106,8 +113,10 @@ const Navbar = () => {
                 onClick={() => setIsDropdownOpen((v) => !v)}
                 className="w-9 h-9 rounded-full bg-[#7C3AED] text-white font-bold text-sm flex items-center justify-center hover:opacity-90 transition-opacity"
                 aria-label="Account menu"
+                aria-expanded={isDropdownOpen}
+                aria-haspopup="true"
               >
-                {(user.username[0] ?? user.email[0] ?? '?').toUpperCase()}
+                {(user.username[0] || user.email[0] || '?').toUpperCase()}
               </button>
               {isDropdownOpen && (
                 <div className="absolute top-full end-0 mt-2 w-48 rounded-xl shadow-lg bg-white border border-slate-100 z-50 overflow-hidden">
