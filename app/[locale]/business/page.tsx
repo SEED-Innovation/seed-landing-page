@@ -7,6 +7,7 @@ import { Handshake, Building2, Users2, ChevronRight, ChevronLeft } from 'lucide-
 import { useLocale } from 'next-intl';
 import SectionBadge from '@/components/ui/SectionBadge';
 import SectionTitle from '@/components/ui/SectionTitle';
+import FeaturesTable from '@/components/FeaturesTable';
 const BusinessPage = () => {
   const t = useTranslations('BusinessPage');
   const locale = useLocale();
@@ -88,6 +89,10 @@ const BusinessPage = () => {
           ))}
         </div>
       </div>
+
+      {/* Features Table for facility owners */}
+      <hr className="border-slate-100 mt-4" />
+      <FeaturesTable />
     </section>
   );
 };
