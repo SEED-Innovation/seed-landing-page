@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useBooking } from '@/components/BookingContext';
 import BookingModal from '@/components/courts/BookingModal';
 import { useTranslations, useLocale } from 'next-intl';
+import { useAuth } from '@/components/AuthContext';
 
 interface Court {
   id: number;
@@ -30,6 +31,7 @@ export default function BookNowButton({
   const locale = useLocale();
   const isRtl = locale === 'ar';
   const { selectedCourtId, selectedDate, selectedTime } = useBooking();
+  const { user, openAuth } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const hasCourt = selectedCourtId !== -1;
@@ -50,7 +52,11 @@ export default function BookNowButton({
   return (
     <>
       <button
-        onClick={() => isReady && setIsOpen(true)}
+        onClick={() => {
+          if (!isReady) return;
+          if (!user) { openAuth('signin'); return; }
+          setIsOpen(true);
+        }}
         disabled={!isReady}
         className={`w-full py-4 rounded-2xl font-bold text-sm text-center transition-all duration-200 ${
           isReady
