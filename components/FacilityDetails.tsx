@@ -7,7 +7,6 @@ interface Court {
   name: string;
   sportType: string;
   hourlyFee: number;
-  seedRecordingFee?: number | null;
 }
 
 interface FacilityDetailsProps {
@@ -20,6 +19,7 @@ interface FacilityDetailsProps {
   currency: string;
   openTime?: string;
   closeTime?: string;
+  recordingFee: number;
 }
 
 export default async function FacilityDetails({
@@ -32,6 +32,7 @@ export default async function FacilityDetails({
   currency,
   openTime,
   closeTime,
+  recordingFee,
 }: FacilityDetailsProps) {
   const t = await getTranslations('FacilityPage');
   const locale = await getLocale();
@@ -56,6 +57,7 @@ export default async function FacilityDetails({
           location={location}
           courts={courts}
           lowestPricedCourt={lowestPricedCourt}
+          recordingFee={recordingFee}
         />
       )}
 

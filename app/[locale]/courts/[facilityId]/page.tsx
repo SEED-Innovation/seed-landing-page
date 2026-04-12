@@ -28,6 +28,8 @@ export default async function FacilityDetailPage({ params }: PageProps) {
   const courts: Array<{ id: number; name: string; sportType: string; hourlyFee: number }> =
     facility.courts ?? [];
 
+  const facilityRecordingFee: number = facility.seedRecordingFee ?? 0;
+
   const sorted = courts.length > 0
     ? [...courts].sort((a, b) => a.hourlyFee - b.hourlyFee)
     : [];
@@ -89,6 +91,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
                 currency={currency}
                 openTime={facility.openTime}
                 closeTime={facility.closeTime}
+                recordingFee={facilityRecordingFee}
               />
             </div>
           </div>

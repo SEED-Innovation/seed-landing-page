@@ -12,7 +12,6 @@ interface Court {
   name: string;
   hourlyFee: number;
   sportType?: string;
-  seedRecordingFee?: number | null;
 }
 
 interface BookNowButtonProps {
@@ -21,6 +20,7 @@ interface BookNowButtonProps {
   location: string;
   courts: Court[];
   lowestPricedCourt: Court;
+  recordingFee: number;
 }
 
 export default function BookNowButton({
@@ -29,6 +29,7 @@ export default function BookNowButton({
   location,
   courts,
   lowestPricedCourt,
+  recordingFee,
 }: BookNowButtonProps) {
   const t = useTranslations('FacilityPage');
   const locale = useLocale();
@@ -66,7 +67,7 @@ export default function BookNowButton({
       courtId:      selectedCourt.id,
       courtName:    selectedCourt.name,
       price:        selectedCourt.hourlyFee,
-      recordingFee: selectedCourt.seedRecordingFee ?? 0,
+      recordingFee,
       date:         selectedDate,
       time:         selectedTime,
       duration:     selectedDuration,
@@ -88,7 +89,7 @@ export default function BookNowButton({
         courtId:      selectedCourt.id,
         courtName:    selectedCourt.name,
         price:        selectedCourt.hourlyFee,
-        recordingFee: selectedCourt.seedRecordingFee ?? 0,
+        recordingFee,
         date:         selectedDate,
         time:         selectedTime,
         duration:     selectedDuration,
