@@ -1,5 +1,6 @@
 import { getTranslations, getLocale } from 'next-intl/server';
 import { Clock, MapPin } from 'lucide-react';
+import LivePriceDisplay from '@/components/LivePriceDisplay';
 
 const AMENITY_ICONS: Record<string, string> = {
   parking: '🅿️',
@@ -36,6 +37,7 @@ interface FacilityBookingSidebarProps {
   openTime?: string;
   closeTime?: string;
   mapQuery: string;
+  recordingFee: number;
 }
 
 export default async function FacilityBookingSidebar({
@@ -48,6 +50,7 @@ export default async function FacilityBookingSidebar({
   openTime,
   closeTime,
   mapQuery,
+  recordingFee,
 }: FacilityBookingSidebarProps) {
   const t = await getTranslations('FacilityPage');
   const locale = await getLocale();
@@ -140,16 +143,13 @@ export default async function FacilityBookingSidebar({
 
       <hr className="border-slate-100" />
 
-      {/* Starting from price */}
-      <div className={isRtl ? 'text-right' : 'text-left'}>
-        {hasVariedPrices && (
-          <p className="text-xs text-slate-400 font-medium mb-0.5">{t('startingFrom')}</p>
-        )}
-        <div className="flex items-baseline gap-1">
-          <span className="text-3xl font-bold text-[#7C3AED]">{lowestPricedCourt.hourlyFee}</span>
-          <span className="text-sm font-bold text-slate-400 uppercase">{t('currency')}</span>
-        </div>
-      </div>
+      {/* Live price — updates reactively from BookingContext */}
+      <LivePriceDisplay
+        lowestPrice={lowestPricedCourt.hourlyFee}
+        hasVariedPrices={hasVariedPrices}
+        courts={courts}
+        recordingFee={recordingFee}
+      />
 
       {/* Hours */}
       {(openTime || closeTime) && (

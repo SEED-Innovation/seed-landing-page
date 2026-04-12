@@ -62,6 +62,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
           hasMultipleCourts={hasMultipleCourts}
         >
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+
             {/* Left: Sidebar — About, Amenities, Courts, Price, Hours, Map */}
             {lowestPricedCourt && (
               <div className="lg:col-span-1">
@@ -76,6 +77,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
                   openTime={facility.openTime}
                   closeTime={facility.closeTime}
                   mapQuery={facility.address ?? facility.location ?? facility.city ?? facilityName}
+                  recordingFee={facilityRecordingFee}
                 />
               </div>
             )}
@@ -96,17 +98,20 @@ export default async function FacilityDetailPage({ params }: PageProps) {
               />
             </div>
           </div>
+
+          {/* Sticky price bar — inside BookingProvider so it can read context */}
+          {lowestPricedCourt && (
+            <StickyPriceBar
+              lowestPrice={lowestPricedCourt.hourlyFee}
+              hasVariedPrices={hasVariedPrices}
+              facilityName={facilityName}
+              courts={courts}
+              recordingFee={facilityRecordingFee}
+              currency={currency}
+            />
+          )}
         </BookingProvider>
       </div>
-
-      {/* Always-visible sticky price bar */}
-      {lowestPricedCourt && (
-        <StickyPriceBar
-          price={lowestPricedCourt.hourlyFee}
-          hasVariedPrices={hasVariedPrices}
-          facilityName={facilityName}
-        />
-      )}
     </main>
   );
 }
