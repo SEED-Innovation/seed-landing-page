@@ -70,7 +70,7 @@ export default function Courts() {
               facilityId={facility.id}
               name={isRtl ? facility.nameAr : facility.name}
               facilityName={isRtl ? facility.nameAr : facility.name}
-              location={facility.location}
+              location={isRtl ? (facility.locationAr ?? facility.location) : facility.location}
               price={(() => {
                 const prices = facility.courts
                   .map((c: any) => c.hourlyFee)
