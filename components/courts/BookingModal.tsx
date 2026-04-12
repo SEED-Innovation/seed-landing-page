@@ -29,7 +29,7 @@ interface PaymentLinkResponse {
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const RECORDING_PRICE = 50; // SAR — update to actual add-on price
+// Recording fee comes from court.seedRecordingFee — BookingModal is legacy/unused
 
 export default function BookingModal({
   isOpen,
@@ -109,7 +109,7 @@ export default function BookingModal({
   };
 
   const courtTotal = price * selectedDuration;
-  const total = courtTotal + (selectedRecording ? RECORDING_PRICE : 0);
+  const total = courtTotal; // recording fee handled by checkout page
 
   // ── Submit ────────────────────────────────────────────────────────────────
   const handleSubmit = async (e: React.FormEvent) => {
@@ -371,7 +371,7 @@ export default function BookingModal({
                     {selectedRecording && (
                       <div className={`flex justify-between items-center text-sm font-semibold ${isRtl ? 'flex-row-reverse' : ''}`}>
                         <span className="text-slate-400">{isRtl ? 'SEED تسجيل' : 'SEED Recording'}</span>
-                        <span>{RECORDING_PRICE} SAR</span>
+                        <span>— SAR</span>
                       </div>
                     )}
                     <div className={`flex justify-between items-center pt-2 border-t border-slate-200 ${isRtl ? 'flex-row-reverse' : ''}`}>

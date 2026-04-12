@@ -4,10 +4,11 @@ export interface CheckoutPayload {
   location: string;
   courtId: number;
   courtName: string;
-  price: number;
-  date: string;      // "YYYY-MM-DD"
-  time: string;      // ISO datetime or "HH:MM"
-  duration: number;  // hours: 1 | 1.5 | 2 | 3
+  price: number;          // hourlyFee — court price per hour
+  recordingFee: number;   // seedRecordingFee from court object (0 if null)
+  date: string;           // "YYYY-MM-DD"
+  time: string;           // ISO datetime or "HH:MM"
+  duration: number;       // hours: 1 | 1.5 | 2 | 3
   recording: boolean;
   sportType: string;
 }

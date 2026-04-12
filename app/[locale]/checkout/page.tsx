@@ -11,8 +11,6 @@ import { useAuth } from '@/components/AuthContext';
 import { useRouter } from '@/i18n/routing';
 import { readCheckout, clearCheckout, type CheckoutPayload } from '@/lib/checkout';
 
-const RECORDING_PRICE = 50; // SAR — update to actual add-on price
-
 const SPORT_TYPE_AR: Record<string, string> = {
   TENNIS: 'تنس', PADEL: 'بادل', SQUASH: 'إسكواش',
   FOOTBALL: 'كرة قدم', BASKETBALL: 'كرة سلة', VOLLEYBALL: 'كرة طائرة',
@@ -157,7 +155,7 @@ export default function CheckoutPage() {
   };
 
   const courtTotal = booking.price * booking.duration;
-  const total      = courtTotal + (booking.recording ? RECORDING_PRICE : 0);
+  const total      = courtTotal + (booking.recording ? booking.recordingFee : 0);
   const cardNet    = detectCardNetwork(cardNumber);
 
   // ── Submit ────────────────────────────────────────────────────────────────
@@ -385,7 +383,7 @@ export default function CheckoutPage() {
                   {booking.recording && (
                     <div className={`flex justify-between items-center text-sm font-semibold ${isRtl ? 'flex-row-reverse' : ''}`}>
                       <span className="text-slate-400">{t('recording')}</span>
-                      <span>{RECORDING_PRICE} SAR</span>
+                      <span>{booking.recordingFee} SAR</span>
                     </div>
                   )}
                   <div className={`flex justify-between items-center pt-2 border-t border-slate-200 ${isRtl ? 'flex-row-reverse' : ''}`}>

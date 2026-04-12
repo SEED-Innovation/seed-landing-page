@@ -7,6 +7,7 @@ interface Court {
   name: string;
   sportType: string;
   hourlyFee: number;
+  seedRecordingFee?: number | null;
 }
 
 interface FacilityDetailsProps {

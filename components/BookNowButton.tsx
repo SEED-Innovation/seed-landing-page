@@ -12,6 +12,7 @@ interface Court {
   name: string;
   hourlyFee: number;
   sportType?: string;
+  seedRecordingFee?: number | null;
 }
 
 interface BookNowButtonProps {
@@ -62,14 +63,15 @@ export default function BookNowButton({
       facilityId,
       facilityName,
       location,
-      courtId:    selectedCourt.id,
-      courtName:  selectedCourt.name,
-      price:      selectedCourt.hourlyFee,
-      date:       selectedDate,
-      time:       selectedTime,
-      duration:   selectedDuration,
-      recording:  selectedRecording,
-      sportType:  selectedSportType,
+      courtId:      selectedCourt.id,
+      courtName:    selectedCourt.name,
+      price:        selectedCourt.hourlyFee,
+      recordingFee: selectedCourt.seedRecordingFee ?? 0,
+      date:         selectedDate,
+      time:         selectedTime,
+      duration:     selectedDuration,
+      recording:    selectedRecording,
+      sportType:    selectedSportType,
     });
     router.push('/checkout');
   };
@@ -83,14 +85,15 @@ export default function BookNowButton({
         facilityId,
         facilityName,
         location,
-        courtId:    selectedCourt.id,
-        courtName:  selectedCourt.name,
-        price:      selectedCourt.hourlyFee,
-        date:       selectedDate,
-        time:       selectedTime,
-        duration:   selectedDuration,
-        recording:  selectedRecording,
-        sportType:  selectedSportType,
+        courtId:      selectedCourt.id,
+        courtName:    selectedCourt.name,
+        price:        selectedCourt.hourlyFee,
+        recordingFee: selectedCourt.seedRecordingFee ?? 0,
+        date:         selectedDate,
+        time:         selectedTime,
+        duration:     selectedDuration,
+        recording:    selectedRecording,
+        sportType:    selectedSportType,
       });
       pendingCheckout.current = true;
       openAuth('signin');
