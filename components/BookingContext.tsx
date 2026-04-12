@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { readCheckout } from '@/lib/checkout';
 
 interface BookingContextType {
   selectedSportType: string;
@@ -8,48 +9,67 @@ interface BookingContextType {
   selectedDuration: number;
   selectedDate: string;
   selectedTime: string;
+  selectedRecording: boolean;
   setSelectedSportType: (sport: string) => void;
   setSelectedCourtId: (id: number) => void;
   setSelectedDuration: (hours: number) => void;
   setSelectedDate: (date: string) => void;
   setSelectedTime: (time: string) => void;
+  setSelectedRecording: (value: boolean) => void;
 }
 
 const BookingContext = createContext<BookingContextType | null>(null);
 
 export function BookingProvider({
   children,
+  facilityId,
 }: {
   children: React.ReactNode;
+  facilityId: number;
   initialCourtId: number;
   hasMultipleCourts: boolean;
 }) {
-  const [selectedSportType, setSelectedSportTypeRaw] = useState('');
-  const [selectedCourtId, setSelectedCourtIdRaw] = useState(-1);
-  const [selectedDuration, setSelectedDurationRaw] = useState(1);
-  const [selectedDate, setSelectedDateRaw] = useState(() => new Date().toISOString().slice(0, 10));
-  const [selectedTime, setSelectedTimeRaw] = useState('');
+  // Lazily restore from sessionStorage if the stored payload matches this facility
+  const restore = () => {
+    if (typeof window === 'undefined') return null;
+    try {
+      const saved = readCheckout();
+      if (saved && saved.facilityId === facilityId) return saved;
+    } catch { /* ignore */ }
+    return null;
+  };
+
+  const saved = restore();
+
+  const [selectedSportType, setSelectedSportTypeRaw]   = useState(saved?.sportType ?? '');
+  const [selectedCourtId,   setSelectedCourtIdRaw]     = useState(saved?.courtId ?? -1);
+  const [selectedDuration,  setSelectedDurationRaw]    = useState(saved?.duration ?? 1);
+  const [selectedDate,      setSelectedDateRaw]        = useState(
+    saved?.date ?? new Date().toISOString().slice(0, 10)
+  );
+  const [selectedTime,      setSelectedTimeRaw]        = useState(saved?.time ?? '');
+  const [selectedRecording, setSelectedRecording]      = useState(saved?.recording ?? false);
 
   // Cascading resets — each step clears all downstream steps
   const setSelectedSportType = (sport: string) => {
     setSelectedSportTypeRaw(sport);
     setSelectedCourtIdRaw(-1);
-    setSelectedTimeRaw(''); // reset time; keep duration + date
+    setSelectedTimeRaw('');
   };
 
   const setSelectedCourtId = (id: number) => {
     setSelectedCourtIdRaw(id);
-    setSelectedTimeRaw(''); // reset time only; keep duration + date
+    setSelectedTimeRaw('');
   };
 
   const setSelectedDuration = (hours: number) => {
     setSelectedDurationRaw(hours);
-    setSelectedTimeRaw(''); // reset time only; keep date + court
+    setSelectedTimeRaw('');
   };
 
   const setSelectedDate = (date: string) => {
     setSelectedDateRaw(date);
-    setSelectedTimeRaw(''); // reset time only
+    setSelectedTimeRaw('');
   };
 
   const setSelectedTime = (time: string) => {
@@ -64,11 +84,13 @@ export function BookingProvider({
         selectedDuration,
         selectedDate,
         selectedTime,
+        selectedRecording,
         setSelectedSportType,
         setSelectedCourtId,
         setSelectedDuration,
         setSelectedDate,
         setSelectedTime,
+        setSelectedRecording,
       }}
     >
       {children}

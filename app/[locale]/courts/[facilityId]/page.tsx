@@ -57,6 +57,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
 
       <div className="max-w-7xl mx-auto px-6 py-10">
         <BookingProvider
+          facilityId={facility.id}
           initialCourtId={-1}
           hasMultipleCourts={hasMultipleCourts}
         >
