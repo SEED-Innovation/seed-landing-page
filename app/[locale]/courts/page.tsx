@@ -86,6 +86,7 @@ export default function Courts() {
               image={facility.imageUrl || '/images/court3.png'}
               rating={facility.averageRating || 4.8}
               category={facility.courts[0]?.sportType || "TENNIS"}
+              onboarding={facility.onboarding === true}
             />
           )) : (
              <div className="col-span-full flex justify-center py-20">

@@ -17,13 +17,65 @@ interface CourtCardProps {
   rating: number;
   category: string;
   facilityName: string;
+  onboarding?: boolean;
 }
 
-const CourtCard = ({ id, facilityId, name, location, price, startingFrom, image, rating, category, facilityName }: CourtCardProps) => {
+const CourtCard = ({ id, facilityId, name, location, price, startingFrom, image, rating, category, facilityName, onboarding }: CourtCardProps) => {
   const t = useTranslations('CourtsPage.Discovery');
   const locale = useLocale();
   const isRtl = locale === 'ar';
   const [showDownloadModal, setShowDownloadModal] = useState(false);
+
+  if (onboarding) {
+    return (
+      <div className="rounded-[32px] border border-slate-100 bg-white overflow-hidden relative">
+        {/* Blurred content */}
+        <div className="p-4 select-none pointer-events-none">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[24px] mb-4">
+            <img src={image} alt={name} className="w-full h-full object-cover blur-[2px] scale-105 brightness-75" />
+          </div>
+          <div className="px-1">
+            <div className="flex justify-between items-start mb-1">
+              <h3 className="font-bold text-lg text-[#7C3AED] me-3">{name}</h3>
+              <div className="flex flex-col items-end">
+                <div className="flex items-baseline gap-1">
+                  <span className="font-saudia font-bold text-[#7C3AED] text-xl">{price}</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{t('currency')}</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-1 text-slate-400">
+              <MapPin size={14} />
+              <span className="text-xs font-saudia font-medium">{location}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Coming Soon overlay */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center rounded-[32px]">
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl px-6 py-4 flex flex-col items-center gap-1 shadow-lg shadow-purple-100/50">
+            <span className="text-2xl">🚀</span>
+            <p className="text-sm font-bold text-slate-800">
+              {isRtl ? 'قريباً' : 'Coming Soon'}
+            </p>
+            <p className="text-[11px] text-slate-400 font-medium text-center">
+              {isRtl ? 'سيكون متاحاً قريباً' : 'This court will be available soon'}
+            </p>
+          </div>
+        </div>
+
+        {/* Disabled action buttons */}
+        <div className="grid grid-cols-2 gap-2 font-bold px-4 pb-4">
+          <div className="bg-slate-100 text-slate-300 py-3 rounded-2xl text-xs font-medium text-center cursor-not-allowed">
+            {t('actions.app')}
+          </div>
+          <div className="bg-slate-100 text-slate-300 py-3 rounded-2xl text-xs font-medium text-center cursor-not-allowed">
+            {t('actions.web')}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-[32px] shadow-sm border border-slate-50 hover:shadow-md transition-all group">
