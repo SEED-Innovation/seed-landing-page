@@ -40,6 +40,9 @@ export default async function FacilityDetailPage({ params }: PageProps) {
   const locale = await getLocale();
   const isAr = locale === 'ar';
   const facilityName = isAr ? (facility.nameAr ?? facility.name) : facility.name;
+  const location = isAr
+    ? (facility.locationAr ?? facility.location ?? facility.city ?? '')
+    : (facility.location ?? facility.city ?? '');
   const description = isAr
     ? (facility.descriptionAr ?? facility.description)
     : facility.description;
@@ -51,7 +54,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
         imageUrl={facility.imageUrl}
         nameAr={facility.nameAr ?? facility.name}
         name={facility.name}
-        location={facility.location ?? facility.city ?? ''}
+        location={location}
         category={lowestPricedCourt?.sportType ?? ''}
       />
 
@@ -68,7 +71,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
               <div className="lg:col-span-1">
                 <FacilityBookingSidebar
                   facilityName={facilityName}
-                  location={facility.location ?? facility.city ?? ''}
+                  location={location}
                   description={description}
                   amenities={facility.amenities}
                   courts={courts}
@@ -87,7 +90,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
               <FacilityDetails
                 facilityId={facility.id}
                 facilityName={facilityName}
-                location={facility.location ?? facility.city ?? ''}
+                location={location}
                 courts={courts}
                 lowestPricedCourt={lowestPricedCourt ?? { id: 0, name: '', sportType: '', hourlyFee: 0 }}
                 images={facility.images}
