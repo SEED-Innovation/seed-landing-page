@@ -37,6 +37,15 @@ export interface User {
   username: string;
   email: string;
   phone: string;
+  picture?: string;
+}
+
+/** Decode the full JWT payload and return it as a plain object. */
+export function decodeJwtPayload(jwt: string): Record<string, unknown> {
+  try {
+    const payload = jwt.split('.')[1];
+    return JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+  } catch { return {}; }
 }
 
 export interface AuthResult {

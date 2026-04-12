@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useBooking } from '@/components/BookingContext';
 import { useTranslations, useLocale } from 'next-intl';
-import { CalendarDays, Clock, Loader2, AlertCircle } from 'lucide-react';
+import { CalendarDays, Clock, Loader2, AlertCircle, Video } from 'lucide-react';
 
 interface Court {
   id: number;
@@ -60,8 +60,8 @@ export default function BookingFlow({ courts, currency }: BookingFlowProps) {
   const isRtl = locale === 'ar';
 
   const {
-    selectedSportType, selectedCourtId, selectedDuration, selectedDate, selectedTime,
-    setSelectedSportType, setSelectedCourtId, setSelectedDuration, setSelectedDate, setSelectedTime,
+    selectedSportType, selectedCourtId, selectedDuration, selectedDate, selectedTime, selectedRecording,
+    setSelectedSportType, setSelectedCourtId, setSelectedDuration, setSelectedDate, setSelectedTime, setSelectedRecording,
   } = useBooking();
 
   const [apiSlots, setApiSlots] = useState<ApiSlot[]>([]);
@@ -323,6 +323,51 @@ export default function BookingFlow({ courts, currency }: BookingFlowProps) {
             </>
           )}
         </div>
+      )}
+
+      {/* ── Step 6: Recording Add-on ── */}
+      {showTimeStep && (
+        <>
+          <StepDivider />
+          <button
+            type="button"
+            onClick={() => setSelectedRecording(!selectedRecording)}
+            className="w-full rounded-2xl p-4 transition-all duration-200 text-left bg-[#6D28D9]"
+          >
+            <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
+              {/* Left: icon + text */}
+              <div className={`flex items-center gap-3 ${isRtl ? 'flex-row-reverse' : ''}`}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-white/20">
+                  <Video size={18} className="text-[#ECDCFF]" />
+                </div>
+                <div className={isRtl ? 'text-right' : 'text-left'}>
+                  <p className="text-sm font-bold leading-tight text-white">
+                    {isRtl ? 'SEED تسجيل' : 'SEED Recording'}
+                  </p>
+                  <p className="text-xs mt-0.5 text-[#D08CFF]">
+                    {isRtl ? 'أضف تسجيل لجلستك' : 'Add a recording to your session'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Toggle + emoji */}
+              <div className={`flex items-center gap-2 ${isRtl ? 'flex-row-reverse' : ''}`}>
+                <span className="text-lg leading-none">
+                  {selectedRecording ? '😊' : '😔'}
+                </span>
+                <div className={`relative w-11 h-6 rounded-full shrink-0 transition-colors duration-200
+                  ${selectedRecording ? 'bg-[#ECDCFF]' : 'bg-white/30'}`}>
+                  <span className={`absolute top-1 w-4 h-4 rounded-full shadow transition-all duration-200 bg-white
+                    ${selectedRecording
+                      ? (isRtl ? 'right-1' : 'left-6')
+                      : (isRtl ? 'right-6' : 'left-1')
+                    }`}
+                  />
+                </div>
+              </div>
+            </div>
+          </button>
+        </>
       )}
     </div>
   );

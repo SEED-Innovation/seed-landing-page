@@ -17,6 +17,7 @@ import {
   normalizeSaudiPhone,
   isTokenExpired,
   getTokenExpiry,
+  decodeJwtPayload,
   EMAIL_RE,
   SAUDI_PHONE,
   type LoginResponse,
@@ -190,11 +191,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const isPhone = SAUDI_PHONE.test(identifier.replace(/\s/g, ''));
       // Note: LoginResponse does not return full profile data.
       // phone is always ''; username is inferred from the identifier type.
+      const claims = decodeJwtPayload(tokens.idToken);
       const newUser: User = {
         userId:   tokens.userId,
-        username: isEmail ? identifier.split('@')[0] : isPhone ? '' : identifier,
-        email:    isEmail ? identifier : '',
-        phone:    '',
+        username: (typeof claims['cognito:username'] === 'string' ? claims['cognito:username'] : null)
+                  ?? (isEmail ? identifier.split('@')[0] : isPhone ? '' : identifier),
+        email:    (typeof claims.email === 'string' ? claims.email : null) ?? (isEmail ? identifier : ''),
+        phone:    typeof claims.phone_number === 'string' ? claims.phone_number : '',
+        picture:  typeof claims.picture === 'string' ? claims.picture : undefined,
       };
       finalizeLogin(newUser, tokens);
       return { ok: true };
@@ -249,9 +253,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const tokens = await login(pendingUsername, password);
         const ud = pendingUserDataRef.current;
-        const newUser: User = ud
-          ? { userId: tokens.userId, username: ud.username, email: ud.email, phone: ud.phone }
-          : { userId: tokens.userId, username: pendingUsername, email: '', phone: '' };
+        const claims2 = decodeJwtPayload(tokens.idToken);
+        const pic2   = typeof claims2.picture      === 'string' ? claims2.picture      : undefined;
+        const phone2 = typeof claims2.phone_number === 'string' ? claims2.phone_number : (ud?.phone ?? '');
+        const email2 = typeof claims2.email        === 'string' ? claims2.email        : (ud?.email ?? '');
+        const uname2 = (typeof claims2['cognito:username'] === 'string' ? claims2['cognito:username'] : null) ?? ud?.username ?? pendingUsername;
+        const newUser: User = {
+          userId:  tokens.userId,
+          username: uname2,
+          email:    email2,
+          phone:    phone2,
+          picture:  pic2,
+        };
         finalizeLogin(newUser, tokens);
         return { ok: true };
       } catch {
