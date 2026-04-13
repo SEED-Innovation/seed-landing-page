@@ -12,10 +12,10 @@
  * to the same value.
  */
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function AuthCallbackPage() {
+function AuthCallbackInner() {
   const params = useSearchParams();
 
   useEffect(() => {
@@ -36,5 +36,17 @@ export default function AuthCallbackPage() {
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
       <p style={{ fontFamily: 'sans-serif', color: '#555' }}>Completing sign in…</p>
     </div>
+  );
+}
+
+export default function AuthCallbackPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <p style={{ fontFamily: 'sans-serif', color: '#555' }}>Completing sign in…</p>
+      </div>
+    }>
+      <AuthCallbackInner />
+    </Suspense>
   );
 }

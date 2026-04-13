@@ -11,6 +11,7 @@ interface Court {
 
 interface FacilityDetailsProps {
   facilityId: number;
+  facilityWebsite: string;
   facilityName: string;
   location: string;
   courts: Court[];
@@ -24,6 +25,7 @@ interface FacilityDetailsProps {
 
 export default async function FacilityDetails({
   facilityId,
+  facilityWebsite,
   facilityName,
   location,
   courts,
@@ -53,6 +55,7 @@ export default async function FacilityDetails({
       {courts.length > 0 && (
         <BookNowButton
           facilityId={facilityId}
+          facilityWebsite={facilityWebsite}
           facilityName={facilityName}
           location={location}
           courts={courts}

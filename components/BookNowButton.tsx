@@ -16,6 +16,7 @@ interface Court {
 
 interface BookNowButtonProps {
   facilityId: number;
+  facilityWebsite: string;
   facilityName: string;
   location: string;
   courts: Court[];
@@ -25,6 +26,7 @@ interface BookNowButtonProps {
 
 export default function BookNowButton({
   facilityId,
+  facilityWebsite,
   facilityName,
   location,
   courts,
@@ -60,19 +62,23 @@ export default function BookNowButton({
 
   const goToCheckout = () => {
     const selectedCourt = courts.find(c => c.id === selectedCourtId) ?? lowestPricedCourt;
+    const resolvedSportType = (selectedSportType || selectedCourt.sportType || '').toUpperCase();
     writeCheckout({
       facilityId,
+      facilityWebsite,
       facilityName,
       location,
       courtId:      selectedCourt.id,
       courtName:    selectedCourt.name,
       price:        selectedCourt.hourlyFee,
       recordingFee,
+      bookingType:  'court',
       date:         selectedDate,
       time:         selectedTime,
       duration:     selectedDuration,
+      durationMinutes: Math.round(selectedDuration * 60),
       recording:    selectedRecording,
-      sportType:    selectedSportType,
+      sportType:    resolvedSportType,
     });
     router.push('/checkout');
   };
@@ -82,19 +88,23 @@ export default function BookNowButton({
     if (!user) {
       // Write checkout data first so it's ready after sign-in
       const selectedCourt = courts.find(c => c.id === selectedCourtId) ?? lowestPricedCourt;
+      const resolvedSportType = (selectedSportType || selectedCourt.sportType || '').toUpperCase();
       writeCheckout({
         facilityId,
+        facilityWebsite,
         facilityName,
         location,
         courtId:      selectedCourt.id,
         courtName:    selectedCourt.name,
         price:        selectedCourt.hourlyFee,
         recordingFee,
+        bookingType:  'court',
         date:         selectedDate,
         time:         selectedTime,
         duration:     selectedDuration,
+        durationMinutes: Math.round(selectedDuration * 60),
         recording:    selectedRecording,
-        sportType:    selectedSportType,
+        sportType:    resolvedSportType,
       });
       pendingCheckout.current = true;
       openAuth('signin');

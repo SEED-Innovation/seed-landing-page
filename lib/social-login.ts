@@ -3,7 +3,7 @@
  *
  * Cognito handles the full OAuth handshake with Google / Apple / Facebook.
  * The frontend only needs:
- *   NEXT_PUBLIC_COGNITO_DOMAIN   — e.g. "seed-tennis.auth.me-central-1.amazoncognito.com"
+ *   NEXT_PUBLIC_COGNITO_DOMAIN   — e.g. "seed-tennis.auth.eu-west-3.amazoncognito.com"
  *   NEXT_PUBLIC_COGNITO_CLIENT_ID — Cognito App Client ID
  *   NEXT_PUBLIC_COGNITO_REDIRECT_URI — registered callback URL for this web app
  *
@@ -24,6 +24,33 @@ export interface SocialLoginResult {
     photoURL?: string;
     id?: string;
   };
+}
+
+function resolveRedirectUri(): string {
+  const configuredRedirectUri = process.env.NEXT_PUBLIC_COGNITO_REDIRECT_URI?.trim();
+
+  if (typeof window === 'undefined') {
+    return configuredRedirectUri || '';
+  }
+
+  const currentOriginRedirectUri = `${window.location.origin}/auth/callback`;
+
+  if (!configuredRedirectUri) {
+    return currentOriginRedirectUri;
+  }
+
+  try {
+    const configuredUrl = new URL(configuredRedirectUri);
+
+    // Popup auth must round-trip back to the same site that opened it.
+    if (configuredUrl.origin !== window.location.origin) {
+      return currentOriginRedirectUri;
+    }
+
+    return configuredUrl.toString();
+  } catch {
+    return currentOriginRedirectUri;
+  }
 }
 
 /* ─── JWT payload decoder ────────────────────────────────── */
@@ -124,9 +151,9 @@ async function signInWithCognito(
 ): Promise<SocialLoginResult> {
   const domain      = process.env.NEXT_PUBLIC_COGNITO_DOMAIN;
   const clientId    = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID;
-  const redirectUri = process.env.NEXT_PUBLIC_COGNITO_REDIRECT_URI ?? `${window.location.origin}/auth/callback`;
+  const redirectUri = resolveRedirectUri();
 
-  if (!domain || !clientId) {
+  if (!domain || !clientId || !redirectUri) {
     throw new Error('Cognito domain or client ID not configured. Set NEXT_PUBLIC_COGNITO_DOMAIN and NEXT_PUBLIC_COGNITO_CLIENT_ID.');
   }
 

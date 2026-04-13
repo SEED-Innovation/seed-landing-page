@@ -89,6 +89,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
             <div className={lowestPricedCourt ? 'lg:col-span-2' : 'lg:col-span-3'}>
               <FacilityDetails
                 facilityId={facility.id}
+                facilityWebsite={facility.facilityWebsite ?? ''}
                 facilityName={facilityName}
                 location={location}
                 courts={courts}

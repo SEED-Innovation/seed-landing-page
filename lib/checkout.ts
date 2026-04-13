@@ -1,14 +1,17 @@
 export interface CheckoutPayload {
   facilityId: number;
+  facilityWebsite: string;
   facilityName: string;
   location: string;
   courtId: number;
   courtName: string;
   price: number;          // hourlyFee — court price per hour
   recordingFee: number;   // seedRecordingFee from court object (0 if null)
+  bookingType: 'court';
   date: string;           // "YYYY-MM-DD"
   time: string;           // ISO datetime or "HH:MM"
-  duration: number;       // hours: 1 | 1.5 | 2 | 3
+  duration: number;       // legacy hours value for UI restore
+  durationMinutes: number;
   recording: boolean;
   sportType: string;
 }

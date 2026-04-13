@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { readCheckout } from '@/lib/checkout';
 
 interface BookingContextType {
@@ -43,7 +43,9 @@ export function BookingProvider({
 
   const [selectedSportType, setSelectedSportTypeRaw]   = useState(saved?.sportType ?? '');
   const [selectedCourtId,   setSelectedCourtIdRaw]     = useState(saved?.courtId ?? -1);
-  const [selectedDuration,  setSelectedDurationRaw]    = useState(saved?.duration ?? 1);
+  const [selectedDuration,  setSelectedDurationRaw]    = useState(
+    saved?.duration ?? (saved?.durationMinutes ? saved.durationMinutes / 60 : 1)
+  );
   const [selectedDate,      setSelectedDateRaw]        = useState(
     saved?.date ?? new Date().toISOString().slice(0, 10)
   );
