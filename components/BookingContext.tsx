@@ -41,7 +41,7 @@ export function BookingProvider({
 
   const saved = restore();
 
-  const [selectedSportType, setSelectedSportTypeRaw]   = useState(saved?.sportType ?? '');
+  const [selectedSportType, setSelectedSportTypeRaw]   = useState(saved?.sportType ?? 'TENNIS');
   const [selectedCourtId,   setSelectedCourtIdRaw]     = useState(saved?.courtId ?? -1);
   const [selectedDuration,  setSelectedDurationRaw]    = useState(
     saved?.duration ?? (saved?.durationMinutes ? saved.durationMinutes / 60 : 1)
@@ -50,7 +50,7 @@ export function BookingProvider({
     saved?.date ?? new Date().toISOString().slice(0, 10)
   );
   const [selectedTime,      setSelectedTimeRaw]        = useState(saved?.time ?? '');
-  const [selectedRecording, setSelectedRecording]      = useState(saved?.recording ?? false);
+  const [selectedRecording, setSelectedRecording]      = useState(saved?.recording ?? true);
 
   // Cascading resets — each step clears all downstream steps
   const setSelectedSportType = (sport: string) => {

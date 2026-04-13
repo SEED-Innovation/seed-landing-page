@@ -77,14 +77,14 @@ function extractTime(value: string): string {
   return value.slice(0, 5);
 }
 
-function getStoredIdToken(): string | null {
+function getStoredAccessToken(): string | null {
   if (typeof window === 'undefined') return null;
 
   try {
     const raw = window.localStorage.getItem('seed-tokens');
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as { idToken?: string };
-    return parsed.idToken ?? null;
+    const parsed = JSON.parse(raw) as { accessToken?: string };
+    return parsed.accessToken ?? null;
   } catch {
     return null;
   }
@@ -154,7 +154,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     const data = readCheckout();
     if (!data) {
-      router.back();
+      router.replace('/courts');
       return;
     }
     setBooking(data);
@@ -272,7 +272,7 @@ export default function CheckoutPage() {
 
   if (!loaded || !booking) return null;
 
-  const authToken = getStoredIdToken();
+  const authToken = getStoredAccessToken();
 
   const ensureCommonFields = (): string | null => {
     if (!fullName.trim()) return t('errors.nameRequired');
@@ -297,6 +297,7 @@ export default function CheckoutPage() {
       payerPhone: normalizedPhone,
       orderId: `LAND-${Date.now()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`,
       description: `${booking.facilityName} booking ${booking.date} ${extractTime(booking.time)}`,
+      returnBaseUrl: typeof window !== 'undefined' ? window.location.origin : undefined,
       courtId: String(booking.courtId),
       date: booking.date,
       startTime: extractTime(booking.time),
@@ -492,7 +493,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-[#F8F7FF]">
       <div className="max-w-lg mx-auto px-4 py-8">
         <button
-          onClick={() => router.back()}
+          onClick={() => booking?.facilityId ? router.replace(`/courts/${booking.facilityId}`) : router.replace('/courts')}
           className={`flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-[#7C3AED] transition-colors mb-6 ${isRtl ? 'flex-row-reverse' : ''}`}
         >
           <BackIcon size={16} />
@@ -547,6 +548,7 @@ export default function CheckoutPage() {
                 onChange={(event) => setFullName(event.target.value)}
                 className={`${inputClass} ${isRtl ? 'text-right' : 'text-left'}`}
                 placeholder={t('fullNamePlaceholder')}
+                autoComplete="name"
               />
             </div>
 
@@ -563,6 +565,7 @@ export default function CheckoutPage() {
                     onChange={(event) => setPhone(event.target.value)}
                     placeholder="05xxxxxxxx"
                     required
+                    autoComplete="tel"
                     className={`${inputClass} ${isRtl ? 'text-right' : 'text-left'}`}
                   />
                 )}
@@ -579,6 +582,7 @@ export default function CheckoutPage() {
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="name@example.com"
                     required
+                    autoComplete="email"
                     className={`${inputClass} ${isRtl ? 'text-right' : 'text-left'}`}
                   />
                 )}
@@ -665,11 +669,13 @@ export default function CheckoutPage() {
                       <div className="relative">
                         <input
                           dir="ltr"
+                          type="text"
                           inputMode="numeric"
                           value={cardNumber}
                           onChange={(event) => setCardNumber(formatCardNumber(event.target.value))}
                           placeholder={t('cardNumberPlaceholder')}
                           maxLength={19}
+                          autoComplete="cc-number"
                           className={`${inputClass} pr-20 text-left tracking-widest`}
                         />
                         <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
@@ -687,6 +693,7 @@ export default function CheckoutPage() {
                         value={cardName}
                         onChange={(event) => setCardName(event.target.value.toUpperCase())}
                         placeholder={t('nameOnCardPlaceholder')}
+                        autoComplete="cc-name"
                         className={`${inputClass} text-left tracking-wide`}
                       />
                     </div>
@@ -698,11 +705,13 @@ export default function CheckoutPage() {
                         </label>
                         <input
                           dir="ltr"
+                          type="text"
                           inputMode="numeric"
                           value={expiry}
                           onChange={(event) => setExpiry(formatExpiry(event.target.value))}
                           placeholder={t('expiryPlaceholder')}
                           maxLength={5}
+                          autoComplete="cc-exp"
                           className={`${inputClass} text-left tracking-widest`}
                         />
                       </div>
@@ -719,6 +728,7 @@ export default function CheckoutPage() {
                             onChange={(event) => setCvv(event.target.value.replace(/\D/g, '').slice(0, 4))}
                             placeholder={t('cvvPlaceholder')}
                             maxLength={4}
+                            autoComplete="cc-csc"
                             className={`${inputClass} pr-10 text-left`}
                           />
                           <Lock size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" />
