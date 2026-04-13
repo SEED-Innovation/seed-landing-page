@@ -141,6 +141,53 @@ export interface SocialLoginPayload {
   };
 }
 
-export async function socialLogin(payload: SocialLoginPayload): Promise<LoginResponse> {
-  return request<LoginResponse>('social-login', payload);
+export interface SocialLinkingChallenge {
+  requiresLinking: true;
+  message: string;
+  linkingToken: string;
+  provider: string;
+  email: string;
+  existingAuthMethod: string;
+  confirmationRequired?: boolean;
+}
+
+export function isLinkingChallenge(r: LoginResponse | SocialLinkingChallenge): r is SocialLinkingChallenge {
+  return (r as SocialLinkingChallenge).requiresLinking === true;
+}
+
+export async function socialLogin(payload: SocialLoginPayload): Promise<LoginResponse | SocialLinkingChallenge> {
+  const res = await fetch(`${AUTH_BASE}/social-login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  let data: Record<string, unknown> = {};
+  try { data = await res.json(); } catch { /* empty body */ }
+
+  if (res.status === 409 && data.requiresLinking === true) {
+    return data as unknown as SocialLinkingChallenge;
+  }
+
+  if (!res.ok) {
+    const raw = (data.code as string) ?? 'UNKNOWN';
+    const parts = raw.split('::');
+    throw { code: parts[0], message: (data.message as string) ?? `Request failed: ${res.status}` } as AuthApiError;
+  }
+  return data as unknown as LoginResponse;
+}
+
+export async function confirmSocialLink(payload: SocialLoginPayload): Promise<LoginResponse> {
+  const res = await fetch(`${AUTH_BASE}/social-login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...payload, confirmAccountLinking: true }),
+  });
+  let data: Record<string, unknown> = {};
+  try { data = await res.json(); } catch { /* empty body */ }
+  if (!res.ok) {
+    const raw = (data.code as string) ?? 'UNKNOWN';
+    const parts = raw.split('::');
+    throw { code: parts[0], message: (data.message as string) ?? `Request failed: ${res.status}` } as AuthApiError;
+  }
+  return data as unknown as LoginResponse;
 }

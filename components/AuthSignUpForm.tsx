@@ -52,7 +52,7 @@ const STRENGTH_KEY   = ['', 'weak', 'fair', 'good', 'strong'] as const;
 export default function AuthSignUpForm() {
   const t = useTranslations('Auth');
   const locale = useLocale();
-  const { switchView, signUp, socialLogin } = useAuth();
+  const { switchView, signUp, socialLogin, linkingChallenge } = useAuth();
   const [showPassword, setShowPassword]   = useState(false);
   const [loading, setLoading]             = useState(false);
   const [apiError, setApiError]           = useState<string | null>(null);
@@ -64,7 +64,8 @@ export default function AuthSignUpForm() {
     try {
       const result = await (provider === 'google' ? signInWithGoogle() : signInWithApple());
       const authResult = await socialLogin(result);
-      if (!authResult.ok) {
+      // If linkingChallenge is set, AuthModal will show the linking view — suppress error
+      if (!authResult.ok && !linkingChallenge) {
         setApiError(t(`errors.${authResult.errorKey ?? 'socialLoginFailed'}` as Parameters<typeof t>[0]));
       }
     } catch (err) {

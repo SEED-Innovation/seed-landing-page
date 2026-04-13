@@ -83,6 +83,12 @@
       "good": "Good",
       "strong": "Strong"
     },
+    "linking": {
+      "title": "Link Account",
+      "existingMethod": "Existing sign-in method: {method}",
+      "confirm": "Yes, Link My Account",
+      "cancel": "Cancel"
+    },
     "signOut": "Sign Out"
   },
   "LandingPage": {

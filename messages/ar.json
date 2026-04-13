@@ -83,6 +83,12 @@
       "good": "جيدة",
       "strong": "قوية"
     },
+    "linking": {
+      "title": "ربط الحساب",
+      "existingMethod": "طريقة تسجيل الدخول الحالية: {method}",
+      "confirm": "نعم، اربط حسابي",
+      "cancel": "إلغاء"
+    },
     "signOut": "تسجيل الخروج"
   },
   "LandingPage": {

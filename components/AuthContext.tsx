@@ -15,6 +15,8 @@ import {
   resendCode,
   refreshTokens,
   socialLogin as apiSocialLogin,
+  confirmSocialLink as apiConfirmSocialLink,
+  isLinkingChallenge,
   normalizeSaudiPhone,
   isTokenExpired,
   getTokenExpiry,
@@ -27,6 +29,7 @@ import {
   type SignUpData,
   type AuthApiError,
   type SocialLoginPayload,
+  type SocialLinkingChallenge,
 } from '@/lib/auth-api';
 
 const STORAGE_USER   = 'seed-user';
@@ -38,6 +41,7 @@ interface AuthContextType {
   pendingUsername: string | null;
   isOpen: boolean;
   view: 'signin' | 'signup';
+  linkingChallenge: SocialLinkingChallenge | null;
   openAuth: (view?: 'signin' | 'signup') => void;
   closeAuth: () => void;
   switchView: (view: 'signin' | 'signup') => void;
@@ -45,6 +49,8 @@ interface AuthContextType {
   signIn: (identifier: string, password: string) => Promise<AuthResult>;
   signUp: (data: SignUpData) => Promise<AuthResult>;
   socialLogin: (payload: SocialLoginPayload) => Promise<AuthResult>;
+  confirmAccountLink: () => Promise<AuthResult>;
+  dismissLinkingChallenge: () => void;
   confirmEmail: (code: string) => Promise<AuthResult>;
   resendVerification: () => Promise<{ ok: boolean }>;
   signOut: () => void;
@@ -68,9 +74,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [view, setView]                   = useState<'signin' | 'signup'>('signin');
   const [pendingUsername, setPendingUsername] = useState<string | null>(null);
 
-  const pendingPasswordRef  = useRef<string | null>(null);
-  const pendingUserDataRef  = useRef<SignUpData | null>(null);
-  const refreshTimerRef     = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [linkingChallenge, setLinkingChallenge] = useState<SocialLinkingChallenge | null>(null);
+
+  const pendingPasswordRef      = useRef<string | null>(null);
+  const pendingUserDataRef      = useRef<SignUpData | null>(null);
+  const pendingSocialPayloadRef = useRef<SocialLoginPayload | null>(null);
+  const refreshTimerRef         = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scheduleRefresh = useCallback((accessToken: string, storedRefreshToken: string) => {
     if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
@@ -244,8 +253,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const socialLogin = useCallback(async (payload: SocialLoginPayload): Promise<AuthResult> => {
+    // Only send the fields the backend expects — strip refreshToken etc.
+    const cleanPayload: SocialLoginPayload = {
+      provider: payload.provider,
+      accessToken: payload.accessToken,
+      idToken: payload.idToken,
+      userInfo: payload.userInfo,
+    };
     try {
-      const tokens = await apiSocialLogin(payload);
+      const outcome = await apiSocialLogin(cleanPayload);
+      if (isLinkingChallenge(outcome)) {
+        pendingSocialPayloadRef.current = cleanPayload;
+        setLinkingChallenge(outcome);
+        return { ok: false };
+      }
+      const claims = decodeJwtPayload(outcome.idToken);
+      const newUser: User = {
+        userId:   outcome.userId,
+        username: (typeof claims['cognito:username'] === 'string' ? claims['cognito:username'] : null)
+                  ?? cleanPayload.userInfo.email.split('@')[0],
+        email:    (typeof claims.email === 'string' ? claims.email : null)
+                  ?? cleanPayload.userInfo.email,
+        phone:    typeof claims.phone_number === 'string' ? claims.phone_number : '',
+        picture:  cleanPayload.userInfo.photoURL
+                  ?? (typeof claims.picture === 'string' ? claims.picture : undefined),
+      };
+      finalizeLogin(newUser, outcome);
+      return { ok: true };
+    } catch {
+      return { ok: false, errorKey: 'socialLoginFailed' };
+    }
+  }, [finalizeLogin]);
+
+  const confirmAccountLink = useCallback(async (): Promise<AuthResult> => {
+    const payload = pendingSocialPayloadRef.current;
+    if (!payload) return { ok: false, errorKey: 'socialLoginFailed' };
+    try {
+      const tokens = await apiConfirmSocialLink(payload);
       const claims = decodeJwtPayload(tokens.idToken);
       const newUser: User = {
         userId:   tokens.userId,
@@ -257,12 +301,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         picture:  payload.userInfo.photoURL
                   ?? (typeof claims.picture === 'string' ? claims.picture : undefined),
       };
+      setLinkingChallenge(null);
+      pendingSocialPayloadRef.current = null;
       finalizeLogin(newUser, tokens);
       return { ok: true };
     } catch {
       return { ok: false, errorKey: 'socialLoginFailed' };
     }
   }, [finalizeLogin]);
+
+  const dismissLinkingChallenge = useCallback(() => {
+    setLinkingChallenge(null);
+    pendingSocialPayloadRef.current = null;
+  }, []);
 
   const confirmEmail = useCallback(async (code: string): Promise<AuthResult> => {
     if (!pendingUsername) return { ok: false, errorKey: 'signUpFailed' };
@@ -326,9 +377,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{
-      user, authLoading, pendingUsername, isOpen, view,
+      user, authLoading, pendingUsername, isOpen, view, linkingChallenge,
       openAuth, closeAuth, switchView, cancelConfirm,
-      signIn, signUp, socialLogin, confirmEmail, resendVerification, signOut,
+      signIn, signUp, socialLogin, confirmAccountLink, dismissLinkingChallenge,
+      confirmEmail, resendVerification, signOut,
     }}>
       {children}
     </AuthContext.Provider>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -20,10 +20,26 @@ const FOCUSABLE = [
 
 export default function AuthModal() {
   const t = useTranslations('Auth');
-  const { isOpen, view, pendingUsername, closeAuth } = useAuth();
+  const { isOpen, view, pendingUsername, linkingChallenge, closeAuth, confirmAccountLink, dismissLinkingChallenge } = useAuth();
   const panelRef = useRef<HTMLDivElement>(null);
+  const [linkingLoading, setLinkingLoading] = React.useState(false);
+  const [linkingError, setLinkingError] = React.useState<string | null>(null);
 
-  const activeView: 'signin' | 'signup' | 'confirm' = pendingUsername ? 'confirm' : view;
+  const activeView: 'signin' | 'signup' | 'confirm' | 'linking' =
+    linkingChallenge ? 'linking' : pendingUsername ? 'confirm' : view;
+
+  const handleConfirmLink = async () => {
+    setLinkingLoading(true);
+    setLinkingError(null);
+    const result = await confirmAccountLink();
+    setLinkingLoading(false);
+    if (!result.ok) setLinkingError(t('errors.socialLoginFailed'));
+  };
+
+  const handleDismissLink = () => {
+    setLinkingError(null);
+    dismissLinkingChallenge();
+  };
 
   // Close on Escape + focus trap
   useEffect(() => {
@@ -102,7 +118,7 @@ export default function AuthModal() {
                 <X size={18} />
               </button>
 
-              {/* 3-view swap */}
+              {/* 4-view swap */}
               <AnimatePresence mode="wait" initial={false}>
                 {activeView === 'signin' && (
                   <motion.div key="signin"
@@ -123,6 +139,39 @@ export default function AuthModal() {
                     initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.15 }}>
                     <AuthConfirmForm />
+                  </motion.div>
+                )}
+                {activeView === 'linking' && linkingChallenge && (
+                  <motion.div key="linking"
+                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.15 }}>
+                    <div className="flex flex-col gap-4 text-center">
+                      <div className="w-11 h-11 bg-gradient-to-br from-[#7C3AED] to-[#a855f7] rounded-[14px] mx-auto flex items-center justify-center text-xl">
+                        🔗
+                      </div>
+                      <h2 className="text-lg font-extrabold text-slate-900">{t('linking.title')}</h2>
+                      <p className="text-sm text-slate-600">{linkingChallenge.message}</p>
+                      <p className="text-xs text-slate-400">
+                        {t('linking.existingMethod', { method: linkingChallenge.existingAuthMethod })}
+                      </p>
+                      {linkingError && (
+                        <p role="alert" className="text-red-500 text-xs">{linkingError}</p>
+                      )}
+                      <button
+                        onClick={handleConfirmLink}
+                        disabled={linkingLoading}
+                        className="w-full py-3 bg-gradient-to-r from-[#7C3AED] to-[#9333ea] text-white font-bold text-sm rounded-xl shadow-lg shadow-purple-200 hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed"
+                      >
+                        {linkingLoading ? '…' : t('linking.confirm')}
+                      </button>
+                      <button
+                        onClick={handleDismissLink}
+                        disabled={linkingLoading}
+                        className="w-full py-2 text-sm text-slate-500 hover:text-slate-700 font-medium transition-colors"
+                      >
+                        {t('linking.cancel')}
+                      </button>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
