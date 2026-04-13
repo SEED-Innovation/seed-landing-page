@@ -174,9 +174,10 @@ async function signInWithCognito(
 
   if (!email) throw new Error('Cognito did not return an email in the ID token');
 
+  const cognitoUsername = typeof claims['cognito:username'] === 'string' ? claims['cognito:username'] as string : '';
   const name =
-    typeof claims.name    === 'string' ? claims.name :
-    typeof claims['cognito:username'] === 'string' ? (claims['cognito:username'] as string).replace(/[._-]/g, ' ') :
+    typeof claims.name === 'string' && claims.name ? claims.name :
+    cognitoUsername && !/^(SignInWithApple|Google|Facebook)_/i.test(cognitoUsername) ? cognitoUsername.replace(/[._-]/g, ' ') :
     email.split('@')[0];
 
   const picture = typeof claims.picture === 'string' ? claims.picture : undefined;
