@@ -128,3 +128,19 @@ export async function resendCode(username: string): Promise<void> {
 export async function refreshTokens(refreshToken: string): Promise<LoginResponse> {
   return request<LoginResponse>('refresh', { refreshToken });
 }
+
+export interface SocialLoginPayload {
+  provider: 'google' | 'apple';
+  accessToken: string;
+  idToken?: string;
+  userInfo: {
+    email: string;
+    displayName?: string;
+    photoURL?: string;
+    id?: string;
+  };
+}
+
+export async function socialLogin(payload: SocialLoginPayload): Promise<LoginResponse> {
+  return request<LoginResponse>('social-login', payload);
+}

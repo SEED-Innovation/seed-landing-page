@@ -9,6 +9,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '@/components/AuthContext';
 import { GoogleIcon, AppleIcon } from '@/components/AuthIcons';
 import { SAUDI_PHONE, USERNAME_RE } from '@/lib/auth-api';
+import { signInWithGoogle, signInWithApple } from '@/lib/social-login';
 
 const signUpSchema = z.object({
   username: z
@@ -51,10 +52,30 @@ const STRENGTH_KEY   = ['', 'weak', 'fair', 'good', 'strong'] as const;
 export default function AuthSignUpForm() {
   const t = useTranslations('Auth');
   const locale = useLocale();
-  const { switchView, signUp } = useAuth();
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading]           = useState(false);
-  const [apiError, setApiError]         = useState<string | null>(null);
+  const { switchView, signUp, socialLogin } = useAuth();
+  const [showPassword, setShowPassword]   = useState(false);
+  const [loading, setLoading]             = useState(false);
+  const [apiError, setApiError]           = useState<string | null>(null);
+  const [socialLoading, setSocialLoading] = useState<'google' | 'apple' | null>(null);
+
+  const handleSocialLogin = async (provider: 'google' | 'apple') => {
+    setApiError(null);
+    setSocialLoading(provider);
+    try {
+      const result = await (provider === 'google' ? signInWithGoogle() : signInWithApple());
+      const authResult = await socialLogin(result);
+      if (!authResult.ok) {
+        setApiError(t(`errors.${authResult.errorKey ?? 'socialLoginFailed'}` as Parameters<typeof t>[0]));
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : '';
+      if (!msg.includes('popup') && !msg.includes('cancel') && !msg.includes('dismiss')) {
+        setApiError(t('errors.socialLoginFailed'));
+      }
+    } finally {
+      setSocialLoading(null);
+    }
+  };
 
   const {
     register,
@@ -114,19 +135,21 @@ export default function AuthSignUpForm() {
       <div className="flex gap-2 mb-4">
         <button
           type="button"
-          onClick={() => console.log('Google sign up')}
-          className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+          onClick={() => handleSocialLogin('google')}
+          disabled={socialLoading !== null || loading}
+          className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <GoogleIcon />
-          {t('continueWithGoogle')}
+          {socialLoading === 'google' ? <><span aria-hidden="true">…</span><span className="sr-only">Loading…</span></> : t('continueWithGoogle')}
         </button>
         <button
           type="button"
-          onClick={() => console.log('Apple sign up')}
-          className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-black rounded-xl text-xs font-semibold text-white hover:bg-slate-900 transition-colors"
+          onClick={() => handleSocialLogin('apple')}
+          disabled={socialLoading !== null || loading}
+          className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-black rounded-xl text-xs font-semibold text-white hover:bg-slate-900 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <AppleIcon />
-          {t('continueWithApple')}
+          {socialLoading === 'apple' ? <><span aria-hidden="true">…</span><span className="sr-only">Loading…</span></> : t('continueWithApple')}
         </button>
       </div>
 
@@ -298,7 +321,7 @@ export default function AuthSignUpForm() {
         </div>
         {fieldError('agreedToTerms')}
 
-        {/* API error */}
+        {/* API / social error */}
         {apiError && (
           <p role="alert" className="text-red-500 text-xs text-center">{apiError}</p>
         )}
@@ -306,7 +329,7 @@ export default function AuthSignUpForm() {
         {/* Submit */}
         <button
           type="submit"
-          disabled={!agreedToTerms || loading}
+          disabled={!agreedToTerms || loading || socialLoading !== null}
           aria-busy={loading}
           className="w-full py-3 bg-gradient-to-r from-[#7C3AED] to-[#9333ea] text-white font-bold text-sm rounded-xl shadow-lg shadow-purple-200 hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed mt-1"
         >

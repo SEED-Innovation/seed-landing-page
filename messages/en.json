@@ -74,7 +74,8 @@
       "invalidCode": "Invalid or expired code. Try again.",
       "usernameTaken": "That username is already taken.",
       "phoneInUse": "That phone number is already registered.",
-      "accountExists": "An account with this email already exists."
+      "accountExists": "An account with this email already exists.",
+      "socialLoginFailed": "Social sign-in failed. Please try again."
     },
     "passwordStrength": {
       "weak": "Weak",
@@ -125,9 +126,15 @@
         "courtsCount": "{count} Courts"
       },
       "items": {
-        "training": { "name": "Training Academy" },
-        "padel": { "name": "Padel Courts" },
-        "tennis": { "name": "Tennis Courts" }
+        "training": {
+          "name": "Training Academy"
+        },
+        "padel": {
+          "name": "Padel Courts"
+        },
+        "tennis": {
+          "name": "Tennis Courts"
+        }
       }
     },
     "Techs": {
@@ -135,10 +142,22 @@
       "title": "Advanced Tech for Performance",
       "description": "Combining latest camera technologies and AI to offer you a <highlight> professional training experience. </highlight>",
       "items": {
-        "liveStats": { "title": "Live Stats", "desc": "Instant data while playing" },
-        "shotTracking": { "title": "Shot Tracking", "desc": "Precise analysis for every shot and move" },
-        "aiAnalysis": { "title": "AI Analysis", "desc": "Advanced AI to improve your performance" },
-        "cameras4k": { "title": "4K Cameras", "desc": "High precision recording for every moment" }
+        "liveStats": {
+          "title": "Live Stats",
+          "desc": "Instant data while playing"
+        },
+        "shotTracking": {
+          "title": "Shot Tracking",
+          "desc": "Precise analysis for every shot and move"
+        },
+        "aiAnalysis": {
+          "title": "AI Analysis",
+          "desc": "Advanced AI to improve your performance"
+        },
+        "cameras4k": {
+          "title": "4K Cameras",
+          "desc": "High precision recording for every moment"
+        }
       }
     },
     "Marquee": {
@@ -171,14 +190,38 @@
       "title": "SEED Tech & Features",
       "description": "Combining latest camera technologies and AI to offer you a complete sports experience elevating your game.",
       "items": {
-        "cameras4k": { "title": "4K Cameras in Every Court", "desc": "High precision cameras installed in strategic angles recording every moment of your match with extreme accuracy." },
-        "aiAnalysis": { "title": "Instant AI Analysis", "desc": "Advanced AI system analyzes your performance immediately after match and provides detailed reports and recommendations." },
-        "shotTracking": { "title": "Shot & Ball Tracking", "desc": "Precise tracking for ball path, speed, and rebound area, with analysis for every forehand and backhand." },
-        "performance": { "title": "Physical Performance Stats", "desc": "Measuring distance covered, movement speed, and coverage areas in court during match." },
-        "booking": { "title": "Fast & Easy Booking", "desc": "Book your favorite court in seconds through the app with advance booking up to a week." },
-        "smartApp": { "title": "Integrated Smart App", "desc": "Easy-to-use app combining booking, analysis, videos, and stats in one place." },
-        "challenges": { "title": "Challenges & Competitions", "desc": "Participate in tournaments and challenges with other players and compare stats with community." },
-        "progress": { "title": "Progress Tracking", "desc": "Monitor your level evolution over time through graphs and historical stats." }
+        "cameras4k": {
+          "title": "4K Cameras in Every Court",
+          "desc": "High precision cameras installed in strategic angles recording every moment of your match with extreme accuracy."
+        },
+        "aiAnalysis": {
+          "title": "Instant AI Analysis",
+          "desc": "Advanced AI system analyzes your performance immediately after match and provides detailed reports and recommendations."
+        },
+        "shotTracking": {
+          "title": "Shot & Ball Tracking",
+          "desc": "Precise tracking for ball path, speed, and rebound area, with analysis for every forehand and backhand."
+        },
+        "performance": {
+          "title": "Physical Performance Stats",
+          "desc": "Measuring distance covered, movement speed, and coverage areas in court during match."
+        },
+        "booking": {
+          "title": "Fast & Easy Booking",
+          "desc": "Book your favorite court in seconds through the app with advance booking up to a week."
+        },
+        "smartApp": {
+          "title": "Integrated Smart App",
+          "desc": "Easy-to-use app combining booking, analysis, videos, and stats in one place."
+        },
+        "challenges": {
+          "title": "Challenges & Competitions",
+          "desc": "Participate in tournaments and challenges with other players and compare stats with community."
+        },
+        "progress": {
+          "title": "Progress Tracking",
+          "desc": "Monitor your level evolution over time through graphs and historical stats."
+        }
       }
     },
     "AISection": {
@@ -321,7 +364,7 @@
         "email": "Email",
         "submit": "Send Request",
         "message": "Request Details",
-        "courtType":"Court type",
+        "courtType": "Court type",
         "placeholder": {
           "mobile": "05xxxxxxxx",
           "email": "name@example.com"
@@ -335,26 +378,86 @@
       "cta": "Register Your Court",
       "subscriptionNote": "All of this with one subscription",
       "features": {
-        "booking":       { "title": "Smart Booking Management",       "desc": "Real-time reservations, cancellations, and rescheduling in one dashboard" },
-        "revenue":       { "title": "Revenue & Earnings Dashboard",   "desc": "Track daily income, payouts, and financial summaries at a glance" },
-        "pricing":       { "title": "Dynamic Pricing Control",        "desc": "Set peak and off-peak rates, hourly pricing, and seasonal adjustments" },
-        "analytics":     { "title": "Analytics & Insights",           "desc": "Occupancy rates, popular time slots, and player demographics" },
-        "multicourt":    { "title": "Multi-Court Support",            "desc": "Manage multiple courts across one or many facilities from a single account" },
-        "promotions":    { "title": "Promotions & Discounts",         "desc": "Create custom offers, discount codes, and seasonal deals for players" },
-        "customers":     { "title": "Customer Management",            "desc": "View player profiles, booking history, and loyalty data" },
-        "scheduling":    { "title": "Smart Scheduling",               "desc": "Block time slots for maintenance, private events, or recurring reservations" },
-        "staff":         { "title": "Staff Accounts & Permissions",   "desc": "Add staff with role-based access — cashier, manager, or viewer" },
-        "payments":      { "title": "Secure Online Payments",         "desc": "Accept online payments, generate invoices, and receive automatic payouts" },
-        "mobile":        { "title": "Mobile App Access",              "desc": "Manage your facility on the go via the SEED iOS & Android app" },
-        "ai":            { "title": "AI-Powered Insights",            "desc": "Smart pricing recommendations and peak-time optimisation powered by SEED AI" },
-        "notifications": { "title": "Real-time Notifications",        "desc": "Instant alerts for new bookings, cancellations, and player reviews" },
-        "reviews":       { "title": "Customer Reviews & Ratings",     "desc": "View and respond to player feedback directly from your dashboard" },
-        "waitlist":      { "title": "Waitlist Management",            "desc": "Auto-fill cancelled slots from a player waitlist to maximise utilisation" },
-        "reports":       { "title": "Reports & Exports",              "desc": "Generate and export PDF or Excel reports for any time period" },
-        "support":       { "title": "24/7 Dedicated Support",         "desc": "Priority support channel exclusively for facility owners" },
-        "qr":            { "title": "QR Code Check-in",               "desc": "Contactless player check-in via a unique QR code — no app required" },
-        "discovery":     { "title": "Discovery Map Listing",          "desc": "Appear prominently on SEED's in-app court discovery map" },
-        "marketing":     { "title": "Marketing & Promotions Reach",   "desc": "Promote your facility to thousands of active SEED players" }
+        "booking": {
+          "title": "Smart Booking Management",
+          "desc": "Real-time reservations, cancellations, and rescheduling in one dashboard"
+        },
+        "revenue": {
+          "title": "Revenue & Earnings Dashboard",
+          "desc": "Track daily income, payouts, and financial summaries at a glance"
+        },
+        "pricing": {
+          "title": "Dynamic Pricing Control",
+          "desc": "Set peak and off-peak rates, hourly pricing, and seasonal adjustments"
+        },
+        "analytics": {
+          "title": "Analytics & Insights",
+          "desc": "Occupancy rates, popular time slots, and player demographics"
+        },
+        "multicourt": {
+          "title": "Multi-Court Support",
+          "desc": "Manage multiple courts across one or many facilities from a single account"
+        },
+        "promotions": {
+          "title": "Promotions & Discounts",
+          "desc": "Create custom offers, discount codes, and seasonal deals for players"
+        },
+        "customers": {
+          "title": "Customer Management",
+          "desc": "View player profiles, booking history, and loyalty data"
+        },
+        "scheduling": {
+          "title": "Smart Scheduling",
+          "desc": "Block time slots for maintenance, private events, or recurring reservations"
+        },
+        "staff": {
+          "title": "Staff Accounts & Permissions",
+          "desc": "Add staff with role-based access — cashier, manager, or viewer"
+        },
+        "payments": {
+          "title": "Secure Online Payments",
+          "desc": "Accept online payments, generate invoices, and receive automatic payouts"
+        },
+        "mobile": {
+          "title": "Mobile App Access",
+          "desc": "Manage your facility on the go via the SEED iOS & Android app"
+        },
+        "ai": {
+          "title": "AI-Powered Insights",
+          "desc": "Smart pricing recommendations and peak-time optimisation powered by SEED AI"
+        },
+        "notifications": {
+          "title": "Real-time Notifications",
+          "desc": "Instant alerts for new bookings, cancellations, and player reviews"
+        },
+        "reviews": {
+          "title": "Customer Reviews & Ratings",
+          "desc": "View and respond to player feedback directly from your dashboard"
+        },
+        "waitlist": {
+          "title": "Waitlist Management",
+          "desc": "Auto-fill cancelled slots from a player waitlist to maximise utilisation"
+        },
+        "reports": {
+          "title": "Reports & Exports",
+          "desc": "Generate and export PDF or Excel reports for any time period"
+        },
+        "support": {
+          "title": "24/7 Dedicated Support",
+          "desc": "Priority support channel exclusively for facility owners"
+        },
+        "qr": {
+          "title": "QR Code Check-in",
+          "desc": "Contactless player check-in via a unique QR code — no app required"
+        },
+        "discovery": {
+          "title": "Discovery Map Listing",
+          "desc": "Appear prominently on SEED's in-app court discovery map"
+        },
+        "marketing": {
+          "title": "Marketing & Promotions Reach",
+          "desc": "Promote your facility to thousands of active SEED players"
+        }
       }
     },
     "PartnersPage": {
@@ -372,7 +475,7 @@
     }
   },
   "AboutPage": {
-    "AboutSection":{
+    "AboutSection": {
       "Hero": {
         "badge": "About Us",
         "title": "Redefining <highlight>Smart Sports</highlight>",
@@ -500,7 +603,7 @@
     "amenities": "Facilities & Amenities",
     "courts": "Courts",
     "gallery": "Gallery",
-    "hours": "Opening Hours",
+    "hours": "hrs",
     "startingFrom": "Starting from",
     "currency": "SAR",
     "callFacility": "Call Facility",
@@ -512,8 +615,7 @@
     "chooseDuration": "Choose Duration",
     "chooseDate": "Choose Date",
     "chooseTime": "Choose Time Slot",
-    "hour": "hr",
-    "hours": "hrs"
+    "hour": "hr"
   },
   "CheckoutPage": {
     "title": "Complete Your Booking",

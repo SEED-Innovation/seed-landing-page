@@ -14,6 +14,7 @@ import {
   confirmSignup,
   resendCode,
   refreshTokens,
+  socialLogin as apiSocialLogin,
   normalizeSaudiPhone,
   isTokenExpired,
   getTokenExpiry,
@@ -25,6 +26,7 @@ import {
   type AuthResult,
   type SignUpData,
   type AuthApiError,
+  type SocialLoginPayload,
 } from '@/lib/auth-api';
 
 const STORAGE_USER   = 'seed-user';
@@ -42,6 +44,7 @@ interface AuthContextType {
   cancelConfirm: () => void;
   signIn: (identifier: string, password: string) => Promise<AuthResult>;
   signUp: (data: SignUpData) => Promise<AuthResult>;
+  socialLogin: (payload: SocialLoginPayload) => Promise<AuthResult>;
   confirmEmail: (code: string) => Promise<AuthResult>;
   resendVerification: () => Promise<{ ok: boolean }>;
   signOut: () => void;
@@ -240,6 +243,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const socialLogin = useCallback(async (payload: SocialLoginPayload): Promise<AuthResult> => {
+    try {
+      const tokens = await apiSocialLogin(payload);
+      const claims = decodeJwtPayload(tokens.idToken);
+      const newUser: User = {
+        userId:   tokens.userId,
+        username: (typeof claims['cognito:username'] === 'string' ? claims['cognito:username'] : null)
+                  ?? payload.userInfo.email.split('@')[0],
+        email:    (typeof claims.email === 'string' ? claims.email : null)
+                  ?? payload.userInfo.email,
+        phone:    typeof claims.phone_number === 'string' ? claims.phone_number : '',
+        picture:  payload.userInfo.photoURL
+                  ?? (typeof claims.picture === 'string' ? claims.picture : undefined),
+      };
+      finalizeLogin(newUser, tokens);
+      return { ok: true };
+    } catch {
+      return { ok: false, errorKey: 'socialLoginFailed' };
+    }
+  }, [finalizeLogin]);
+
   const confirmEmail = useCallback(async (code: string): Promise<AuthResult> => {
     if (!pendingUsername) return { ok: false, errorKey: 'signUpFailed' };
     if (!pendingPasswordRef.current) {
@@ -304,7 +328,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider value={{
       user, authLoading, pendingUsername, isOpen, view,
       openAuth, closeAuth, switchView, cancelConfirm,
-      signIn, signUp, confirmEmail, resendVerification, signOut,
+      signIn, signUp, socialLogin, confirmEmail, resendVerification, signOut,
     }}>
       {children}
     </AuthContext.Provider>
