@@ -13,7 +13,6 @@ import { clearCheckout, readCheckout, type CheckoutPayload } from '@/lib/checkou
 
 const LANDING_API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'https://api.seedco.sa/api/landing_page';
 
-type PaymentMethod = 'apple' | 'card';
 type CardNetwork = 'visa' | 'mastercard' | 'amex' | null;
 
 interface PaymentQuoteResponse {
@@ -140,7 +139,6 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState(user?.email ?? '');
   const [phone, setPhone] = useState(user?.phone ?? '');
 
-  const [method, setMethod] = useState<PaymentMethod>('card');
   const [applePayAvailable, setApplePayAvailable] = useState(false);
   const [isApplePayLoading, setIsApplePayLoading] = useState(false);
   const [isCardSubmitting, setIsCardSubmitting] = useState(false);
@@ -176,7 +174,6 @@ export default function CheckoutPage() {
       };
       if (applePayWindow.ApplePaySession?.canMakePayments?.()) {
         setApplePayAvailable(true);
-        setMethod('apple');
       }
     } catch {
       setApplePayAvailable(false);
@@ -620,125 +617,97 @@ export default function CheckoutPage() {
               )}
             </div>
 
-            <div>
-              <p className={`text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 ${isRtl ? 'text-right' : 'text-left'}`}>
-                {t('payWith')}
-              </p>
-              <div className="grid grid-cols-2 gap-2 bg-slate-100 rounded-2xl p-1">
+            {/* Apple Pay native button — only shown on supported Safari/Apple devices */}
+            {applePayAvailable && (
+              <>
                 <button
                   type="button"
-                  onClick={() => setMethod('apple')}
-                  disabled={!applePayAvailable}
-                  className={`relative py-3 rounded-xl text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
-                    method === 'apple' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-400 hover:text-slate-600'
-                  } ${!applePayAvailable ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current shrink-0" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                  </svg>
-                  {t('methodApplePay')}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMethod('card')}
-                  className={`py-3 rounded-xl text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
-                    method === 'card' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-400 hover:text-slate-600'
-                  }`}
-                >
-                  <CreditCard size={15} className="shrink-0" />
-                  {t('methodCard')}
-                </button>
+                  className="apple-pay-btn"
+                  onClick={handleApplePay}
+                  disabled={isApplePayLoading || isLoadingQuote}
+                  aria-label="Pay with Apple Pay"
+                />
+                <div className="payment-divider">
+                  <span>{isRtl ? 'أو ادفع بالبطاقة' : 'or pay with card'}</span>
+                </div>
+              </>
+            )}
+
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <label className={`text-xs font-bold text-slate-500 uppercase tracking-wide block ${isRtl ? 'text-right' : 'text-left'}`}>
+                  {t('cardNumber')}
+                </label>
+                <div className="relative">
+                  <input
+                    dir="ltr"
+                    type="text"
+                    inputMode="numeric"
+                    value={cardNumber}
+                    onChange={(event) => setCardNumber(formatCardNumber(event.target.value))}
+                    placeholder={t('cardNumberPlaceholder')}
+                    maxLength={19}
+                    autoComplete="cc-number"
+                    className={`${inputClass} pr-20 text-left tracking-widest`}
+                  />
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                    {cardNet ? <CardNetworkLogo network={cardNet} /> : <CreditCard size={18} className="text-slate-300" />}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className={`text-xs font-bold text-slate-500 uppercase tracking-wide block ${isRtl ? 'text-right' : 'text-left'}`}>
+                  {t('nameOnCard')}
+                </label>
+                <input
+                  dir="ltr"
+                  value={cardName}
+                  onChange={(event) => setCardName(event.target.value.toUpperCase())}
+                  placeholder={t('nameOnCardPlaceholder')}
+                  autoComplete="cc-name"
+                  className={`${inputClass} text-left tracking-wide`}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className={`text-xs font-bold text-slate-500 uppercase tracking-wide block ${isRtl ? 'text-right' : 'text-left'}`}>
+                    {t('expiry')}
+                  </label>
+                  <input
+                    dir="ltr"
+                    type="text"
+                    inputMode="numeric"
+                    value={expiry}
+                    onChange={(event) => setExpiry(formatExpiry(event.target.value))}
+                    placeholder={t('expiryPlaceholder')}
+                    maxLength={5}
+                    autoComplete="cc-exp"
+                    className={`${inputClass} text-left tracking-widest`}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className={`text-xs font-bold text-slate-500 uppercase tracking-wide block ${isRtl ? 'text-right' : 'text-left'}`}>
+                    {t('cvv')}
+                  </label>
+                  <div className="relative">
+                    <input
+                      dir="ltr"
+                      inputMode="numeric"
+                      type="password"
+                      value={cvv}
+                      onChange={(event) => setCvv(event.target.value.replace(/\D/g, '').slice(0, 4))}
+                      placeholder={t('cvvPlaceholder')}
+                      maxLength={4}
+                      autoComplete="cc-csc"
+                      className={`${inputClass} pr-10 text-left`}
+                    />
+                    <Lock size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" />
+                  </div>
+                </div>
               </div>
             </div>
-
-            <AnimatePresence>
-              {method === 'card' && (
-                <motion.div
-                  key="card-form"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="overflow-hidden"
-                >
-                  <div className="space-y-3 pt-1">
-                    <div className="space-y-1">
-                      <label className={`text-xs font-bold text-slate-500 uppercase tracking-wide block ${isRtl ? 'text-right' : 'text-left'}`}>
-                        {t('cardNumber')}
-                      </label>
-                      <div className="relative">
-                        <input
-                          dir="ltr"
-                          type="text"
-                          inputMode="numeric"
-                          value={cardNumber}
-                          onChange={(event) => setCardNumber(formatCardNumber(event.target.value))}
-                          placeholder={t('cardNumberPlaceholder')}
-                          maxLength={19}
-                          autoComplete="cc-number"
-                          className={`${inputClass} pr-20 text-left tracking-widest`}
-                        />
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-                          {cardNet ? <CardNetworkLogo network={cardNet} /> : <CreditCard size={18} className="text-slate-300" />}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className={`text-xs font-bold text-slate-500 uppercase tracking-wide block ${isRtl ? 'text-right' : 'text-left'}`}>
-                        {t('nameOnCard')}
-                      </label>
-                      <input
-                        dir="ltr"
-                        value={cardName}
-                        onChange={(event) => setCardName(event.target.value.toUpperCase())}
-                        placeholder={t('nameOnCardPlaceholder')}
-                        autoComplete="cc-name"
-                        className={`${inputClass} text-left tracking-wide`}
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1">
-                        <label className={`text-xs font-bold text-slate-500 uppercase tracking-wide block ${isRtl ? 'text-right' : 'text-left'}`}>
-                          {t('expiry')}
-                        </label>
-                        <input
-                          dir="ltr"
-                          type="text"
-                          inputMode="numeric"
-                          value={expiry}
-                          onChange={(event) => setExpiry(formatExpiry(event.target.value))}
-                          placeholder={t('expiryPlaceholder')}
-                          maxLength={5}
-                          autoComplete="cc-exp"
-                          className={`${inputClass} text-left tracking-widest`}
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <label className={`text-xs font-bold text-slate-500 uppercase tracking-wide block ${isRtl ? 'text-right' : 'text-left'}`}>
-                          {t('cvv')}
-                        </label>
-                        <div className="relative">
-                          <input
-                            dir="ltr"
-                            inputMode="numeric"
-                            type="password"
-                            value={cvv}
-                            onChange={(event) => setCvv(event.target.value.replace(/\D/g, '').slice(0, 4))}
-                            placeholder={t('cvvPlaceholder')}
-                            maxLength={4}
-                            autoComplete="cc-csc"
-                            className={`${inputClass} pr-10 text-left`}
-                          />
-                          <Lock size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
 
             <AnimatePresence>
               {submitError && (
@@ -754,40 +723,20 @@ export default function CheckoutPage() {
               )}
             </AnimatePresence>
 
-            {method === 'apple' ? (
-              <button
-                type="button"
-                onClick={handleApplePay}
-                disabled={!applePayAvailable || isApplePayLoading || isLoadingQuote}
-                className="w-full bg-black text-white py-4 rounded-3xl font-bold text-base hover:bg-neutral-800 hover:shadow-xl hover:shadow-black/20 active:scale-[0.98] transition-all disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center gap-2"
-              >
-                {isApplePayLoading ? (
-                  <Loader2 className="animate-spin" size={20} />
-                ) : (
-                  <>
-                    <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white shrink-0" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                    </svg>
-                    <span>{t('payApple', { amount: total != null ? total.toFixed(2) : '0.00' })}</span>
-                  </>
-                )}
-              </button>
-            ) : (
-              <button
-                type="submit"
-                disabled={isCardSubmitting || isLoadingQuote}
-                className="w-full bg-[#7C3AED] text-white py-4 rounded-3xl font-bold text-base hover:bg-[#6D28D9] hover:shadow-xl hover:shadow-purple-200 active:scale-[0.98] transition-all disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center gap-2"
-              >
-                {isCardSubmitting ? (
-                  <Loader2 className="animate-spin" size={20} />
-                ) : (
-                  <>
-                    <CreditCard size={18} className="shrink-0" />
-                    <span>{t('payCard', { amount: total != null ? total.toFixed(2) : '0.00' })}</span>
-                  </>
-                )}
-              </button>
-            )}
+            <button
+              type="submit"
+              disabled={isCardSubmitting || isLoadingQuote}
+              className="w-full bg-[#7C3AED] text-white py-4 rounded-3xl font-bold text-base hover:bg-[#6D28D9] hover:shadow-xl hover:shadow-purple-200 active:scale-[0.98] transition-all disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center gap-2"
+            >
+              {isCardSubmitting ? (
+                <Loader2 className="animate-spin" size={20} />
+              ) : (
+                <>
+                  <CreditCard size={18} className="shrink-0" />
+                  <span>{t('payCard', { amount: total != null ? total.toFixed(2) : '0.00' })}</span>
+                </>
+              )}
+            </button>
           </form>
         </motion.div>
       </div>
