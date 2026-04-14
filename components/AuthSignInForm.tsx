@@ -27,7 +27,7 @@ type ErrKey = 'required' | 'invalidEmailOrPhone';
 
 export default function AuthSignInForm() {
   const t = useTranslations('Auth');
-  const { switchView, signIn, socialLogin, linkingChallenge } = useAuth();
+  const { switchView, signIn, socialLogin } = useAuth();
   const [showPassword, setShowPassword]   = useState(false);
   const [loading, setLoading]             = useState(false);
   const [apiError, setApiError]           = useState<string | null>(null);
@@ -39,9 +39,10 @@ export default function AuthSignInForm() {
     try {
       const result = await (provider === 'google' ? signInWithGoogle() : signInWithApple());
       const authResult = await socialLogin(result);
-      // If linkingChallenge is set, AuthModal will switch to linking view — suppress error
-      if (!authResult.ok && !linkingChallenge) {
-        setApiError(t(`errors.${authResult.errorKey ?? 'socialLoginFailed'}` as Parameters<typeof t>[0]));
+      // socialLogin returns { ok: false } with no errorKey when a linking challenge is set.
+      // Only show an error when there is an explicit errorKey (real failure, not linking flow).
+      if (!authResult.ok && authResult.errorKey) {
+        setApiError(t(`errors.${authResult.errorKey}` as Parameters<typeof t>[0]));
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : '';

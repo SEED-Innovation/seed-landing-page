@@ -52,7 +52,7 @@ const STRENGTH_KEY   = ['', 'weak', 'fair', 'good', 'strong'] as const;
 export default function AuthSignUpForm() {
   const t = useTranslations('Auth');
   const locale = useLocale();
-  const { switchView, signUp, socialLogin, linkingChallenge } = useAuth();
+  const { switchView, signUp, socialLogin } = useAuth();
   const [showPassword, setShowPassword]   = useState(false);
   const [loading, setLoading]             = useState(false);
   const [apiError, setApiError]           = useState<string | null>(null);
@@ -64,9 +64,10 @@ export default function AuthSignUpForm() {
     try {
       const result = await (provider === 'google' ? signInWithGoogle() : signInWithApple());
       const authResult = await socialLogin(result);
-      // If linkingChallenge is set, AuthModal will show the linking view — suppress error
-      if (!authResult.ok && !linkingChallenge) {
-        setApiError(t(`errors.${authResult.errorKey ?? 'socialLoginFailed'}` as Parameters<typeof t>[0]));
+      // socialLogin returns { ok: false } with no errorKey when a linking challenge is set.
+      // Only show an error when there is an explicit errorKey (real failure, not linking flow).
+      if (!authResult.ok && authResult.errorKey) {
+        setApiError(t(`errors.${authResult.errorKey}` as Parameters<typeof t>[0]));
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : '';
