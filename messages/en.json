@@ -75,7 +75,15 @@
       "usernameTaken": "That username is already taken.",
       "phoneInUse": "That phone number is already registered.",
       "accountExists": "An account with this email already exists.",
-      "socialLoginFailed": "Social sign-in failed. Please try again."
+      "socialLoginFailed": "Social sign-in failed. Please try again.",
+      "phoneSaveFailed": "Could not save phone number. Please try again.",
+      "accountLinkedSignIn": "Accounts linked! Please sign in with your email and password to continue."
+    },
+    "phone": {
+      "title": "Add your phone number",
+      "subtitle": "Required for booking payments. Saudi numbers only.",
+      "save": "Save & Continue",
+      "skip": "Skip for now"
     },
     "passwordStrength": {
       "weak": "Weak",

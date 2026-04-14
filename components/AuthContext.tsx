@@ -16,6 +16,7 @@ import {
   refreshTokens,
   socialLogin as apiSocialLogin,
   confirmSocialLink as apiConfirmSocialLink,
+  updatePhone as apiUpdatePhone,
   isLinkingChallenge,
   normalizeSaudiPhone,
   isTokenExpired,
@@ -40,7 +41,7 @@ interface AuthContextType {
   authLoading: boolean;
   pendingUsername: string | null;
   isOpen: boolean;
-  view: 'signin' | 'signup';
+  view: 'signin' | 'signup' | 'phone';
   linkingChallenge: SocialLinkingChallenge | null;
   openAuth: (view?: 'signin' | 'signup') => void;
   closeAuth: () => void;
@@ -53,6 +54,7 @@ interface AuthContextType {
   dismissLinkingChallenge: () => void;
   confirmEmail: (code: string) => Promise<AuthResult>;
   resendVerification: () => Promise<{ ok: boolean }>;
+  updatePhone: (phone: string) => Promise<AuthResult>;
   signOut: () => void;
 }
 
@@ -71,7 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser]                   = useState<User | null>(null);
   const [authLoading, setAuthLoading]     = useState(true);
   const [isOpen, setIsOpen]               = useState(false);
-  const [view, setView]                   = useState<'signin' | 'signup'>('signin');
+  const [view, setView]                   = useState<'signin' | 'signup' | 'phone'>('signin');
   const [pendingUsername, setPendingUsername] = useState<string | null>(null);
 
   const [linkingChallenge, setLinkingChallenge] = useState<SocialLinkingChallenge | null>(null);
@@ -168,7 +170,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setPendingUsername(null);
     pendingPasswordRef.current = null;
     pendingUserDataRef.current = null;
-    setIsOpen(false);
+    // If the user has no phone (e.g. Apple/Google login), keep modal open and collect it
+    if (!newUser.phone) {
+      setIsOpen(true);
+      setView('phone');
+    } else {
+      setIsOpen(false);
+    }
   }, [scheduleRefresh]);
 
   const openAuth = useCallback((v: 'signin' | 'signup' = 'signin') => {
@@ -182,6 +190,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     pendingPasswordRef.current = null;
     pendingUserDataRef.current = null;
     setView('signin');
+  }, []);
+
+  const updatePhone = useCallback(async (phone: string): Promise<AuthResult> => {
+    const saved = localStorage.getItem(STORAGE_TOKENS);
+    if (!saved) return { ok: false, errorKey: 'authRequired' };
+    const tokens: LoginResponse = JSON.parse(saved);
+    try {
+      await apiUpdatePhone(phone, tokens.accessToken);
+      const normalized = normalizeSaudiPhone(phone);
+      setUser((prev) => {
+        if (!prev) return prev;
+        const updated = { ...prev, phone: normalized };
+        localStorage.setItem(STORAGE_USER, JSON.stringify(updated));
+        return updated;
+      });
+      setIsOpen(false);
+      setView('signin');
+      return { ok: true };
+    } catch {
+      return { ok: false, errorKey: 'phoneSaveFailed' };
+    }
   }, []);
 
   const switchView = useCallback((v: 'signin' | 'signup') => {
@@ -268,10 +297,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { ok: false };
       }
       const claims = decodeJwtPayload(outcome.idToken);
+      const cognitoUsername = typeof claims['cognito:username'] === 'string' ? claims['cognito:username'] : '';
+      const emailPrefix = cleanPayload.userInfo.email.split('@')[0];
+      // Cognito usernames for Apple/Google are random identifiers like "SignInWithApple_001.abc"
+      // — use the provider display name or email prefix instead
+      const username = (
+        cognitoUsername && !/^(SignInWithApple|Google|Facebook)_/i.test(cognitoUsername)
+          ? cognitoUsername
+          : (cleanPayload.userInfo.displayName ?? emailPrefix)
+      );
       const newUser: User = {
         userId:   outcome.userId,
-        username: (typeof claims['cognito:username'] === 'string' ? claims['cognito:username'] : null)
-                  ?? cleanPayload.userInfo.email.split('@')[0],
+        username,
         email:    (typeof claims.email === 'string' ? claims.email : null)
                   ?? cleanPayload.userInfo.email,
         phone:    typeof claims.phone_number === 'string' ? claims.phone_number : '',
@@ -291,10 +328,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const tokens = await apiConfirmSocialLink(payload);
       const claims = decodeJwtPayload(tokens.idToken);
+      const cognitoUsername2 = typeof claims['cognito:username'] === 'string' ? claims['cognito:username'] : '';
+      const emailPrefix2 = payload.userInfo.email.split('@')[0];
+      const username2 = (
+        cognitoUsername2 && !/^(SignInWithApple|Google|Facebook)_/i.test(cognitoUsername2)
+          ? cognitoUsername2
+          : (payload.userInfo.displayName ?? emailPrefix2)
+      );
       const newUser: User = {
         userId:   tokens.userId,
-        username: (typeof claims['cognito:username'] === 'string' ? claims['cognito:username'] : null)
-                  ?? payload.userInfo.email.split('@')[0],
+        username: username2,
         email:    (typeof claims.email === 'string' ? claims.email : null)
                   ?? payload.userInfo.email,
         phone:    typeof claims.phone_number === 'string' ? claims.phone_number : '',
@@ -305,7 +348,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       pendingSocialPayloadRef.current = null;
       finalizeLogin(newUser, tokens);
       return { ok: true };
-    } catch {
+    } catch (err) {
+      const apiErr = err as AuthApiError;
+      if (apiErr.code === 'ACCOUNT_LINKED_SIGN_IN_REQUIRED') {
+        // Linking worked but token generation failed — dismiss challenge and let user sign in normally
+        setLinkingChallenge(null);
+        pendingSocialPayloadRef.current = null;
+        setView('signin');
+        return { ok: false, errorKey: 'accountLinkedSignIn' };
+      }
       return { ok: false, errorKey: 'socialLoginFailed' };
     }
   }, [finalizeLogin]);
@@ -380,7 +431,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user, authLoading, pendingUsername, isOpen, view, linkingChallenge,
       openAuth, closeAuth, switchView, cancelConfirm,
       signIn, signUp, socialLogin, confirmAccountLink, dismissLinkingChallenge,
-      confirmEmail, resendVerification, signOut,
+      confirmEmail, resendVerification, updatePhone, signOut,
     }}>
       {children}
     </AuthContext.Provider>

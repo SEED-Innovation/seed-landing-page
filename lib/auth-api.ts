@@ -176,6 +176,22 @@ export async function socialLogin(payload: SocialLoginPayload): Promise<LoginRes
   return data as unknown as LoginResponse;
 }
 
+/** Update the authenticated user's phone number via PATCH /users/me */
+export async function updatePhone(phone: string, accessToken: string): Promise<void> {
+  const res = await fetch('https://api.seedco.sa/api/users/me', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({ phone }),
+  });
+  if (!res.ok) {
+    const data: Record<string, unknown> = await res.json().catch(() => ({}));
+    throw { code: 'UPDATE_FAILED', message: (data.message as string) ?? 'Failed to save phone number' } as AuthApiError;
+  }
+}
+
 export async function confirmSocialLink(payload: SocialLoginPayload): Promise<LoginResponse> {
   const res = await fetch(`${AUTH_BASE}/social-login`, {
     method: 'POST',
@@ -188,6 +204,10 @@ export async function confirmSocialLink(payload: SocialLoginPayload): Promise<Lo
     const raw = (data.code as string) ?? 'UNKNOWN';
     const parts = raw.split('::');
     throw { code: parts[0], message: (data.message as string) ?? `Request failed: ${res.status}` } as AuthApiError;
+  }
+  // Linking succeeded but the existing account uses email/password — user must sign in manually
+  if (data.linked === true && data.requiresSignIn === true) {
+    throw { code: 'ACCOUNT_LINKED_SIGN_IN_REQUIRED', message: (data.message as string) ?? 'Accounts linked. Please sign in with your email and password.' } as AuthApiError;
   }
   return data as unknown as LoginResponse;
 }
