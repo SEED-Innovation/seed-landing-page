@@ -130,6 +130,7 @@ export default function CheckoutPage() {
   const { user } = useAuth();
 
   const [booking, setBooking] = useState<CheckoutPayload | null>(null);
+  const facilityWebsite = booking?.facilityWebsite ?? '';
   const [loaded, setLoaded] = useState(false);
   const [quote, setQuote] = useState<PaymentQuoteResponse | null>(null);
   const [quoteError, setQuoteError] = useState<string | null>(null);
@@ -183,11 +184,19 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (!booking) return;
     if (!booking.facilityWebsite) {
-      setQuote(null);
-      setQuoteError(t('errors.quoteFailed'));
-      setIsLoadingQuote(false);
-      return;
+      console.warn('[checkout] facilityWebsite missing in booking payload, defaulting to seedco.sa', booking);
     }
+
+    const quoteBody = {
+      courtId: String(booking.courtId),
+      date: booking.date,
+      startTime: extractTime(booking.time),
+      duration: booking.durationMinutes,
+      camera: booking.recording,
+      bookingType: booking.bookingType,
+      sport: booking.sportType,
+    };
+    console.log('[checkout] fetching quote', { facilityWebsite, body: quoteBody });
 
     let cancelled = false;
     setIsLoadingQuote(true);
@@ -197,27 +206,20 @@ export default function CheckoutPage() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Facility-Website': booking.facilityWebsite,
+        'X-Facility-Website': facilityWebsite,
       },
-      body: JSON.stringify({
-        courtId: String(booking.courtId),
-        date: booking.date,
-        startTime: extractTime(booking.time),
-        duration: booking.durationMinutes,
-        camera: booking.recording,
-        bookingType: booking.bookingType,
-        sport: booking.sportType,
-      }),
+      body: JSON.stringify(quoteBody),
       cache: 'no-store',
     })
       .then(async (response) => {
         const data = await response.json().catch(() => ({}));
         if (!response.ok) {
-          throw new Error(
+          const message =
             (data as { message?: string; error?: string }).message ??
             (data as { message?: string; error?: string }).error ??
-            t('errors.quoteFailed')
-          );
+            t('errors.quoteFailed');
+          console.error('[checkout] quote HTTP error', { status: response.status, data });
+          throw new Error(message);
         }
         return data as PaymentQuoteResponse;
       })
@@ -227,6 +229,7 @@ export default function CheckoutPage() {
       })
       .catch((error: unknown) => {
         if (cancelled) return;
+        console.error('[checkout] quote fetch failed', error);
         setQuoteError(error instanceof Error ? error.message : t('errors.quoteFailed'));
       })
       .finally(() => {
@@ -350,7 +353,7 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Facility-Website': booking.facilityWebsite,
+          'X-Facility-Website': facilityWebsite,
           Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({
@@ -431,7 +434,7 @@ export default function CheckoutPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Facility-Website': booking.facilityWebsite,
+            'X-Facility-Website': facilityWebsite,
           },
           body: JSON.stringify({ validationURL: event.validationURL }),
         });
@@ -453,7 +456,7 @@ export default function CheckoutPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Facility-Website': booking.facilityWebsite,
+            'X-Facility-Website': facilityWebsite,
             Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify({
