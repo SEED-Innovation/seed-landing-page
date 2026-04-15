@@ -79,7 +79,7 @@ const CourtCard = ({ id, facilityId, name, location, price, startingFrom, image,
 
   return (
     <div className="rounded-[32px] shadow-sm border border-slate-50 hover:shadow-md transition-all group">
-      <Link href={`/courts/${facilityId}`} className="block p-4 cursor-pointer">
+      <Link href={`/facilities/${facilityId}`} className="block p-4 cursor-pointer">
         {/* Image Container */}
         <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[24px] mb-4">
           <img src={image} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -130,7 +130,7 @@ const CourtCard = ({ id, facilityId, name, location, price, startingFrom, image,
           {t('actions.app')}
         </button>
         <Link
-          href={`/courts/${facilityId}`}
+          href={`/facilities/${facilityId}`}
           className="bg-[#7C3AED] text-white py-3 rounded-2xl text-xs font-medium hover:bg-[#6D28D9] transition-colors shadow-lg shadow-purple-100 hover:cursor-pointer text-center"
         >
           {t('actions.web')}

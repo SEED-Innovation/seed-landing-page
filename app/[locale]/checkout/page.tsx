@@ -153,7 +153,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     const data = readCheckout();
     if (!data) {
-      router.replace('/courts');
+      router.replace('/facilities');
       return;
     }
     setBooking(data);
@@ -493,7 +493,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-[#F8F7FF]">
       <div className="max-w-lg mx-auto px-4 py-8">
         <button
-          onClick={() => booking?.facilityId ? router.replace(`/courts/${booking.facilityId}`) : router.replace('/courts')}
+          onClick={() => booking?.facilityId ? router.replace(`/facilities/${booking.facilityId}`) : router.replace('/facilities')}
           className={`flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-[#7C3AED] transition-colors mb-6 ${isRtl ? 'flex-row-reverse' : ''}`}
         >
           <BackIcon size={16} />

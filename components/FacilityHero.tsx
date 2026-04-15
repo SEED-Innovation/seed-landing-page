@@ -56,7 +56,7 @@ export default async function FacilityHero({
 
       {/* Back button */}
       <Link
-        href="/courts"
+        href="/facilities"
         className="absolute top-4 start-4 flex items-center gap-1 bg-black/40 backdrop-blur-md text-white text-sm font-bold px-3 py-2 rounded-full hover:bg-black/60 transition-colors"
       >
         <BackIcon size={16} />

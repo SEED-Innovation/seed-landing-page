@@ -66,7 +66,7 @@ const Courts = () => {
         
         <div className="flex flex-row justify-between  md:items-end mb-12 gap-4 " >
           <SectionTitle>{t('title')}</SectionTitle>
-          <Link href="/courts">
+          <Link href="/facilities">
             <button className="group/btn flex items-center gap-2 text-gray-400 hover:text-purple-600 transition-colors font-medium text-sm md:text-base whitespace-nowrap cursor-pointer">
               {t('viewAll')}
               <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
@@ -80,7 +80,7 @@ const Courts = () => {
               key={court.key}
               className="group relative h-[450px] rounded-[32px] overflow-hidden bg-gray-200 shadow-sm hover:shadow-2xl hover:-translate-y-3 hover:scale-[1.02] transition-all duration-500 ease-out cursor-pointer"
               href={{
-                pathname: '/courts',
+                pathname: '/facilities',
                 query: { category: court.category }
               }}
             >

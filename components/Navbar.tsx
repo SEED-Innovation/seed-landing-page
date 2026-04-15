@@ -51,7 +51,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: t('home'), href: '/' },
-    { name: t('explore'), href: '/courts' },
+    { name: t('explore'), href: '/facilities' },
     { name: t('technology'), href: '/techs' },
     { name: t('business'), href: '/business' },
     { name: t('about'), href: '/about' },

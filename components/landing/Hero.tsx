@@ -62,7 +62,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
           </button>
 
             <Link 
-            href="/courts" 
+            href="/facilities"
             className="group bg-white/10 h-14 w-52 cursor-pointer /10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-between ps-6 pe-2 transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span className="text-white font-medium text-lg whitespace-nowrap">{t('findCourt')}</span>
