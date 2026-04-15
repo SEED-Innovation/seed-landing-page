@@ -3,7 +3,8 @@
 export const AUTH_BASE = 'https://api.seedco.sa/api/auth';
 
 export const EMAIL_RE    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-export const SAUDI_PHONE = /^(?:\+966|966|0)5\d{7,8}$/;
+// Accepts: +966XXXXXXXXX, 966XXXXXXXXX, 0XXXXXXXXX, or just 5XXXXXXXX (9 digits starting with 5)
+export const SAUDI_PHONE = /^(?:\+966|966|0)?5\d{8}$/;
 export const USERNAME_RE = /^[a-zA-Z0-9_]{3,30}$/;
 
 export interface RegisterPayload {

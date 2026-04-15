@@ -5,11 +5,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { X, Phone, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '@/components/AuthContext';
+import { normalizeSaudiPhone } from '@/lib/auth-api';
 import AuthSignInForm from '@/components/AuthSignInForm';
 import AuthSignUpForm from '@/components/AuthSignUpForm';
 import AuthConfirmForm from '@/components/AuthConfirmForm';
 
-const SAUDI_PHONE_RE = /^(?:\+966|966|0)(5[0-9])\d{7}$/;
+// Accepts +966XXXXXXXXX, 966XXXXXXXXX, 0XXXXXXXXX, or plain 5XXXXXXXX
+const SAUDI_PHONE_RE = /^(?:\+966|966|0)?5\d{8}$/;
 
 function PhoneCollectView() {
   const t = useTranslations('Auth');
@@ -21,13 +23,15 @@ function PhoneCollectView() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    const cleaned = phone.replace(/\s/g, '');
+    // Strip all non-digit chars except leading +
+    const cleaned = phone.replace(/[^\d+]/g, '');
     if (!SAUDI_PHONE_RE.test(cleaned)) {
       setError(t('errors.invalidPhone'));
       return;
     }
     setLoading(true);
-    const result = await updatePhone(cleaned);
+    // Normalize to +966XXXXXXXXX before saving
+    const result = await updatePhone(normalizeSaudiPhone(cleaned));
     setLoading(false);
     if (!result.ok) setError(t('errors.phoneSaveFailed'));
   };
