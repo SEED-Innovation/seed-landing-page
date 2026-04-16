@@ -434,7 +434,6 @@ export default function CheckoutPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Facility-Website': facilityWebsite,
           },
           body: JSON.stringify({ validationURL: event.validationURL }),
         });
@@ -456,7 +455,6 @@ export default function CheckoutPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Facility-Website': facilityWebsite,
             Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify({
