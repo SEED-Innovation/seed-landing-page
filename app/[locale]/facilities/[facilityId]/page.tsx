@@ -98,6 +98,7 @@ export default async function FacilityDetailPage({ params }: PageProps) {
                 openTime={facility.openTime}
                 closeTime={facility.closeTime}
                 recordingFee={facilityRecordingFee}
+                facilityWebsite={facility.facilityWebsite ?? ''}
               />
             </div>
           </div>
