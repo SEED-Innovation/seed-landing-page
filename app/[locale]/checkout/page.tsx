@@ -130,7 +130,6 @@ export default function CheckoutPage() {
   const { user } = useAuth();
 
   const [booking, setBooking] = useState<CheckoutPayload | null>(null);
-  const facilityWebsite = booking?.facilityWebsite?.trim() ?? '';
   const [loaded, setLoaded] = useState(false);
   const [quote, setQuote] = useState<PaymentQuoteResponse | null>(null);
   const [quoteError, setQuoteError] = useState<string | null>(null);
@@ -185,6 +184,7 @@ export default function CheckoutPage() {
     if (!booking) return;
 
     const quoteBody = {
+      facilityId: booking.facilityId,
       courtId: String(booking.courtId),
       date: booking.date,
       startTime: extractTime(booking.time),
@@ -193,7 +193,7 @@ export default function CheckoutPage() {
       bookingType: booking.bookingType,
       sport: booking.sportType,
     };
-    console.log('[checkout] fetching quote', { facilityWebsite, body: quoteBody });
+    console.log('[checkout] fetching quote', { facilityId: booking.facilityId, body: quoteBody });
 
     let cancelled = false;
     setIsLoadingQuote(true);
@@ -203,7 +203,6 @@ export default function CheckoutPage() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Facility-Website': facilityWebsite,
       },
       body: JSON.stringify(quoteBody),
       cache: 'no-store',
@@ -294,6 +293,7 @@ export default function CheckoutPage() {
       payerPhone: normalizedPhone,
       orderId: `LAND-${Date.now()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`,
       description: `${booking.facilityName} booking ${booking.date} ${extractTime(booking.time)}`,
+      facilityId: booking.facilityId,
       returnBaseUrl: typeof window !== 'undefined' ? window.location.origin : undefined,
       courtId: String(booking.courtId),
       date: booking.date,
@@ -350,7 +350,6 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Facility-Website': facilityWebsite,
           Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({
@@ -431,9 +430,8 @@ export default function CheckoutPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Facility-Website': facilityWebsite,
           },
-          body: JSON.stringify({ validationURL: event.validationURL }),
+          body: JSON.stringify({ validationURL: event.validationURL, facilityId: booking.facilityId }),
         });
         const merchantSession = await response.json();
         if (!response.ok) {
@@ -453,7 +451,6 @@ export default function CheckoutPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Facility-Website': facilityWebsite,
             Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify({
