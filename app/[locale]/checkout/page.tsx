@@ -130,7 +130,7 @@ export default function CheckoutPage() {
   const { user } = useAuth();
 
   const [booking, setBooking] = useState<CheckoutPayload | null>(null);
-  const facilityWebsite = booking?.facilityWebsite ?? '';
+  const facilityWebsite = booking?.facilityWebsite?.trim() ?? '';
   const [loaded, setLoaded] = useState(false);
   const [quote, setQuote] = useState<PaymentQuoteResponse | null>(null);
   const [quoteError, setQuoteError] = useState<string | null>(null);
@@ -183,9 +183,6 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (!booking) return;
-    if (!booking.facilityWebsite) {
-      console.warn('[checkout] facilityWebsite missing in booking payload, defaulting to seedco.sa', booking);
-    }
 
     const quoteBody = {
       courtId: String(booking.courtId),
@@ -434,6 +431,7 @@ export default function CheckoutPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'X-Facility-Website': facilityWebsite,
           },
           body: JSON.stringify({ validationURL: event.validationURL }),
         });
@@ -455,6 +453,7 @@ export default function CheckoutPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'X-Facility-Website': facilityWebsite,
             Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify({
