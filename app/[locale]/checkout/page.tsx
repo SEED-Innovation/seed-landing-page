@@ -415,6 +415,13 @@ export default function CheckoutPage() {
 
     const ApplePaySessionCtor = appleWindow.ApplePaySession;
     const payload = buildBasePayload();
+    console.log('[apple-pay] session start', {
+      facilityId: booking.facilityId,
+      facilityName: booking.facilityName,
+      origin: window.location.origin,
+      orderId: payload.orderId,
+      total: (total ?? 0).toFixed(2),
+    });
 
     const session = new ApplePaySessionCtor(3, {
       countryCode: 'SA',
@@ -426,6 +433,11 @@ export default function CheckoutPage() {
 
     session.onvalidatemerchant = async (event) => {
       try {
+        console.log('[apple-pay] onvalidatemerchant', {
+          facilityId: booking.facilityId,
+          validationURL: event.validationURL,
+          origin: window.location.origin,
+        });
         const response = await fetch(`${LANDING_API_BASE}/payment/apple-pay/validate-merchant`, {
           method: 'POST',
           headers: {
@@ -434,11 +446,18 @@ export default function CheckoutPage() {
           body: JSON.stringify({ validationURL: event.validationURL, facilityId: booking.facilityId }),
         });
         const merchantSession = await response.json();
+        console.log('[apple-pay] validate-merchant response', {
+          ok: response.ok,
+          status: response.status,
+          body: merchantSession,
+        });
         if (!response.ok) {
           throw new Error((merchantSession as { error?: string }).error ?? t('errors.applePayValidationFailed'));
         }
         session.completeMerchantValidation(merchantSession);
-      } catch {
+        console.log('[apple-pay] merchant validation completed');
+      } catch (error) {
+        console.error('[apple-pay] merchant validation failed', error);
         session.abort();
         setIsApplePayLoading(false);
         setSubmitError(t('errors.applePayValidationFailed'));
@@ -447,6 +466,11 @@ export default function CheckoutPage() {
 
     session.onpaymentauthorized = async (event) => {
       try {
+        console.log('[apple-pay] onpaymentauthorized', {
+          facilityId: payload.facilityId,
+          orderId: payload.orderId,
+          token: event.payment.token,
+        });
         const response = await fetch(`${LANDING_API_BASE}/payment/apple-pay/charge`, {
           method: 'POST',
           headers: {
@@ -459,17 +483,31 @@ export default function CheckoutPage() {
           }),
         });
         const data = await response.json().catch(() => ({})) as PaymentInitiateResponse;
+        console.log('[apple-pay] charge response', {
+          ok: response.ok,
+          status: response.status,
+          body: data,
+        });
 
         if (data.success) {
+          console.log('[apple-pay] charge success', {
+            orderId: data.orderId ?? payload.orderId,
+            transId: data.transId,
+          });
           session.completePayment(ApplePaySessionCtor.STATUS_SUCCESS);
           handleSuccessfulPayment(data.orderId ?? payload.orderId);
           return;
         }
 
+        console.warn('[apple-pay] charge not successful', {
+          error: data.error,
+          status: response.status,
+        });
         session.completePayment(ApplePaySessionCtor.STATUS_FAILURE);
         setSubmitError(data.error ?? t('errors.applePayChargeFailed'));
         setIsApplePayLoading(false);
-      } catch {
+      } catch (error) {
+        console.error('[apple-pay] charge request failed', error);
         session.completePayment(ApplePaySessionCtor.STATUS_FAILURE);
         setSubmitError(t('errors.applePayChargeFailed'));
         setIsApplePayLoading(false);
@@ -477,9 +515,11 @@ export default function CheckoutPage() {
     };
 
     session.oncancel = () => {
+      console.warn('[apple-pay] session cancelled');
       setIsApplePayLoading(false);
     };
 
+    console.log('[apple-pay] session begin');
     session.begin();
   };
 
