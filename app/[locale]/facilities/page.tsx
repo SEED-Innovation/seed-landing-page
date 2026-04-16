@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import CourtCard from "@/components/CourtCard";
 import Search from "@/components/courts/Search";
 import { useLocale } from 'next-intl';
@@ -19,11 +19,10 @@ export default function Courts() {
     const fetchFacilities = async () => {
       try {
         setIsLoading(true);
-        
+
         const response = await fetch(`${BASE_URL}/facilities`);
         const data = await response.json();
 
-        // The API returns an array of facilities directly or inside a data property
         const facilitiesData = data.data || data || [];
 
         setFacilities(facilitiesData);
@@ -38,19 +37,32 @@ export default function Courts() {
     fetchFacilities();
   }, [BASE_URL]);
 
-  const handleFilterChange = useCallback(({ query, category, city }: any) => {     
+  // Build a deduplicated city list from facilities that have cityEn set
+  const availableCities = useMemo(() => {
+    const seen = new Set<string>();
+    const result: { en: string; ar: string }[] = [];
+    for (const f of facilities) {
+      if (f.cityEn && !seen.has(f.cityEn)) {
+        seen.add(f.cityEn);
+        result.push({ en: f.cityEn, ar: f.cityAr || f.cityEn });
+      }
+    }
+    return result;
+  }, [facilities]);
+
+  const handleFilterChange = useCallback(({ query, category, city }: any) => {
     const results = facilities.filter((facility) => {
-      const nameMatch = isRtl ? facility.nameAr : facility.name;
-      const matchesQuery = nameMatch.toLowerCase().includes(query.toLowerCase()) || 
-                           facility.address.toLowerCase().includes(query.toLowerCase());
-      
-      // Check if any court in this facility matches the sport category
-      const matchesCategory = category === 'all' || facility.courts.some((c: any) => 
-        c.sportType.toLowerCase() === category.toLowerCase()
+      const nameMatch = isRtl ? (facility.nameAr || facility.name) : facility.name;
+      const matchesQuery = nameMatch.toLowerCase().includes(query.toLowerCase()) ||
+                           (facility.location || '').toLowerCase().includes(query.toLowerCase());
+
+      const matchesCategory = category === 'all' || facility.courts?.some((c: any) =>
+        c.sportType?.toLowerCase() === category.toLowerCase()
       );
 
-      const matchesCity = city === 'all' || facility.city.toLowerCase().includes(city.toLowerCase());
-      
+      // city filter key is always the English city name
+      const matchesCity = city === 'all' || facility.cityEn === city;
+
       return matchesQuery && matchesCategory && matchesCity;
     });
 
@@ -59,7 +71,7 @@ export default function Courts() {
 
   return (
     <main className="bg-[#FBFCFE] min-h-screen font-saudia">
-      <Search onFilterChange={handleFilterChange} />
+      <Search onFilterChange={handleFilterChange} cities={availableCities} />
       
       <div className="max-w-7xl mx-auto px-6 pb-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

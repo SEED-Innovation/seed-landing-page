@@ -1,35 +1,35 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation'; // Added for URL params
 import { useTranslations, useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Search as SearchIcon, 
-  SlidersHorizontal, 
-  X, 
-  CircleDot,     
-  Activity,      
-  Home,          
-  Sun,           
-  GraduationCap, 
+import {
+  Search as SearchIcon,
+  SlidersHorizontal,
+  X,
+  CircleDot,
+  Activity,
+  Home,
+  Sun,
+  GraduationCap,
   Map as MapIcon,
-  Building2,     
-  Waves,         
-  Anchor,        
-  Palmtree,      
-  Landmark,      
-  MapPin,        
-  Mountain       
+  MapPin,
 } from 'lucide-react';
 import SectionTitle from '../ui/SectionTitle';
 
+interface CityOption {
+  en: string;
+  ar: string;
+}
+
 interface SearchProps {
   onFilterChange: (filters: { query: string; category: string; city: string }) => void;
+  cities?: CityOption[];
 }
 
 // Separate component to handle Search logic within Suspense
-const SearchContent = ({ onFilterChange }: SearchProps) => {
+const SearchContent = ({ onFilterChange, cities = [] }: SearchProps) => {
   const t = useTranslations('CourtsPage.Search');
   const locale = useLocale();
   const isRtl = locale === 'ar';
@@ -70,15 +70,14 @@ const SearchContent = ({ onFilterChange }: SearchProps) => {
     { id: 'academies', icon: <GraduationCap size={24} /> },
   ];
 
-  const citiesList = [
-    { id: 'all', icon: <MapIcon size={16} /> },
-    { id: 'riyadh', icon: <Building2 size={16} /> },
-    { id: 'jeddah', icon: <Waves size={16} /> },
-    { id: 'dammam', icon: <Anchor size={16} /> },
-    { id: 'khobar', icon: <Palmtree size={16} /> },
-    { id: 'makkah', icon: <Landmark size={16} /> },
-    { id: 'madinah', icon: <MapPin size={16} /> },
-    { id: 'abha', icon: <Mountain size={16} /> },
+  // "all" option always first, then one entry per city from facilities
+  const cityButtons = [
+    { id: 'all', label: t('cities.all'), icon: <MapIcon size={16} /> },
+    ...cities.map((c) => ({
+      id: c.en,
+      label: isRtl ? c.ar : c.en,
+      icon: <MapPin size={16} />,
+    })),
   ];
 
   return (
@@ -148,9 +147,9 @@ const SearchContent = ({ onFilterChange }: SearchProps) => {
                   ))}
                 </div>
 
-                {/* City Selection */}
+                {/* City Selection — built from facilities that have a city set */}
                 <div className="flex gap-3 w-full overflow-x-auto flex-nowrap scrollbar-hide px-4 justify-start md:justify-center pb-4 pt-2">
-                  {citiesList.map((city, index) => (
+                  {cityButtons.map((city, index) => (
                     <motion.button
                       key={city.id}
                       initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
@@ -159,14 +158,14 @@ const SearchContent = ({ onFilterChange }: SearchProps) => {
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setActiveCity(city.id)}
                       className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 shrink-0 group font-saudia
-                        ${activeCity === city.id 
-                          ? 'bg-[#4C1D95] text-white shadow-[0_10px_20px_rgba(76,29,149,0.2)]' 
+                        ${activeCity === city.id
+                          ? 'bg-[#4C1D95] text-white shadow-[0_10px_20px_rgba(76,29,149,0.2)]'
                           : 'bg-white text-slate-500 border border-slate-100 hover:border-slate-300 hover:cursor-pointer'
-                        } 
+                        }
                         ${isRtl ? 'flex-row-reverse' : 'flex-row'}
                       `}
                     >
-                      <span>{t(`cities.${city.id}`)}</span>
+                      <span>{city.label}</span>
                       <span className={`transition-colors ${activeCity === city.id ? 'text-white' : 'text-slate-400 group-hover:text-slate-600'}`}>
                         {city.icon}
                       </span>
@@ -182,7 +181,6 @@ const SearchContent = ({ onFilterChange }: SearchProps) => {
   );
 };
 
-// Standard wrapper export
 const Search = (props: SearchProps) => (
   <Suspense fallback={<div className="h-40 w-full animate-pulse bg-slate-50" />}>
     <SearchContent {...props} />
