@@ -268,14 +268,11 @@ export default function CheckoutPage() {
 
   if (!loaded || !booking) return null;
 
-  const authToken = getStoredAccessToken();
-
   const ensureCommonFields = (): string | null => {
     if (!fullName.trim()) return t('errors.nameRequired');
     if (!user?.phone && !phone.trim()) return t('errors.phoneRequired');
     if (!user?.email && !email.trim()) return t('errors.emailRequired');
     if (!quote) return quoteError ?? t('errors.quoteFailed');
-    if (!authToken) return t('errors.authRequired');
     return null;
   };
 
@@ -343,6 +340,7 @@ export default function CheckoutPage() {
 
     const exp = expiry.replace(/\D/g, '');
     const payload = buildBasePayload();
+    const accessToken = getStoredAccessToken();
 
     setIsCardSubmitting(true);
     try {
@@ -350,7 +348,7 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${authToken}`,
+          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         },
         body: JSON.stringify({
           ...payload,
@@ -428,7 +426,7 @@ export default function CheckoutPage() {
       currencyCode: 'SAR',
       supportedNetworks: ['visa', 'masterCard', 'mada'],
       merchantCapabilities: ['supports3DS'],
-      total: { label: booking.facilityName, amount: (total ?? 0).toFixed(2) },
+      total: { label: booking.facilityName || 'SEED', amount: (total ?? 0).toFixed(2) },
     });
 
     session.onvalidatemerchant = async (event) => {
@@ -466,6 +464,7 @@ export default function CheckoutPage() {
 
     session.onpaymentauthorized = async (event) => {
       try {
+        const accessToken = getStoredAccessToken();
         console.log('[apple-pay] onpaymentauthorized', {
           facilityId: payload.facilityId,
           orderId: payload.orderId,
@@ -475,7 +474,7 @@ export default function CheckoutPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${authToken}`,
+            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
           },
           body: JSON.stringify({
             ...payload,
