@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.seedco.sa" }],
+      "destination": "https://seedco.sa/:path*",
+      "permanent": true
+    }
+  ]
+}
