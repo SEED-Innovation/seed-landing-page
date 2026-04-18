@@ -433,8 +433,8 @@
           "desc": "Accept online payments, generate invoices, and receive automatic payouts"
         },
         "mobile": {
-          "title": "Mobile App Access",
-          "desc": "Manage your facility on the go via the SEED iOS & Android app"
+          "title": "Web Dashboard",
+          "desc": "Manage your facility from anywhere via a web dashboard built exclusively for facility owners and managers"
         },
         "ai": {
           "title": "AI-Powered Insights",
