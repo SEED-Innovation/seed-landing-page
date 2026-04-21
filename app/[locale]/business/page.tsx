@@ -8,6 +8,7 @@ import { useLocale } from 'next-intl';
 import SectionBadge from '@/components/ui/SectionBadge';
 import SectionTitle from '@/components/ui/SectionTitle';
 import FeaturesTable from '@/components/FeaturesTable';
+
 const BusinessPage = () => {
   const t = useTranslations('BusinessPage');
   const locale = useLocale();
@@ -38,10 +39,17 @@ const BusinessPage = () => {
   ];
 
   return (
-    <section className="py-20 px-6  min-h-screen">
+    <section className="py-20 px-6 min-h-screen">
+
+      {/* ── Features Table (top) ── */}
+      <FeaturesTable />
+
+      <hr className="border-slate-100 my-16" />
+
+      {/* ── Business cards (bottom) ── */}
       <div className="max-w-7xl mx-auto">
-        
-        {/* Header Section */}
+
+        {/* Header */}
         <div className="text-center mb-16 font-saudia">
           <SectionBadge>{t('badge')}</SectionBadge>
           <SectionTitle>{t('title')}</SectionTitle>
@@ -50,29 +58,24 @@ const BusinessPage = () => {
           </p>
         </div>
 
-        {/* Features Table for facility owners */}
-        <FeaturesTable />
-
-        <hr className="border-slate-100 my-8" />
-
-        {/* Business Options Grid */}
+        {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {businessCards.map((card) => (
-            <Link 
+            <Link
               key={card.key}
               href={card.path}
-              className=" rounded-[32px] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.05)] 
-                         border border-slate-50 flex flex-col items-center text-center 
+              className="rounded-[32px] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.05)]
+                         border border-slate-50 flex flex-col items-center text-center
                          cursor-pointer transition-all duration-500 ease-out
                          hover:shadow-[0_30px_60px_rgba(124,58,237,0.12)] hover:-translate-y-3 group"
             >
-              {/* Icon Container with Animation */}
-              <div className={`w-16 h-16 ${card.iconBg} rounded-2xl flex items-center justify-center mb-8 
+              {/* Icon */}
+              <div className={`w-16 h-16 ${card.iconBg} rounded-2xl flex items-center justify-center mb-8
                                transition-transform duration-500 group-hover:scale-125 group-hover:rotate-6`}>
                 {card.icon}
               </div>
 
-              {/* Text Content */}
+              {/* Text */}
               <h3 className="text-2xl font-bold text-[#0F172A] mb-4">
                 {t(`cards.${card.key}.title`)}
               </h3>
@@ -80,12 +83,11 @@ const BusinessPage = () => {
                 {t(`cards.${card.key}.desc`)}
               </p>
 
-              {/* Action Label with Sliding Arrow */}
-              <div className={`mt-auto flex items-center gap-2 font-bold text-lg ${card.linkColor} 
+              {/* Link */}
+              <div className={`mt-auto flex items-center gap-2 font-bold text-lg ${card.linkColor}
                                  transition-all duration-300 group-hover:brightness-90`}>
                 <span className="uppercase tracking-wide">{t(`cards.${card.key}.link`)}</span>
-                
-                <div className={`transition-transform duration-300 
+                <div className={`transition-transform duration-300
                                 ${isRtl ? 'group-hover:-translate-x-2' : 'group-hover:translate-x-2'}`}>
                   {isRtl ? <ChevronLeft className="w-6 h-6" /> : <ChevronRight className="w-6 h-6" />}
                 </div>
@@ -94,7 +96,6 @@ const BusinessPage = () => {
           ))}
         </div>
       </div>
-
     </section>
   );
 };
