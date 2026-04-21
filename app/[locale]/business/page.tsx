@@ -50,6 +50,11 @@ const BusinessPage = () => {
           </p>
         </div>
 
+        {/* Features Table for facility owners */}
+        <FeaturesTable />
+
+        <hr className="border-slate-100 my-8" />
+
         {/* Business Options Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {businessCards.map((card) => (
@@ -90,9 +95,6 @@ const BusinessPage = () => {
         </div>
       </div>
 
-      {/* Features Table for facility owners */}
-      <hr className="border-slate-100 mt-4" />
-      <FeaturesTable />
     </section>
   );
 };
