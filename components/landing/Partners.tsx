@@ -4,10 +4,10 @@ import React from 'react';
 import { useTranslations } from 'next-intl';
 
 const PARTNERS = [
-  "images/partners/MCIT.png",
-  "images/partners/Monshaat.png", 
-  "images/partners/NTDP.png", 
-  "images/partners/The_Garage.png"
+  "/images/partners/MCIT.png",
+  "/images/partners/Monshaat.png",
+  "/images/partners/NTDP.png",
+  "/images/partners/The_Garage.png"
 ];
 
 const Partners = () => {
