@@ -9,6 +9,6 @@ export const config = {
     '/',
     '/(ar|en)/:path*',
     // Exclude .well-known and static files from locale routing
-    '/((?!_next|_vercel|\\.well-known|[^/]+\\.[^/]+$).*)',
+    '/((?!_next|_vercel|\\.well-known|.*\\.[^/]+$).*)',
   ],
 };
