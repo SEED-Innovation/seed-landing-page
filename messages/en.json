@@ -471,6 +471,10 @@
         "marketing": {
           "title": "Marketing & Promotions Reach",
           "desc": "Promote your facility to thousands of active SEED players"
+        },
+        "whatsapp": {
+          "title": "WhatsApp Auto-Reply",
+          "desc": "Link your facility's WhatsApp number to SEED — players get instant automated replies specific to your facility via our n8n workflow"
         }
       }
     },

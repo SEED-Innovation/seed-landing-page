@@ -8,7 +8,7 @@ import {
   CalendarCheck, DollarSign, BarChart3, Layers,
   Users, Clock, CreditCard, Smartphone, BrainCircuit,
   Bell, FileText, Headphones, LogIn, MapPin, Megaphone,
-  Check,
+  MessageCircle, Check,
 } from 'lucide-react';
 
 const FEATURES = [
@@ -27,6 +27,7 @@ const FEATURES = [
   { key: 'qr',            Icon: LogIn          },
   { key: 'discovery',     Icon: MapPin         },
   { key: 'marketing',     Icon: Megaphone      },
+  { key: 'whatsapp',      Icon: MessageCircle  },
 ] as const;
 
 export default function FeaturesTable() {
